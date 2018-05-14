@@ -1,0 +1,87 @@
+<form class="form-horizontal" data-ng-submit="add(container)">
+    <a class="glyphicon glyphicon-remove pull-right"
+       title="{{'global:ui.button.cancel' | i18next}}"
+       data-ng-click="switchCollapse(createContainer)">
+    </a>
+    <div class="row col-sm-6">
+        <div class="form-group">
+            <label for="container.barCode" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.barCode"></label>
+            <div class="col-sm-9">
+                <input class="form-control" id="container.barCode" data-ng-model="container.barCode" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="container.name" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.name"></label>
+            <div class="col-sm-9">
+                <input class="form-control" id="container.name" data-ng-model="container.name" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.logisticRequire"></label>
+            <div class="col-sm-9">
+                <label class="ui-checkbox" data-ng-repeat="require in logisticRequireEnum track by $index">
+                    <input name="checkbox1" type="checkbox" value="container.logisticRequire"
+                           data-ng-model="logisticRequireList[require]"
+                           data-ng-click="checkLogisticRequire()">
+                    <span>{{'wms:ui.logisticRequireEnum.'+require | i18next}}</span>
+                </label>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="container.totalInventory" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.totalInventory"></label>
+            <div class="col-sm-9">
+                <input class="form-control" id="container.totalInventory" data-ng-model="container.totalInventory" />
+            </div>
+        </div>
+    </div>
+    <div class="row col-sm-6">
+        <div class="form-group">
+            <label for="container.length" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.length"></label>
+            <div class="col-sm-9">
+                <input class="form-control" id="container.length" data-ng-model="container.length" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="container.width" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.width"></label>
+            <div class="col-sm-9">
+                <input class="form-control" id="container.width" data-ng-model="container.width" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="container.height" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.height"></label>
+            <div class="col-sm-9">
+                <input class="form-control" id="container.height" data-ng-model="container.height" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="container.packingCharge" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.packingCharge"></label>
+            <div class="col-sm-9">
+                <input class="form-control" id="container.packingCharge" data-ng-model="container.packingCharge" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="container.weight" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.weight"></label>
+            <div class="col-sm-9">
+                <input class="form-control" id="container.weight" data-ng-model="container.weight" />
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-6 col-sm-4 pull-right">
+            <a class="btn btn-default btn-md" data-ng-click="switchCollapse(createContainer)">
+                <span class="glyphicon glyphicon-remove"></span>
+                <span data-ng-i18next="global:ui.button.cancel"></span>
+            </a>
+            <div class="space"></div>
+            <button class="btn btn-primary btn-md ">
+                <span class="ti-save"></span>
+                <span data-ng-i18next="global:ui.button.save"></span><span data-ng-i18next="wms:ui.heading.container"></span>
+            </button>
+        </div>
+    </div>
+</form>

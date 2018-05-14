@@ -1,0 +1,33 @@
+<div class="page page-table" data-ng-controller="WmsPrepackGoodsCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.label.goodsPackEntrance"></span>
+            <span data-ng-if="seller.id">【{{seller.name}}】</span>
+            <a href="#/wms/seller_list" class="ti-arrow-left pull-right">
+                {{'wms:ui.label.backTo' | i18next}}{{'wms:ui.heading.sellerList' | i18next}}
+            </a>
+        </div>
+
+        <div class="panel-body">
+            <form class="form-horizontal" data-ng-submit="addPrepackOrder()">
+                <div class="form-group">
+                    <label for="barCode" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.barCode"></label>
+                    <div class="col-sm-4 ">
+                        <input class="form-control" id="barCode" data-ng-model="barCode"
+                               placeholder="{{'wms:ui.label.pleaseScanning' | i18next}}{{'wms:ui.label.barCode' | i18next}}" />
+                    </div>
+                    <div class="col-sm-2 ">
+                        <button class="btn btn-primary btn-w-md">
+                            <span data-ng-i18next="wms:ui.label.pleaseScanning"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </section>
+
+</div>

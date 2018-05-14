@@ -1,0 +1,184 @@
+<div class="page page-table" data-ng-controller="WmsSellerPickOrderListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.label.sellerPickList"></span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="btn-group pull-right" uib-dropdown is-open="status.isopen3">
+                        <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                            <span data-ng-i18next="wms:ui.label.status"></span>:
+                            {{'wms:ui.logisticOrderStatus.'+displayLogisticStatus | i18next}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="javascript:;" data-ng-click="viewLogisticStatus('all')">
+                                {{'wms:ui.logisticOrderStatus.all' | i18next}}
+                            </a></li>
+                            <li data-ng-repeat="status in logisticOrderStatusEnumList">
+                                <a href="javascript:;" data-ng-click="viewLogisticStatus(status)" >
+                                    {{'wms:ui.logisticOrderStatus.'+status | i18next}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table  table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="col-sm-1">
+                            <div class="th" data-ng-i18next="wms:ui.label.logisticSn"></div>
+                        </th>
+                        <th class="col-sm-1">
+                            <div class="th" data-ng-i18next="wms:ui.heading.logisticCompany"></div>
+                        </th>
+                        <th class="col-sm-1">
+                            <div class="th" data-ng-i18next="wms:ui.label.consigneeName"></div>
+                        </th>
+                        <th class="col-sm-2">
+                            <div class="th" data-ng-i18next="wms:ui.label.province-city-district"></div>
+                        </th>
+                        <th class="col-sm-2">
+                            <div class="th" data-ng-i18next="wms:ui.label.comment"></div>
+                        </th>
+                        <th class="col-sm-2">
+                            <div class="th" data-ng-i18next="wms:ui.label.fullName"></div>
+                        </th>
+                        <th class="col-sm-1">
+                            <div class="th" data-ng-i18next="wms:ui.label.goodsNumber"></div>
+                        </th>
+                        <th class="col-sm-1">
+                            <div class="th" data-ng-i18next="wms:ui.label.status"></div>
+                        </th>
+                        <th class="col-sm-1">
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody data-ng-repeat="item in currentPageItems track by $index">
+                    <tr>
+                        <td rowspan="{{pickOrderGoodsMap[item.id].length}}">{{item.id}}</td>
+                        <td rowspan="{{pickOrderGoodsMap[item.id].length}}">
+                            <div data-ng-if="item.status == 1">
+                                <form data-ng-submit="updateLogisticCompanyId(item, 'logisticCompanyId')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'logisticCompanyId']"
+                                       data-ng-click="switchNode(item,'logisticCompanyId',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{logisticCompanyMap[item.logisticCompanyId].name}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                    <span data-ng-show="item[item.id+'logisticCompanyId']">
+                                        <select class="ui-class" id="inputLogisticCompanyId"
+                                                data-ng-model="item.logisticCompanyId"
+                                                data-ng-options="freight.logisticCompanyId as logisticCompanyMap[freight.logisticCompanyId].name
+                                                for freight in sellerFreightGroupMap">
+                                        </select>
+                                        <a href="javascript:;" class="ti-save"
+                                           data-ng-click="updateLogisticCompanyId(item, 'logisticCompanyId')"
+                                           title="{{'global:ui.button.save' | i18next}}"></a>
+                                        <a href="javascript:;" class="ti-close"
+                                           data-ng-click="switchNode(item,'logisticCompanyId',false)"
+                                           title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                    </span>
+                                </form>
+                            </div>
+                            <div data-ng-if="item.status > 1">
+                                {{logisticCompanyMap[item.logisticCompanyId].name}}
+                            </div>
+                            <br>
+                            <div>
+                                {{item.expressSn}}
+                                <button class="btn btn-xs btn-primary" data-ng-if="!item.expressSn && item.logisticCompanyId>0"
+                                        data-ng-click="setExpressSn(item)">
+                                    <span data-ng-i18next="wms:ui.tips.setExpressSn" data-ng-if="!item.isSetting"></span>
+                                    <span data-ng-i18next="wms:ui.label.obtaining" data-ng-if="item.isSetting"></span>
+                                </button>
+                            </div>
+                        </td>
+                        <td rowspan="{{pickOrderGoodsMap[item.id].length}}">
+                            <div>{{item.consigneeName}}</div>
+                            <div>{{item.phoneNumber}}</div>
+                        </td>
+                        <td rowspan="{{pickOrderGoodsMap[item.id].length}}">
+                            <div>
+                                {{addressMap[item.province].name}}
+                                {{addressMap[item.city].name}}
+                                {{addressMap[item.district].name}}
+                                <br>
+                                {{item.consigneeAddress}}</div>
+                        </td>
+                        <td rowspan="{{pickOrderGoodsMap[item.id].length}}">
+                            <div>
+                                {{item.comment}}
+                            </div>
+                        </td>
+                        <td>{{sellerGoodsMap[pickOrderGoodsMap[item.id][0].sellerGoodsId].name}}</td>
+                        <td>{{pickOrderGoodsMap[item.id][0].goodsNumber}}</td>
+
+                        <td rowspan="{{pickOrderGoodsMap[item.id].length}}">
+                            <span data-ng-class="{ 'label label-danger': item.status == 1,
+                                           'label label-warning': item.status == 2,
+                                           'label label-success': item.status == 3}">
+                                {{'wms:ui.logisticOrderStatus.'+item.status | i18next}}</span>
+                        </td>
+                        <td rowspan="{{pickOrderGoodsMap[item.id].length}}">
+                            <a href="javascript:;" class="btn btn-sm btn-line-danger"
+                               data-ng-click="withdrawAudit(item.id)"
+                               data-ng-if="item.status == 1 && !item.pickerId && !item.isPrepack" >
+                                <span class="glyphicon glyphicon-repeat"></span>
+                                {{'wms:ui.button.withdraw' | i18next}}</a>
+                        </td>
+                    </tr>
+                    <tr data-ng-repeat="pickOrderGoods in pickOrderGoodsMap[item.id] track by $index" data-ng-if="$index > 0">
+                        <td>{{sellerGoodsMap[pickOrderGoods.sellerGoodsId].name}}</td>
+                        <td>{{pickOrderGoods.goodsNumber}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <footer class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                        <uib-pagination class="pagination-sm"
+                                        ng-model="currentPage"
+                                        total-items="filteredItems.length"
+                                        max-size="4"
+                                        ng-change="select(currentPage)"
+                                        items-per-page="searchOption.numPerPage"
+                                        rotate="false"
+                                        previous-text="&lsaquo;" next-text="&rsaquo;"
+                                        boundary-links="true"></uib-pagination>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+</div>

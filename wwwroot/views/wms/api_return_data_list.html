@@ -1,0 +1,70 @@
+<div class="page page-table" data-ng-controller="WmsApiReturnDataListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.apiReturnData"></span>
+            <a href="#/wms/provider_api_list?apiId={{providerApi.apiId}}" class="ti-arrow-left pull-right"
+               data-ng-if="providerApi"></a>
+        </div>
+
+        <div class="panel-body">
+            <div class="callout callout-info">
+                {{provider.name}} ({{api.resourceName}}【{{api.action}}】)
+            </div>
+
+            <div data-ng-repeat="item in returnDataList track by $index">
+                <div class="form-group row">
+                    <div class="col-xs-5">
+                        <span data-ng-class="'col-xs-offset-'+item.depth"></span>
+                        <a href="javascript:" class="ti-menu"
+                           data-ng-click="switchCollapse(item)"></a>
+                        <span>{{item.varKey}}</span>
+                    </div>
+                    <div class="col-xs-2">
+                        <span>{{item.dataType}}</span>
+                    </div>
+                    <div class="col-xs-5">
+                        <form data-ng-if="!returnDataMap[item.id]" data-ng-submit="add(item.id, apiReturnData)">
+                            <a href="javascript:;" data-ng-show="!item.inEditing" data-ng-click="switchCollapse(item)"
+                               title="{{'global:ui.button.add' | i18next}}">
+                                <span class="ti-plus"></span>
+                            </a>
+                            <span data-ng-show="item.inEditing">
+                                <select class="ui-class" id="apiReturnData.providerApiReturnDataId"
+                                        data-ng-model="apiReturnData.providerApiReturnDataId"
+                                        data-ng-options="returnData.id as returnData.name for returnData in providerApiReturnDataMap" >
+                                </select>
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="add(item.id, apiReturnData)"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                            </span>
+                        </form>
+                        <form data-ng-if="returnDataMap[item.id]"
+                              data-ng-submit="updateProviderApiReturnDataId(returnDataMap[item.id], 'providerApiReturnDataId')" >
+                            <a href="javascript:;" data-ng-show="!returnDataMap[item.id][returnDataMap[item.id].id+'providerApiReturnDataId']"
+                               data-ng-click="switchNode(returnDataMap[item.id],'providerApiReturnDataId',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{providerApiReturnDataMap[returnDataMap[item.id].providerApiReturnDataId].name}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="returnDataMap[item.id][returnDataMap[item.id].id+'providerApiReturnDataId']">
+                                <select class="ui-class" id="returnDataMap[item.id].providerApiReturnDataId"
+                                        data-ng-model="returnDataMap[item.id].providerApiReturnDataId"
+                                        data-ng-options="returnData.id as returnData.name for returnData in providerApiReturnDataMap" >
+                                </select>
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateProviderApiReturnDataId(returnDataMap[item.id], 'providerApiReturnDataId')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(returnDataMap[item.id],'providerApiReturnDataId',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</div>

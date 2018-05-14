@@ -1,0 +1,219 @@
+<div class="page page-table" data-ng-controller="WmsOrderListPartSplitCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.waitCreatePickOrder"></span>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+
+                    <div data-ng-if="chosenOrderIdLength > 0">
+                      <span data-ng-if="chosenOrderIdLength > 0">
+                        {{'wms:ui.label.chosen' | i18next}}: {{chosenOrderIdLength}}
+                    </span>
+                        <button class="btn btn-success"
+                                data-ng-if="chosenOrderIdLength > 0"
+                                data-ng-click="split()">
+                            {{'wms:ui.label.performSplit' | i18next}}
+                        </button>
+                        <h4 class="text-info" data-ng-if="items.length > 0 && chosenOrderIdLength == 0">
+                            {{'wms:ui.tips.batchCreatePickingOrders' | i18next}}</h4>
+
+                        <label data-ng-i18next="wms:ui.heading.logisticCompany"></label>:
+                        <label class="ui-radio" data-ng-repeat="freight in sellerFreightGroupMap" >
+                            <input name="logisticCompanyId" type="radio"
+                                   data-ng-model="splitOrder.logisticCompanyId" value="{{freight.logisticCompanyId}}">
+                            <span>{{logisticCompanyMap[freight.logisticCompanyId].name}}</span>
+                        </label>
+                    </div>
+
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th class="col-sm-3">
+                            <div class="th" >
+                                <label class="">
+                                    <input name="printBox" type="checkbox" value=""
+                                           data-ng-click="checkAll(verifyOrderIds)"
+                                           data-ng-model="verifyAllGoodsIds" >
+                                    <span data-ng-i18next="global:ui.label.selectedAll"></span>
+                                    {{verifyOrderIds.length}}
+                                </label>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.heading.platformSource"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.consigneeName"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.consigneeAddress"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.phoneNumber"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.comment"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.status"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in currentPageItems track by $index">
+                        <td>
+
+                            <label>
+                                <input name="printBox" type="checkbox" value="{{item.id}}"
+                                       data-ng-click="calArrayTrue()"
+                                       data-ng-model="verifyOrderIds[item.id]" >
+                                <span>{{item.orderSn}}</span>
+                            </label>
+
+                        </td>
+                        <td>{{platformSourceMap[item.platformSourceId].name}}</td>
+                        <td>
+                            <div>
+                                <form data-ng-submit="updateConsigneeName(item, 'consigneeName')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'consigneeName']"
+                                       data-ng-click="switchNode(item,'consigneeName',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{item.consigneeName}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                    <span data-ng-show="item[item.id+'consigneeName']">
+                                        <input id="inputConsigneeName" data-ng-model="item.consigneeName" />
+                                        <a href="javascript:;" class="ti-save"
+                                           data-ng-click="updateConsigneeName(item, 'consigneeName')"
+                                           title="{{'global:ui.button.save' | i18next}}"></a>
+                                        <a href="javascript:;" class="ti-close"
+                                           data-ng-click="switchNode(item,'consigneeName',false)"
+                                           title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                    </span>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <form data-ng-submit="updateConsigneeAddress(item, 'consigneeAddress')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'consigneeAddress']"
+                                       data-ng-click="switchNode(item,'consigneeAddress',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{item.consigneeAddress}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                    <span data-ng-show="item[item.id+'consigneeAddress']">
+                                        <input id="inputConsigneeAddress" data-ng-model="item.consigneeAddress" />
+                                        <a href="javascript:;" class="ti-save"
+                                           data-ng-click="updateConsigneeAddress(item, 'consigneeAddress')"
+                                           title="{{'global:ui.button.save' | i18next}}"></a>
+                                        <a href="javascript:;" class="ti-close"
+                                           data-ng-click="switchNode(item,'consigneeAddress',false)"
+                                           title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                    </span>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <form data-ng-submit="updatePhoneNumber(item, 'phoneNumber')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'phoneNumber']"
+                                       data-ng-click="switchNode(item,'phoneNumber',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{item.phoneNumber}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                    <span data-ng-show="item[item.id+'phoneNumber']">
+                                        <input id="inputPhoneNumber" data-ng-model="item.phoneNumber" />
+                                        <a href="javascript:;" class="ti-save"
+                                           data-ng-click="updatePhoneNumber(item, 'phoneNumber')"
+                                           title="{{'global:ui.button.save' | i18next}}"></a>
+                                        <a href="javascript:;" class="ti-close"
+                                           data-ng-click="switchNode(item,'phoneNumber',false)"
+                                           title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                    </span>
+                                </form>
+                            </div>
+                        </td>
+                        <td>{{item.comment}}</td>
+                        <td>
+                            <span data-ng-class="{  'label label-default': item.status == 0,
+                                                    'label label-danger': item.status == 1,
+                                                   'label label-warning': item.status == 2,
+                                                   'label label-success': item.status == 3}">
+                                        {{'wms:ui.orderStatus.'+item.status | i18next}}
+                                    </span>
+                        <td>
+                            <p>
+                                <a href="#/wms/order_goods_list?orderId={{item.id}}" class="btn btn-sm btn-line-primary">
+                                    <span class="ti-menu"></span>
+                                    <span data-ng-i18next="wms:ui.heading.orderGoods"></span>
+                                </a>
+                            </p>
+                            <a href="#/wms/split_order?orderId={{item.id}}"
+                               class="btn btn-sm btn-line-primary"
+                               data-ng-if="item.status > 0">
+                                <span class="ti-eye"></span>
+                                <span data-ng-if="item.status == 1 || item.status == 2" data-ng-i18next="wms:ui.label.performSplit"></span>
+                                <span data-ng-if="item.status == 3" data-ng-i18next="wms:ui.heading.pickOrder"></span>
+                            </a>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                {{'global:ui.pagination.showing' | i18next}}
+                                {{filteredItems.length}}/{{items.length}}
+                                {{'global:ui.pagination.entries' | i18next}}
+                                <select data-ng-model="searchOption.numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()">
+                                </select>
+                                {{'global:ui.pagination.entries' | i18next}}
+                                {{'global:ui.pagination.perPage' | i18next}}
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="filteredItems.length"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="searchOption.numPerPage"
+                                            rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </section>
+
+</div>

@@ -1,0 +1,140 @@
+<div class="page page-table" data-ng-controller="WmsLogisticOrderImportListCtrl">
+
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.logisticOrder"></span>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <label data-ng-i18next="wms:ui.heading.logisticCompany"></label>
+                    <select class="ui-class" id="logisticCompanyId"
+                            data-ng-model="searchOption.logisticCompanyId"
+                            data-ng-change="search()"
+                            data-ng-options="company.id as company.name for company in logisticCompanyMap">
+                    </select>
+                    <span class="space"></span>
+
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    {{'global:ui.pagination.showing' | i18next}}
+                    {{filteredItems.length}}/{{items.length}}
+                    {{'global:ui.pagination.entries' | i18next}}
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.logisticSn"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.heading.logisticCompany"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.expressSn"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.phoneNumber"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.consigneeName"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.province-city-district"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.consigneeAddress"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in currentPageItems track by $index">
+                        <td>{{item.id}}</td>
+                        <td>
+                            {{logisticCompanyMap[item.logisticCompanyId].name}}
+                        </td>
+                        <td>
+                            <form data-ng-submit="updateExpressSn(item)" >
+                                <input id="inputExpressSn"  data-ng-model="item.expressSn"
+                                       data-ng-if="$index == 0" autofocus
+                                       placeholder="{{'wms:ui.label.pleaseScanning' | i18next}}{{'wms:ui.label.expressSn' | i18next}}"/>
+
+                                <input data-ng-model="item.expressSn"
+                                       data-ng-if="$index > 0"
+                                       placeholder="{{'wms:ui.label.pleaseScanning' | i18next}}{{'wms:ui.label.expressSn' | i18next}}"/>
+                            </form>
+                        </td>
+                        <td>{{item.phoneNumber | limitTo:3}}****{{item.phoneNumber | limitTo:-4}}</td>
+                        <td>{{item.consigneeName}}</td>
+                        <td>
+                            {{addressMap[item.province].name}}
+                            {{addressMap[item.city].name}}
+                            {{addressMap[item.district].name}}
+                        </td>
+                        <td>{{item.consigneeAddress}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="filteredItems.length"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="searchOption.numPerPage"
+                                            rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </section>
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <h3 class="panel-title" data-ng-i18next="global:ui.heading.relatedLink"></h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li>
+                    <a class="btn" href="#/wms/express_order_import"
+                       data-ng-i18next="wms:ui.label.importRefExpress"></a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+</div>

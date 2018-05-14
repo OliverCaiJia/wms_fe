@@ -1,0 +1,116 @@
+<div class="page page-table" data-ng-controller="WmsGoodsInventoryLogListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.goodsInventoryLog"></span>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <button class="btn btn-primary" data-ng-click="switchCollapse(createGoodsInventoryLog)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span data-ng-i18next="global:ui.button.create"></span>
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-show="createGoodsInventoryLog.inEditing">
+            <div class="well">
+                <div data-ng-include="'views/wms/partial/goods_inventory_log_form.html'"></div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.id"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.goodsId"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.type"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.number"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.reason"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.memberId"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.created"></div>
+                </th>
+               <th>
+                    <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in currentPageItems track by $index">
+                <td>{{item.id}}</td>
+                <td>{{item.goodsId}}</td>
+                <td>{{item.type}}</td>
+                <td>{{item.number}}</td>
+                <td>{{item.reason}}</td>
+                <td>{{item.memberId}}</td>
+                <td>{{item.created}}</td>
+                <td>
+                    <a href="#/wms/goods_inventory_log_detail?id={{item.id}}"
+                       class="btn btn-xs btn-primary">
+                        <span class="ti-pencil"></span>
+                        <span data-ng-i18next="global:ui.label.detail"></span>
+                    </a>
+                    <a class="btn btn-xs btn-danger" data-ng-click="delete(item.id, $index)">
+                        <span class="ti-trash"></span>
+                        <span data-ng-i18next="global:ui.button.remove"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <uib-pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredItems.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="searchOption.numPerPage"
+                                    rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    boundary-links="true"></uib-pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+</div>

@@ -1,0 +1,50 @@
+<div class="page" data-ng-controller="WmsSellerPlatformSourceDetailCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.sellerPlatformSource"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/seller_platform_source_list" class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+        
+                <div class="form-group">
+                    <label for="sellerPlatformSource.id" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.id"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="sellerPlatformSource.id" readonly data-ng-model="sellerPlatformSource.id" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sellerPlatformSource.sellerId" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.sellerId"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="sellerPlatformSource.sellerId" readonly data-ng-model="sellerPlatformSource.sellerId" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sellerPlatformSource.platformSourceId" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.platformSourceId"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="sellerPlatformSource.platformSourceId" readonly data-ng-model="sellerPlatformSource.platformSourceId" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sellerPlatformSource.appKey" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.appKey"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="sellerPlatformSource.appKey" readonly data-ng-model="sellerPlatformSource.appKey" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sellerPlatformSource.secret" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.secret"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="sellerPlatformSource.secret" readonly data-ng-model="sellerPlatformSource.secret" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

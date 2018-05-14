@@ -1,0 +1,251 @@
+<div class="page page-table page-tasks" data-ng-controller="WmsSellerAvailableGoodsListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-if="seller.id">【{{seller.name}}】</span>
+            <!--<span data-ng-i18next="wms:ui.label.creditLine"></span>-->
+            <!--<span>{{seller.creditLine}}</span>-->
+            <span data-ng-i18next="wms:ui.heading.sellerAvailableGoodsList"></span>
+            <a href="#/wms/seller_list" class="ti-arrow-left pull-right">
+                {{'wms:ui.label.backTo' | i18next}}{{'wms:ui.heading.sellerList' | i18next}}
+            </a>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+
+                    <button class="btn btn-primary"
+                            data-ng-show="!createSellerAvailableGoods.inEditing"
+                            data-ng-click="switchCollapse(createSellerAvailableGoods)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span data-ng-i18next="global:ui.button.add"></span>
+                        <span data-ng-i18next="wms:ui.heading.sellerAvailableGoods"></span>
+
+                    </button>
+                    <button class="btn btn-default"
+                            data-ng-show="createSellerAvailableGoods.inEditing"
+                            data-ng-click="switchCollapse(createSellerAvailableGoods)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        <span data-ng-i18next="global:ui.button.cancel"></span>
+                    </button>
+
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-show="createSellerAvailableGoods.inEditing">
+            <div class="well">
+                <div data-ng-include="'views/wms/partial/seller_available_goods_form.html'"></div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th class="col-sm-3">
+                            <div class="th" data-ng-i18next="wms:ui.heading.goods"></div>
+                        </th>
+                        <th class="col-sm-1">
+                            <div class="th" data-ng-i18next="wms:ui.label.encodeType"></div>
+                        </th>
+                        <th  class="col-sm-2">
+                            <div class="th" data-ng-i18next="wms:ui.label.shelfLocation"></div>
+                        </th>
+                        <th  class="col-sm-2">
+                            <div class="th" data-ng-i18next="wms:ui.label.quantity"></div>
+                        </th>
+                        <th  class="col-sm-2">
+                            <div class="th" data-ng-i18next="wms:ui.label.price"></div>
+                        </th>
+                        <th class="col-sm-1">
+                            <div class="th" data-ng-i18next="wms:ui.label.isDisabled"></div>
+                        </th>
+                        <th class="col-sm-1">
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in currentPageItems track by $index">
+                        <td>
+                            <a href="#/wms/goods_edit?id={{item.goodsId}}">{{goodsMap[item.goodsId].name}}</a>
+                        </td>
+                        <td>
+                            <div data-ng-if="item.quantity < 1">
+                                <form data-ng-submit="updateEncodeType(item, 'encodeType')">
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'encodeType']"
+                                       data-ng-click="switchNode(item,'encodeType',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{encodeTypeMap[item.encodeType]}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                 <span data-ng-show="item[item.id+'encodeType']">
+                                     <select class="ui-class" id="inputEncodeType"
+                                             data-ng-model="item.encodeType"
+                                             data-ng-options="encodeType as encodeTypeMap[encodeType] for encodeType in encodeTypeList">
+                                     </select>
+                                     <a href="javascript:;" class="ti-save"
+                                        data-ng-click="updateEncodeType(item, 'encodeType')"
+                                        title="{{'global:ui.button.save' | i18next}}"></a>
+                                     <a href="javascript:;" class="ti-close"
+                                        data-ng-click="switchNode(item,'encodeType',false)"
+                                        title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                 </span>
+                                </form>
+                            </div>
+                            <div data-ng-if="item.quantity > 0">
+                                {{encodeTypeMap[item.encodeType]}}
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <form data-ng-submit="updateShelfLocation(item, 'shelfLocation')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'shelfLocation']"
+                                       data-ng-click="switchNode(item,'shelfLocation',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{item.shelfLocation}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                 <span data-ng-show="item[item.id+'shelfLocation']">
+                                     <input id="inputShelfLocation" data-ng-model="item.shelfLocation" />
+                                     <a href="javascript:;" class="ti-save"
+                                        data-ng-click="updateShelfLocation(item, 'shelfLocation')"
+                                        title="{{'global:ui.button.save' | i18next}}"></a>
+                                     <a href="javascript:;" class="ti-close"
+                                        data-ng-click="switchNode(item,'shelfLocation',false)"
+                                        title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                 </span>
+                                </form>
+                            </div>
+                        </td>
+                        <td>{{item.quantity}}</td>
+                        <td>
+                            <div>
+                                <form data-ng-submit="updatePrice(item, 'price')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'price']"
+                                       data-ng-click="switchNode(item,'price',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{item.price}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                 <span data-ng-show="item[item.id+'price']">
+                                     <input id="inputPrice" data-ng-model="item.price" />
+                                     <a href="javascript:;" class="ti-save"
+                                        data-ng-click="updatePrice(item, 'price')"
+                                        title="{{'global:ui.button.save' | i18next}}"></a>
+                                     <a href="javascript:;" class="ti-close"
+                                        data-ng-click="switchNode(item,'price',false)"
+                                        title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                 </span>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="javascript:;" class="btn btn-xs btn-success"
+                               data-ng-if="!item.disabled"
+                               data-ng-click="disabledSellerAvailableGoods(item,!item.disabled)">
+                                <span class="fa fa-toggle-on"></span>
+                                <span >{{'wms:ui.label.disabled' | i18next}}</span>
+                            </a>
+                            <a href="javascript:;" class="btn btn-xs btn-danger"
+                               data-ng-if="item.disabled"
+                               data-ng-click="disabledSellerAvailableGoods(item,!item.disabled)">
+                                <span class="fa fa-toggle-off"></span>
+                                <span >{{'wms:ui.label.enabled' | i18next}}</span>
+                            </a>
+                        </td>
+                        <td>
+                            <p data-ng-if="item.encodeType != 'bar'">
+                                <a href="#/wms/goods_encode_list?sellerAvailableGoodsId={{item.id}}"
+                                   class="btn btn-sm  btn-line-primary" data-ng-class="{'btn-line-success':item.encodeType == 'rfid',
+                                                                'btn-line-primary':item.encodeType == 'unique'}">
+                                    <span class="glyphicon glyphicon-barcode"></span>
+                                    <span>
+                                        {{'wms:ui.statusEnum.encodeType.'+item.encodeType | i18next}}{{'wms:ui.label.manager' | i18next}}
+                                    </span>
+                                </a>
+                            </p>
+                            <p data-ng-if="item.encodeType == 'bar'">
+                                <a href="#/wms/goods_breakage?availableGoodsId={{item.id}}"
+                                   class="btn btn-sm btn-line-primary">
+                                    <span class="glyphicon glyphicon-ban-circle"></span>
+                                    <span data-ng-i18next="wms:ui.label.goodsBreakage"></span>
+                                </a>
+                            </p>
+                            <p>
+                                <a href="#/wms/increase_available_goods_quantity?availableGoodsId={{item.id}}"
+                                   class="btn btn-sm btn-line-primary">
+                                    <span class="glyphicon glyphicon-log-in"></span>
+                                    <span data-ng-i18next="wms:ui.label.goodsStorage"></span>
+                                </a>
+                            </p>
+                            <p>
+                                <a href="#/wms/goods_putaway?sellerAvailableGoodsId={{item.id}}"
+                                   class="btn btn-sm btn-line-primary">
+                                    <span class="glyphicon glyphicon-cloud-upload"></span>
+                                    <span data-ng-i18next="wms:ui.label.goodsPutaway"></span>
+                                </a>
+                            </p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                        <span>
+                            {{'global:ui.pagination.showing' | i18next}}
+                            {{filteredItems.length}}/{{items.length}}
+                            {{'global:ui.pagination.entries' | i18next}}
+                            <select data-ng-model="searchOption.numPerPage"
+                                    data-ng-options="num for num in numPerPageOpt"
+                                    data-ng-change="onNumPerPageChange()">
+                            </select>
+                            {{'global:ui.pagination.entries' | i18next}}
+                            {{'global:ui.pagination.perPage' | i18next}}
+                        </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="filteredItems.length"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="searchOption.numPerPage"
+                                            rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <h3 class="panel-title" data-ng-i18next="global:ui.heading.relatedLink"></h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li>
+                    <a class="btn" href="#/wms/seller_available_container_list?sellerId={{seller.id}}"
+                       data-ng-if="seller.id"
+                       data-ng-i18next="wms:ui.heading.sellerAvailableContainer"></a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+</div>

@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h3 data-ng-i18next="global:ui.modal.progressTitle"></h3>
+</div>
+<div class="modal-body">
+    <div class="alert alert-success">
+        {{ apiResult.message }}
+    </div>
+</div>
+<div class="modal-footer" date="{{ apiResult.flags_close }} --- {{cancel()}}">
+    <button autofocus class="btn btn-primary" data-ng-click="ok()">
+        <span class="glyphicon glyphicon-ok"></span>
+        <span data-ng-i18next="global:ui.modal.successButton"></span>
+    </button>
+</div>

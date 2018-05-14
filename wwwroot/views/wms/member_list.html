@@ -1,0 +1,212 @@
+<div class="page page-table" data-ng-controller="WmsMemberListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.memberList"></span>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <button class="btn btn-primary"
+                            data-ng-show="!createMember.inEditing"
+                            data-ng-click="switchCollapse(createMember)">
+                        <span class="glyphicon glyphicon-plus" data-ng-show="!createMember.inEditing"></span>
+                        {{'global:ui.button.add' | i18next}}{{'wms:ui.heading.warehouse' | i18next}}{{'wms:ui.heading.member' | i18next}}
+                    </button>
+                    <button class="btn btn-default"
+                            data-ng-show="createMember.inEditing"
+                            data-ng-click="switchCollapse(createMember)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        <span data-ng-i18next="global:ui.button.cancel"></span>
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-show="createMember.inEditing">
+            <div class="well">
+                <div data-ng-include="'views/wms/partial/member_form.html'"></div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.jobNumber"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.memberName"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.realName"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.mobilePhone"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.disabled"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.lastLogin"></div>
+                        </th>
+                       <th>
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in currentPageItems">
+                        <td>
+                            <div>
+                                <form data-ng-submit="updateJobNumber(item, 'jobNumber')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'jobNumber']"
+                                       data-ng-click="switchNode(item,'jobNumber',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{item.jobNumber}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                    <span data-ng-show="item[item.id+'jobNumber']">
+                                        <input id="inputJobNumber" data-ng-model="item.jobNumber" />
+                                        <a href="javascript:;" class="ti-save"
+                                           data-ng-click="updateJobNumber(item, 'jobNumber')"
+                                           title="{{'global:ui.button.save' | i18next}}"></a>
+                                        <a href="javascript:;" class="ti-close"
+                                           data-ng-click="switchNode(item,'jobNumber',false)"
+                                           title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                    </span>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <form data-ng-submit="updateName(item, 'name')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'name']"
+                                       data-ng-click="switchNode(item,'name',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{item.name}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                    <span data-ng-show="item[item.id+'name']">
+                                        <input id="inputName" data-ng-model="item.name" />
+                                        <a href="javascript:;" class="ti-save"
+                                           data-ng-click="updateName(item, 'name')"
+                                           title="{{'global:ui.button.save' | i18next}}"></a>
+                                        <a href="javascript:;" class="ti-close"
+                                           data-ng-click="switchNode(item,'name',false)"
+                                           title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                    </span>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <form data-ng-submit="updateRealName(item, 'realName')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'realName']"
+                                       data-ng-click="switchNode(item,'realName',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{item.realName}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                    <span data-ng-show="item[item.id+'realName']">
+                                        <input id="inputRealName" data-ng-model="item.realName" />
+                                        <a href="javascript:;" class="ti-save"
+                                           data-ng-click="updateRealName(item, 'realName')"
+                                           title="{{'global:ui.button.save' | i18next}}"></a>
+                                        <a href="javascript:;" class="ti-close"
+                                           data-ng-click="switchNode(item,'realName',false)"
+                                           title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                    </span>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <form data-ng-submit="updateMobilePhone(item, 'mobilePhone')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'mobilePhone']"
+                                       data-ng-click="switchNode(item,'mobilePhone',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{item.mobilePhone}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                    <span data-ng-show="item[item.id+'mobilePhone']">
+                                        <input id="inputMobilePhone" data-ng-model="item.mobilePhone" />
+                                        <a href="javascript:;" class="ti-save"
+                                           data-ng-click="updateMobilePhone(item, 'mobilePhone')"
+                                           title="{{'global:ui.button.save' | i18next}}"></a>
+                                        <a href="javascript:;" class="ti-close"
+                                           data-ng-click="switchNode(item,'mobilePhone',false)"
+                                           title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                    </span>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <input class="checkbox1" type="checkbox" data-ng-checked="item.disabled"
+                                   data-ng-if="username != item.jobNumber"
+                                   data-ng-click="disabledMember(item, !item.disabled)">
+                        </td>
+                        <td>{{item.lastLogin}}</td>
+                        <td>
+                            <div data-ng-if="username != item.jobNumber">
+                                <a href="#/wms/reset_password?id={{item.id}}"
+                                   class="btn btn-sm btn-line-primary">
+                                    <span class="ti-pencil"></span>
+                                    <span data-ng-i18next="passport:ui.button.resetPassword"></span>
+                                </a>
+                                <div class="space"></div>
+                                <a href="#/wms/member_role_list?memberId={{item.id}}"
+                                   class="btn btn-sm btn-line-primary">
+                                    <span class="ti-menu"></span>
+                                    <span data-ng-i18next="wms:ui.heading.memberRole"></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                {{'global:ui.pagination.showing' | i18next}}
+                                {{filteredItems.length}}/{{items.length}}
+                                {{'global:ui.pagination.entries' | i18next}}
+                                <select data-ng-model="searchOption.numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()">
+                                </select>
+                                {{'global:ui.pagination.entries' | i18next}}
+                                {{'global:ui.pagination.perPage' | i18next}}
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="filteredItems.length"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="searchOption.numPerPage"
+                                            rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </section>
+
+</div>

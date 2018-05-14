@@ -1,0 +1,86 @@
+<div class="col-xs-12">
+    <div class="panel panel-success">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.sellerGoodsGroup"></span><span data-ng-i18next="global:ui.label.detail"></span>
+        </div>
+        <div class="panel-body">
+            <div class="row ">
+                <div class="col-sm-12 form-group checkbox">
+                    <span>
+                        {{'wms:ui.label.existingComboGoodsNumber' | i18next}} : {{sellerComboGoodsList | calTotalGoodsNumber}}
+                    </span>
+                    <span class="pull-right" data-ng-if="sellerGoods.isLocked">
+                        <i class="fa fa-lock"></i>
+                        {{'wms:ui.label.locked' | i18next}}
+                    </span>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th><div class="th">#</div></th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.heading.goods"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.barCode"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.goodsNumber"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.encodeType"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.price"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in sellerComboGoodsList track by $index"  >
+                        <td>{{$index+1}}</td>
+                        <td>{{sellerGoodsMap[item.sellerGoodsId].name}}
+                        </td>
+                        <td>{{sellerGoodsMap[item.sellerGoodsId].barCode}}</td>
+                        <td>{{item.goodsNumber}}</td>
+                        <td>{{encodeTypeMap[sellerGoodsMap[item.sellerGoodsId].encodeType]}}</td>
+                        <td>{{sellerGoodsMap[item.sellerGoodsId].price}}</td>
+                        <td>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <footer class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                            <span>
+                                {{'wms:ui.label.existingGroupGoods' | i18next}} : {{sellerComboGoodsList.length}}
+                            </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                    </div>
+                </div>
+            </footer>
+            <div class="divider divider-dashed divider-xs pull-in"></div>
+            <div class="table-filters">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p><strong>{{'wms:ui.label.totalPrice' | i18next}}</strong>
+                            <strong><span>{{totalPrice | number:2}}</span></strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>

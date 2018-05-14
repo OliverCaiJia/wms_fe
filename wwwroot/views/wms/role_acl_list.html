@@ -1,0 +1,107 @@
+<div class="page page-table" data-ng-controller="WmsRoleAclListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.roleAcl"></span>
+            <span>({{role.name}})</span>
+            <a href="#/wms/role_list" class="ti-arrow-left pull-right"></a>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    {{roleChecked}}
+                    <label >
+                        <input type="radio" name="roleChecked" value="{{roleChecked}}"
+                               checked="checked"
+                                data-ng-click="showAll()">
+                        <span data-ng-i18next="global:ui.label.all"></span>
+                        <span class="space"></span>
+                    </label>
+
+                    <label >
+                        <input type="radio" name="roleChecked"
+                               data-ng-click="showExistObject()" value="1" >
+                        <span data-ng-i18next="wms:ui.label.chosen"></span>
+                        <span class="space"></span>
+                    </label>
+
+                    <label >
+                        <input type="radio" name="roleChecked"
+                               data-ng-click="showEmptyObject()" value="0" >
+
+                        <span data-ng-i18next="wms:ui.label.noChoose"></span>
+                        <span class="space"></span>
+                    </label>
+
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th><div class="th">({{countMapLength(roleAclMap)}})</div></th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.heading.moduleAction" ></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.alias"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in currentPageItems track by $index">
+                <td class="col-xs-1">
+                    <input class="checkbox1" type="checkbox" checked
+                           data-ng-if="roleAclMap[item.id]"
+                           data-ng-click="delete(roleAclMap[item.id])">
+                    <input class="checkbox1" type="checkbox"
+                           data-ng-if="!roleAclMap[item.id]"
+                           data-ng-click="add(item.id)">
+                </td>
+                <td class="col-xs-6">{{item.name}}</td>
+                <td class="col-xs-5">{{item.alias}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <uib-pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredItems.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="searchOption.numPerPage"
+                                    rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    boundary-links="true"></uib-pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+</div>

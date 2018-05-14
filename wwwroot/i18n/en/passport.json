@@ -1,0 +1,44 @@
+{
+  "message": {
+    "validationError": {
+      "password": {
+        "notEqual": "Password doesn't match the confirmation"
+      }
+    },
+    "apiError": {
+      "10301": "Username does't match the email",
+      "10202": "Password not matches",
+      "10201": "User not exists",
+      "10102": "Email already exists",
+      "10101": "Username already exists"
+    },
+    "onResetPasswordSuccess": "Password reset successfully, please check you mail box",
+    "onChangePasswordSuccess": "Password changed successfully",
+    "onSignOutSuccess": "Sign out successfully",
+    "onSignUpSuccess": "Sign up successfully",
+    "onSignInSuccess": "Sign in successfully"
+  },
+  "ui": {
+    "tips": {
+      "signUpFirst": "Your current operation needs to be logged in before being used",
+      "otherUserSignIn": "Sign in as other user",
+      "welcomeBack": "Welcome back",
+      "reSignIn": "Sorry, authentication expired, please sign in and redo your operations",
+      "agreePolicy": "By clicking on sign up, you agree to terms & conditions and privacy policy"
+    },
+    "button": {
+      "changePassword": "Change Password",
+      "resetPassword": "Reset Password",
+      "forgotPassword": "Forgot Password",
+      "signOut": "Sign Out",
+      "signIn": "Sign In"
+    },
+    "label": {
+      "email": "Email",
+      "passwordConfirmation": "Confirm Your Password",
+      "originalPassword": "Original Password",
+      "password": "Password",
+      "username": "Username"
+    }
+  }
+}

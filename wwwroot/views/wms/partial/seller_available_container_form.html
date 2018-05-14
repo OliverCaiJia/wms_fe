@@ -1,0 +1,151 @@
+<div class="row" data-ng-if="containerList.length">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-footer">
+                {{'wms:ui.heading.waiteToAddContainer' | i18next}}
+                ({{currentContainerList.length}}/{{containerList.length}})
+            </div>
+            <div class="panel-body ui-map " data-slim-scroll data-scroll-height="400px" >
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <form>
+                            <input type="text"
+                                   data-ng-i18next="[placeholder]global:ui.button.search"
+                                   class="form-control"
+                                   data-ng-model="containerKeywords"
+                                   data-ng-keyup="searchContainerList(containerKeywords)">
+                        </form>
+                    </div>
+                </div>
+                <ul class="task-list list-unstyled">
+                    <li data-ng-repeat="container in currentContainerList track by $index" class="" >
+                        <div class="view" data-ng-if="container.id != sellerAvailableContainer.containerId">
+                            <label data-ng-click="checkedContainer(container)">
+                                {{container.name}}
+                                <span class="space"></span>
+                                <span data-ng-i18next="wms:ui.label.postInventory"></span>：
+                                {{container.postInventory}}
+                                <a href="javascript:;" class="btn btn-xs btn-success pull-right">
+                                    {{'global:ui.button.choose' | i18next}}
+                                </a>
+                            </label>
+                        </div>
+                        <div class="alert alert-success" data-ng-if="container.id == sellerAvailableContainer.containerId">
+                            <span class="space"></span>
+                            <span class="space"></span>
+                            <label data-ng-click="checkedContainer(container)">
+                                {{container.name}}
+                                <span class="space"></span>
+                                <span data-ng-i18next="wms:ui.label.postInventory"></span>：
+                                {{container.postInventory}}
+                            </label>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-footer">
+                {{'wms:ui.tips.waiteToEditForm' | i18next}}
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" data-ng-submit="add(sellerAvailableContainer)">
+                    <div class="form-group" >
+                        <label class="col-sm-4 control-label" ><strong data-ng-i18next="wms:ui.heading.sellerAvailableContainer"></strong></label>
+                        <div class="col-sm-8">
+
+                            <label class="control-label ui-checkbox error" data-ng-if="!sellerAvailableContainer.containerName">
+                                <strong data-ng-i18next="wms:ui.tips.chooseLeftSideContainer"></strong></label>
+                            <input class="form-control" disabled
+                                   data-ng-if="sellerAvailableContainer.containerName"
+                                   data-ng-model="sellerAvailableContainer.containerName" />
+                        </div>
+                    </div>
+
+                    <div class="form-group" data-ng-if="sellerAvailableContainer.containerId" >
+                        <label class="col-sm-4 control-label" ><strong data-ng-i18next="wms:ui.label.totalInventory"></strong></label>
+                        <div class="col-sm-8">
+                            <input class="form-control" disabled
+                                   data-ng-if="sellerAvailableContainer.containerName"
+                                   data-ng-model="containerMap[sellerAvailableContainer.containerId].totalInventory" />
+                        </div>
+                    </div>
+
+                    <div class="form-group" data-ng-if="sellerAvailableContainer.containerId" >
+                        <label class="col-sm-4 control-label" ><strong data-ng-i18next="wms:ui.label.postInventory"></strong></label>
+                        <div class="col-sm-8">
+                            <input class="form-control" disabled
+                                   data-ng-if="sellerAvailableContainer.containerName"
+                                   data-ng-model="containerMap[sellerAvailableContainer.containerId].postInventory" />
+                        </div>
+                    </div>
+
+                    <div class="form-group" data-ng-if="sellerAvailableContainer.containerId" >
+                        <label class="col-sm-4 control-label" ><strong data-ng-i18next="wms:ui.label.packingCharge"></strong></label>
+                        <div class="col-sm-8">
+                            <input class="form-control" disabled
+                                   data-ng-if="sellerAvailableContainer.containerName"
+                                   data-ng-model="containerMap[sellerAvailableContainer.containerId].packingCharge" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" data-ng-if="sellerAvailableContainer.containerInventory">
+                        <label class="col-sm-4 control-label" >
+                            <strong data-ng-i18next="wms:ui.label.containerInventory"></strong>
+                        </label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="sellerAvailableContainer.containerInventory" disabled data-ng-model="sellerAvailableContainer.containerInventory" />
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-4 control-label" >
+                            <strong data-ng-i18next="wms:ui.label.payMode"></strong>
+                        </label>
+                        <div class="col-sm-8">
+                            <label class="ui-radio" data-ng-repeat="payMode in payModeList">
+                                <input name="payMode" type="radio" value="{{payMode}}" data-ng-model="sellerAvailableContainer.payMode">
+                                <span>{{'wms:ui.label.'+payMode+'PayMode' | i18next}}</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-if="sellerAvailableContainer.payMode">
+                        <label class="col-sm-4 control-label">
+                            <strong data-ng-i18next="wms:ui.label.payModeInstruction"></strong>
+                        </label>
+                        <div class="col-sm-8">
+                            <p data-ng-i18next="wms:message.prePayModeContainerInstruction"></p>
+                            <p data-ng-i18next="wms:message.postPayModeContainerInstruction"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sellerAvailableContainer.price" class="col-sm-4 control-label" >
+                            <strong data-ng-i18next="global:ui.button.setting"></strong><strong data-ng-i18next="wms:ui.label.price"></strong>
+                        </label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="sellerAvailableContainer.price" data-ng-model="sellerAvailableContainer.price" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8" data-ng-if="sellerAvailableContainer.containerName">
+                            <button class="btn btn-primary btn-w-md"
+                                    data-ng-if="sellerAvailableContainer.id"
+                                    data-ng-i18next="global:ui.button.save"></button>
+                            <button class="btn btn-primary btn-w-md"
+                                    data-ng-if="!sellerAvailableContainer.id"
+                                    data-ng-i18next="global:ui.button.create"></button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" data-ng-if="containerList.length == 0">
+    <span data-ng-i18next="wms:ui.tips.noMoreContainer"></span>
+</div>
+

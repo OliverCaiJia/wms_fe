@@ -1,0 +1,178 @@
+<div class="page page-table" data-ng-controller="WmsPlatformOrderUploadListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.platformOrderUpload"></span>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <button class="btn btn-primary"
+                            data-ng-show="!createPlatformOrderUpload.inEditing"
+                            data-ng-click="switchCollapse(createPlatformOrderUpload)">
+                        <span class="glyphicon glyphicon-plus" data-ng-show="!createPlatformOrderUpload.inEditing"></span>
+                        <span data-ng-i18next="global:ui.button.upload"></span><span data-ng-i18next="wms:ui.heading.order"></span>
+                    </button>
+                    <button class="btn btn-default"
+                            data-ng-show="createPlatformOrderUpload.inEditing"
+                            data-ng-click="switchCollapse(createPlatformOrderUpload)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        <span data-ng-i18next="global:ui.button.cancel"></span>
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel-body" >
+            <div class="well" data-ng-show="createPlatformOrderUpload.inEditing">
+                <div data-ng-include="'views/wms/partial/platform_order_upload_form.html'"></div>
+            </div>
+            <div class="table-responsive" data-ng-if="csv.result && createPlatformOrderUpload.inEditing">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr class="info">
+                        <th data-ng-repeat="header in csv.result[0] track by $index" data-ng-if="rulesMap[$index]">
+                            <div class="th" >
+                                <span class="label label-info">
+                                    {{'importRules:order.'+ rulesMap[$index] | i18next}}
+                                </span>
+                            </div>
+                        </th>
+                        <th class="col-sm-1">
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="items in csv.result track by $index" >
+                        <td data-ng-repeat="item in items" data-ng-if="rulesMap[$index]">{{item}}</td>
+                        <td>
+                            <a class="btn btn-xs btn-danger" data-ng-if="$index > 0"
+                               data-ng-click="deleteRow(item.id, $index)">
+                                <span class="ti-trash"></span>
+                                <span data-ng-i18next="global:ui.button.remove"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.heading.platformSource"></div>
+                        </th>
+                        <!--<th>-->
+                            <!--<div class="th" data-ng-i18next="wms:ui.label.originalFileName"></div>-->
+                        <!--</th>-->
+                        <!--<th>-->
+                            <!--<div class="th" data-ng-i18next="wms:ui.label.filePath"></div>-->
+                        <!--</th>-->
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.status"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.heading.member"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="global:ui.label.message"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.createdTime"></div>
+                        </th>
+                       <th>
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in currentPageItems track by $index">
+                        <td>{{platformSourceMap[item.platformSourceId].name}}</td>
+                        <!--<td>{{item.originalFileName}}</td>-->
+                        <!--<td>{{item.filePath}}</td>-->
+                        <td>
+                            <span class="label"
+                                  data-ng-if="item.status >= 0"
+                                  data-ng-class="{'label-info':item.status == 0,
+                                                                'label-success':item.status == 1,
+                                                                'label-danger':item.status == 2}">
+                                {{'wms:ui.orderUploadStatus.'+ item.status | i18next}}</span>
+                        </td>
+                        <td>
+                            <span data-ng-show="item.memberId">{{memberMap[item.memberId].name}}</span>
+                            <span data-ng-show="!item.memberId">{{username}}</span>
+                        </td>
+                        <td>{{item.message}}</td>
+                        <td>{{item.created}}</td>
+                        <td>
+                            <!--<a href="#/wms/platform_order_upload_detail?id={{item.id}}"-->
+                               <!--class="btn btn-xs btn-line-primary">-->
+                                <!--<span class="ti-eye"></span>-->
+                                <!--<span data-ng-i18next="global:ui.label.detail"></span>-->
+                            <!--</a>-->
+                            <!--<span class="space"></span>-->
+
+                            <a class="btn btn-xs btn-danger"
+                               data-ng-click="delete(item.id, $index)">
+                                <span class="ti-trash"></span>
+                                <span data-ng-i18next="global:ui.button.remove"></span>
+                            </a>
+                            <span class="space"></span>
+                            <a class="btn btn-xs btn-success text-right" data-ng-if="item.status != 1"
+                               data-ng-click="deal(item)">
+                                <span class="glyphicon glyphicon-repeat"></span>
+                                <span data-ng-i18next="wms:ui.button.dealAgain"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                {{'global:ui.pagination.showing' | i18next}}
+                                {{filteredItems.length}}/{{items.length}}
+                                {{'global:ui.pagination.entries' | i18next}}
+                                <select data-ng-model="searchOption.numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()">
+                                </select>
+                                {{'global:ui.pagination.entries' | i18next}}
+                                {{'global:ui.pagination.perPage' | i18next}}
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="filteredItems.length"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="searchOption.numPerPage"
+                                            rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </section>
+
+</div>

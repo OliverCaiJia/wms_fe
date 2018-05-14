@@ -1,0 +1,49 @@
+<form class="form-horizontal" data-ng-submit="add(logisticCompany)">
+    <div class="form-group">
+        <label class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.name"></label>
+        <div class="col-sm-8">
+            <select class="form-control" id="logisticCompany.usableLogisticCompanyId"
+                    data-ng-model="logisticCompany.usableLogisticCompanyId"
+                    data-ng-options="item.id as item.name for item in usableLogisticCompanyMap">
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="logisticCompany.customerName" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.customerName"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="logisticCompany.customerName" data-ng-model="logisticCompany.customerName" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="logisticCompany.customerPwd" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.customerPwd"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="logisticCompany.customerPwd" data-ng-model="logisticCompany.customerPwd" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="logisticCompany.sendSite" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.sendSite"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="logisticCompany.sendSite" data-ng-model="logisticCompany.sendSite" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="logisticCompany.monthCode" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.monthCode"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="logisticCompany.monthCode" data-ng-model="logisticCompany.monthCode" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="logisticCompany.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!logisticCompany.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

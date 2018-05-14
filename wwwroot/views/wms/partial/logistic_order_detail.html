@@ -1,0 +1,184 @@
+<div class="panel-body">
+    <div class="form-horizontal">
+        <div class="row col-sm-6 ">
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.logisticSn"></label>
+                <div class="col-sm-9 checkbox">
+                    <div class="input-group" >
+                        <span>{{pickOrder.id}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.consigneeName"></label>
+                <div class="col-sm-9 checkbox">
+                    <div class="input-group" >
+                        <span>{{logisticOrder.consigneeName}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.province-city-district"></label>
+                <div class="col-sm-9 checkbox">
+                    <div class="col-sm-9 checkbox">
+                        <span data-ng-repeat="province in provinceList" data-ng-if="logisticOrder.province == province.id">{{province.name}}</span>
+                        <span data-ng-repeat="city in cityList" data-ng-if="logisticOrder.city == city.id">{{city.name}}</span>
+                        <span data-ng-repeat="district in districtList" data-ng-if="logisticOrder.district == district.id">{{district.name}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.consigneeAddress"></label>
+                <div class="col-sm-9 checkbox">
+                    <div class="input-group" >
+                        <span>{{logisticOrder.consigneeAddress}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.phoneNumber"></label>
+                <div class="col-sm-9 checkbox">
+                    <div class="input-group" >
+                        <span>{{logisticOrder.phoneNumber}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.goodsCharge"></label>
+                <div class="col-sm-9 checkbox">
+                    <div class="input-group" >
+                        <span>{{logisticOrder.goodsCharge}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{'wms:ui.label.comment' | i18next}}: </label>
+                <div class="col-sm-9 checkbox">
+                    <span data-ng-if="pickOrder.status >= 3">{{logisticOrder.comment}}&nbsp;</span>
+                    <form data-ng-if="pickOrder.status < 3" data-ng-submit="updateComment(logisticOrder, 'comment')" >
+                        <a href="javascript:;" data-ng-show="!logisticOrder[logisticOrder.id+'comment']"
+                           data-ng-click="switchNode(logisticOrder,'comment',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            {{logisticOrder.comment}}&nbsp;
+                            <span class="ti-pencil"></span>
+                        </a>
+                        <span data-ng-show="logisticOrder[logisticOrder.id+'comment']">
+                                <input id="inputComment" data-ng-model="logisticOrder.comment" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateComment(logisticOrder, 'comment')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(logisticOrder,'comment',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                    </form>
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <div class="row col-sm-6 ">
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.heading.logisticCompany"></label>
+                <div class="col-sm-9 checkbox">
+                    <span data-ng-if="!showLogisticOrderEdit || pickOrder.status >= 3">
+                        {{logisticCompanyMap[logisticOrder.logisticCompanyId].name}}&nbsp;</span>
+                    <form data-ng-if="pickOrder.status < 3" data-ng-show="showLogisticOrderEdit"
+                          data-ng-submit="updateLogisticCompanyId(logisticOrder, 'logisticCompanyId')">
+                        <span data-ng-if="!logisticOrder.logisticCompanyId && !logisticOrder[logisticOrder.id+'logisticCompanyId']">
+                            {{'wms:message.validationError.logisticNotNull' | i18next}}
+                        </span>
+                        <a href="javascript:;"
+                           data-ng-show="!logisticOrder[logisticOrder.id+'logisticCompanyId']"
+                           data-ng-click="switchNode(logisticOrder,'logisticCompanyId',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            {{logisticCompanyMap[logisticOrder.logisticCompanyId].name}}
+                            <span class="ti-pencil"></span>
+                        </a>
+                        <span data-ng-show="logisticOrder[logisticOrder.id+'logisticCompanyId']">
+                            <select class="ui-class" id="inputLogisticCompanyId"
+                                    data-ng-model="logisticOrder.logisticCompanyId"
+                                    data-ng-options="freight.logisticCompanyId as logisticCompanyMap[freight.logisticCompanyId].name
+                                        for freight in sellerFreightGroupList">
+                            </select>
+                            <a href="javascript:;" class="ti-save"
+                               data-ng-click="updateLogisticCompanyId(logisticOrder, 'logisticCompanyId')"
+                               title="{{'global:ui.button.save' | i18next}}"></a>
+                            <a href="javascript:;" class="ti-close"
+                               data-ng-click="switchNode(logisticOrder,'logisticCompanyId',false)"
+                               title="{{'global:ui.button.cancel' | i18next}}"></a>
+                        </span>
+                    </form>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.expressSn"></label>
+                <div class="col-sm-9 checkbox">
+                    {{logisticOrder.expressSn}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.heading.container"></label>
+                <div class="col-sm-9 checkbox">
+                    {{containerMap[logisticOrder.containerId].name}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.totalWeight"></label>
+                <div class="col-sm-9 checkbox">
+                    {{logisticOrder.totalWeight}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.packingCharge"></label>
+                <div class="col-sm-9 checkbox">
+                    <span>{{logisticOrder.packingCharge}}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.logisticCharge"></label>
+                <div class="col-sm-9 checkbox">
+                    {{logisticOrder.logisticCharge}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.status"></label>
+                <div class="col-sm-9 checkbox">
+                    <div class="input-group" data-ng-if="pickOrder.status" >
+                        <span  data-ng-class="{ 'label label-danger': pickOrder.status == 1,
+                                       'label label-warning': pickOrder.status == 2,
+                                       'label label-success': pickOrder.status == 3}">
+                            {{'wms:ui.logisticOrderStatus.'+pickOrder.status | i18next}}</span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

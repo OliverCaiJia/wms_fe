@@ -1,0 +1,189 @@
+<div class="col-xs-6" data-ng-if="!sellerGoods.isLocked">
+    <div class="panel panel-info">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.sellerGoodsList"></span>
+        </div>
+        <div class="panel-body" >
+            <div class="row ">
+                <div class="form-group col-sm-12">
+                    <form>
+                        <input type="text" class="form-control"
+                               placeholder="{{'global:ui.button.search' | i18next}}{{'wms:ui.heading.goods' | i18next}}"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+            <div class="table-responsive" >
+                <table class="table table-bordered table-striped ">
+                    <thead>
+                    <tr class="info">
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.heading.goods"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.barCode"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.price"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in filteredSellerGoodsList track by $index"
+                        data-ng-if="item.id && !goodsGroupRefGoodsMap[item.id]">
+                        <td>{{$index+1}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.barCode}}</td>
+                        <td>{{item.price}}</td>
+                        <td>
+                            <a href="javascript:;" data-ng-click="addComboGoods(item.id)"
+                               data-ng-if="!sellerGoods.isLocked"
+                               class="btn btn-sm btn-primary">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                <span data-ng-i18next="global:ui.button.add"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <footer class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                            <span>
+                                {{'global:ui.pagination.showing' | i18next}}
+                                {{filteredSellerGoodsList.length}}/{{selectSellerGoodsList.length}}
+                                {{'global:ui.pagination.entries' | i18next}}
+                            </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+
+    </div>
+</div>
+
+<div data-ng-class="{'col-xs-6':!sellerGoods.isLocked,'col-xs-12':sellerGoods.isLocked}">
+    <div class="panel panel-success">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.sellerGoodsGroup"></span><span data-ng-i18next="global:ui.label.detail"></span>
+        </div>
+        <div class="panel-body">
+            <div class="row ">
+                <div class="col-sm-12 form-group checkbox">
+                            <span>
+                                {{'wms:ui.label.existingComboGoodsNumber' | i18next}} : {{sellerComboGoodsList | calTotalGoodsNumber}}
+                            </span>
+                    <span class="pull-right" data-ng-if="sellerGoods.isLocked">
+                        <i class="fa fa-lock"></i>
+                        {{'wms:ui.label.locked' | i18next}}
+                    </span>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                    <tr class="success">
+                        <th><div class="th">#</div></th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.heading.goods"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.goodsNumber"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.price"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in sellerComboGoodsList track by $index" data-ng-if="!item.isDelete" >
+                        <td>{{$index+1}}</td>
+                        <td>
+                            <div>{{sellerGoodsMap[item.sellerGoodsId].name}}</div>
+                            <div>{{sellerGoodsMap[item.sellerGoodsId].barCode}}</div>
+                        </td>
+
+                        <td>
+                            <div data-ng-if="!sellerGoods.isLocked" class="input-group">
+                                                <span class="btn btn-default input-group-addon"
+                                                      data-ng-click="changeComboGoodsNumber(item,-1)">
+                                                    <i class="ti-minus"></i></span>
+                                <input type="text" class="form-control"
+                                       data-ng-model="item.goodsNumber"
+                                       data-ng-blur="updateGoodsNumber(item,'goodsNumber')">
+                                <span class="btn btn-default input-group-addon"
+                                      data-ng-click="changeComboGoodsNumber(item,1)">
+                                                    <i class="ti-plus"></i></span>
+                            </div>
+                            <span data-ng-if="sellerGoods.isLocked">{{item.goodsNumber}}</span>
+                        </td>
+
+                        <td>{{sellerGoodsMap[item.sellerGoodsId].price}}</td>
+                        <td>
+                            <a href="javascript:;" data-ng-click="comboGoodsDelete(item)"
+                               data-ng-if="!sellerGoods.isLocked"
+                               class="btn btn-sm btn-danger">
+                                <span class="ti-trash"></span>
+                                <span data-ng-i18next="global:ui.button.remove"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <footer class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                            <span>
+                                {{'wms:ui.label.existingGroupGoods' | i18next}} : {{sellerComboGoodsList.length}}
+                            </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                    </div>
+                </div>
+            </footer>
+            <div class="divider divider-dashed divider-xs pull-in"></div>
+            <div class="table-filters">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p><strong>{{'wms:ui.label.totalPrice' | i18next}}</strong>
+                            <strong><span>{{totalPrice | number:2}}</span></strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="alert alert-danger " data-ng-if="totalPrice && sellerGoods.price != totalPrice">
+                    <span data-ng-i18next="wms:ui.label.comboPrice"></span>
+                    <strong> {{sellerGoods.price | number:2}} </strong>
+
+                    <a href="javascript:;" class="btn btn-sm btn-primary"
+                       data-ng-click="syncSellerGoodsPrice(sellerGoods,totalPrice)">
+                        <span class="fa fa-refresh"></span>
+                        {{'global:ui.button.sync' | i18next}} {{totalPrice | number:2}}
+                        {{'global:ui.label.to' | i18next}}{{'wms:ui.label.comboPrice' | i18next}}
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>

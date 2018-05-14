@@ -1,0 +1,43 @@
+<form class="form-horizontal" data-ng-submit="add(goodsEncode)" data-ng-if="sellerGoods.id">
+    <a class="glyphicon glyphicon-remove pull-right"
+       title="{{'global:ui.button.cancel' | i18next}}"
+       data-ng-click="switchCollapse(createGoodsEncode)">
+    </a>
+    <div class="row form-group">
+        <label for="goodsEncode.barCode" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.barCode"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="goodsEncode.barCode" readonly data-ng-model="sellerGoods.barCode" />
+        </div>
+    </div>
+    <div class="row form-group">
+        <label for="goodsEncode.batchNumber" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.batchNumber"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="goodsEncode.batchNumber" data-ng-model="goodsEncode.batchNumber" />
+        </div>
+    </div>
+    <div class="row form-group" data-ng-if="sellerGoods.id">
+        <label for="goodsEncode.goodsCode" class="col-sm-2 control-label">
+            {{'wms:ui.statusEnum.encodeType.'+sellerGoods.encodeType | i18next}}
+        </label>
+        <div class="col-sm-6">
+            <input class="form-control" id="goodsEncode.goodsCode"  data-ng-model="goodsEncode.goodsCode" />
+        </div>
+        <div class="col-sm-2">
+            <a href="javascript:;" class="btn btn-primary btn-w-md" data-ng-click="autoGenerateEncode()">
+                {{'wms:ui.label.autoReceive' | i18next}}
+                {{'wms:ui.statusEnum.encodeType.'+sellerGoods.encodeType | i18next}}
+            </a>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="goodsEncode.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!goodsEncode.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

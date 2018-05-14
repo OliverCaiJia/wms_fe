@@ -1,0 +1,120 @@
+<div class="page" data-ng-controller="WmsOrderDetailCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.order"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/order_list" class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+        
+                <div class="form-group">
+                    <label for="order.id" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.id"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.id" readonly data-ng-model="order.id" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.orderSn" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.orderSn"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.orderSn" readonly data-ng-model="order.orderSn" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.platformSourceId" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.platformSourceId"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.platformSourceId" readonly data-ng-model="order.platformSourceId" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.sellerId" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.sellerId"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.sellerId" readonly data-ng-model="order.sellerId" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.consigneeName" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.consigneeName"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.consigneeName" readonly data-ng-model="order.consigneeName" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.consigneeAddress" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.consigneeAddress"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.consigneeAddress" readonly data-ng-model="order.consigneeAddress" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.phoneNumber" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.phoneNumber"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.phoneNumber" readonly data-ng-model="order.phoneNumber" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.comment" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.comment"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.comment" readonly data-ng-model="order.comment" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.buyerMessage" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.buyerMessage"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.buyerMessage" readonly data-ng-model="order.buyerMessage" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.paidPrice" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.paidPrice"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.paidPrice" readonly data-ng-model="order.paidPrice" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.totalPrice" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.totalPrice"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.totalPrice" readonly data-ng-model="order.totalPrice" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.identityCard" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.identityCard"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.identityCard" readonly data-ng-model="order.identityCard" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.identityCardFront" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.identityCardFront"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.identityCardFront" readonly data-ng-model="order.identityCardFront" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.identityCardContrary" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.identityCardContrary"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.identityCardContrary" readonly data-ng-model="order.identityCardContrary" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order.status" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.status"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="order.status" readonly data-ng-model="order.status" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

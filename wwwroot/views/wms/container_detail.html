@@ -1,0 +1,77 @@
+<div class="page" data-ng-controller="WmsContainerDetailCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.container"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/container_list" class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="container.barCode" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.barCode"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="container.barCode" readonly data-ng-model="container.barCode" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="container.name" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.name"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="container.name" readonly data-ng-model="container.name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="container.length" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.length"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="container.length" readonly data-ng-model="container.length" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="container.width" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.width"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="container.width" readonly data-ng-model="container.width" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="container.height" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.height"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="container.height" readonly data-ng-model="container.height" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="container.logisticRequire" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.logisticRequire"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="container.logisticRequire" readonly data-ng-model="container.logisticRequire" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="container.image" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.image"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="container.image" readonly data-ng-model="container.image" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="container.packingCharge" class="col-sm-4 control-label"
+                          data-ng-i18next="wms:ui.label.packingCharge"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="container.packingCharge" readonly data-ng-model="container.packingCharge" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="container.inventory" class="col-sm-4 control-label"
+                          data-ng-i18next="wms:ui.label.inventory"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="container.inventory" readonly data-ng-model="container.inventory" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

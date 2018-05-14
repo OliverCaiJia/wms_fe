@@ -1,0 +1,87 @@
+<div class="page" data-ng-controller="WmsLogisticOrderRefExpressCtrl">
+
+    <section class="panel panel-default">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.label.logisticSnRefExpressSn"></span>
+        </strong></div>
+        <div class="panel-body">
+
+            <form class="form-horizontal" data-ng-submit="getLogisticOrder()">
+                <div class="form-group">
+                    <label for="logisticId" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.logisticSn"></label>
+                    <div class="col-sm-6 ">
+                        <input class="form-control" id="logisticId" data-ng-model="logisticOrderId"
+                               autofocus
+                               data-ng-i18next="[placeholder]wms:ui.label.logisticSn" />
+                    </div>
+                    <div class="col-sm-2 ">
+                        <button class="btn btn-primary btn-md form-control" data-ng-if="!logisticOrder.id">
+                            <span class="glyphicon glyphicon-search"></span>
+                            <span data-ng-i18next="global:ui.button.search"></span>
+                        </button>
+
+                    </div>
+                </div>
+                <div class="form-group" data-ng-show="logisticOrder.consigneeName">
+                    <label for="logisticOrder.consigneeName" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.consigneeName"></label>
+                    <div class="col-sm-6">
+                        <input class="form-control" id="logisticOrder.consigneeName" readonly
+                               data-ng-model="logisticOrder.consigneeName" />
+                    </div>
+                </div>
+                <div class="form-group" data-ng-show="logisticOrder.consigneeAddress">
+                    <label for="logisticOrder.consigneeAddress" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.consigneeAddress"></label>
+                    <div class="col-sm-6">
+                        <input class="form-control" id="logisticOrder.consigneeAddress" readonly
+                               data-ng-model="logisticOrder.consigneeAddress" />
+                    </div>
+                </div>
+            </form>
+            <form class="form-horizontal" data-ng-submit="checkPhoneNumber()"  data-ng-show="isOpenNumberFocus"  >
+                <div class="form-group" data-ng-show="isOpenNumberFocus">
+                    <label for="last4PhoneNumber" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.last4PhoneNumber"></label>
+                    <div class="col-sm-6">
+                        <input class="form-control" id="last4PhoneNumber" data-ng-keyup="checkPhoneNumber()"
+                               data-ng-model="expressOrder.last4PhoneNumber" />
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-horizontal" data-ng-submit="updateExpressOrder()" data-ng-show="showInputExpressSn"  >
+                <div class="form-group" >
+                    <label for="inputExpressSn" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.expressSn"></label>
+                    <div class="col-sm-6">
+                        <input class="form-control" id="inputExpressSn" data-ng-model="logisticOrder.expressSn" />
+                    </div>
+                </div>
+                <div class="form-group"  >
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <button class="btn btn-primary btn-w-md">
+                            <span class="fa fa-save"></span>
+                            <span data-ng-i18next="global:ui.button.save"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="panel panel-default">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="global:ui.heading.moreAction"></span>
+        </strong></div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li>
+                    <a class="btn" href="#/wms/logistic_order_import_list"
+                       data-ng-i18next="wms:ui.label.logisticSnRefExpressSnList"></a>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,57 @@
+<form class="form-horizontal" data-ng-submit="add(inventoryTransfer)">
+    <div class="form-group">
+        <label for="inventoryTransfer.responseSeller" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.responseSeller"></label>
+        <div class="col-sm-8">
+            <select class="form-control" id="inventoryTransfer.responseSeller"
+                    data-ng-model="inventoryTransfer.responseSeller"
+                    data-ng-options="seller.id as seller.name for seller in sellerMap" >
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.voucher"></label>
+        <div class="col-sm-8 checkbox">
+            <span><input type="file" data-nv-file-select="" data-uploader="uploader"/></span>
+            <div class="row" data-ng-repeat="queueImage in uploader.queue">
+                <div data-ng-show="uploader.isHTML5" data-ng-thumb="{file: queueImage._file, width: 300}"></div>
+                <div data-ng-show="uploader.isHTML5" data-nowrap>
+                    <p>
+                        {{ queueImage.file.size/1024/1024|number:2 }} MB
+                    </p>
+                    <div class="progress" style="margin-bottom: 0;">
+                        <div class="progress-bar" role="progressbar" data-ng-style="{ 'width': queueImage.progress + '%' }"></div>
+                    </div>
+                    <p>
+                        <span data-ng-show="queueImage.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                        <span data-ng-show="queueImage.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                        <span data-ng-show="queueImage.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                    </p>
+                    <p>
+                        <span data-ng-if="(queueImage.file.size/1024/1024) > 2">{{'wms:ui.label.moreThan2MB' | i18next}}</span>
+
+                        <button type="button" class="btn btn-success" data-ng-click="queueImage.upload()"
+                                data-ng-show="(queueImage.file.size/1024/1024) <= 2"
+                                data-ng-disabled="(queueImage.file.size/1024/1024) > 2 || queueImage.isReady || queueImage.isUploading || queueImage.isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> <span data-ng-i18next="global:ui.button.upload"></span>
+                        </button>
+                        <span class="space"></span>
+                        <button type="button" class="btn btn-danger" data-ng-click="queueImage.remove()">
+                            <span class="glyphicon glyphicon-trash"></span> <span data-ng-i18next="global:ui.button.remove"></span>
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="inventoryTransfer.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!inventoryTransfer.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

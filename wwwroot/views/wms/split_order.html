@@ -1,0 +1,238 @@
+<div class="page page-table" data-ng-controller="WmsSplitOrderCtrl">
+    <div data-ng-include="'views/wms/order_edit.html'"></div>
+    <section class="panel panel-default table-dynamic" data-ng-if="orderGoodsListNoSplit.length">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.label.waitToSplitOrder"></span>
+            <span>({{order.orderSn}})</span>
+
+            <span class="space"></span>
+            <buttonn href="javascript:;" class="btn btn-danger"
+               data-ng-if="order.status == 1"
+               data-ng-click="withdraw()" >{{'wms:ui.label.withdrawAudit' | i18next}}</buttonn>
+            <a href="#/wms/order_list_verify" class="ti-arrow-left pull-right"></a>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4 data-ng-if="order.status == 1 || order.status == 2 ">
+                        {{'wms:ui.tips.selectSplitOrderGoods' | i18next}}
+                    </h4>
+                    <button class="btn btn-success btn-lg"
+                            data-ng-if="showSplitOrderButton && (order.status == 1 || order.status == 2)"
+                            data-ng-click="splitOrder(orderGoodsIdMap)">
+                        <span class="glyphicon glyphicon-ok"></span>
+                        <span data-ng-i18next="wms:ui.label.performSplit"></span>
+                    </button>
+                    <span class="space"></span>
+
+                    <span data-ng-if="showSplitOrderButton && (order.status == 1 || order.status == 2)">
+                        <label data-ng-i18next="wms:ui.heading.logisticCompany"></label>:
+                        <label class="ui-radio" data-ng-repeat="freight in sellerFreightGroupMap" >
+                            <input name="logisticCompanyId" type="radio"
+                                   data-ng-model="order.logisticCompanyId" value="{{freight.logisticCompanyId}}">
+                            <span>{{logisticCompanyMap[freight.logisticCompanyId].name}}</span>
+                        </label>
+                    </span>
+
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-responsive" >
+            <thead>
+            <tr>
+                <th><div class="th">#</div></th>
+                <td class="col-sm-3">
+                    <label class="th">
+                        <input class="checkbox1" type="checkbox"
+                               data-ng-model="checkAll"
+                               data-ng-if="order.status == 1 || order.status == 2"
+                               data-ng-click="checkAllOrderGoods(checkAll)">
+                        <strong data-ng-i18next="wms:ui.heading.goods"></strong>
+
+                    </label>
+                </td>
+                <th class="col-sm-2">
+                    <div class="th" data-ng-i18next="wms:ui.label.isCombo"></div>
+                </th>
+                <th class="col-sm-2">
+                    <div class="th" data-ng-i18next="wms:ui.label.encodeType"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.goodsNumber"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.inventory"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="global:ui.label.notes"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody data-ng-repeat="item in orderGoodsListNoSplit track by $index" data-ng-if="!item.isSplit">
+            <tr>
+                <td><strong>{{$index+1}}</strong></td>
+                <td>
+                    <label>
+                        <input class="checkbox1" type="checkbox" data-ng-checked="orderGoodsIdMap[item.id]"
+                               data-ng-click="checkOrderGoods(item.id)"
+                               data-ng-if="order.status > 0 && !item.isSplit"/>
+                        {{item.goodsName}}
+                    </label>
+                </td>
+                <td><span class="label label-info"  data-ng-i18next="global:ui.button.yes"
+                               data-ng-if="sellerGoodsMap[item.sellerGoodsId].isCombo"></span>
+                    <span data-ng-i18next="global:ui.button.no" data-ng-if="!sellerGoodsMap[item.sellerGoodsId].isCombo"></span>
+                </td>
+                <td>{{encodeTypeMap[sellerGoodsMap[item.sellerGoodsId].encodeType]}}</td>
+                <td>{{item.goodsNumber}}</td>
+                <td>
+                    <span>{{sellerGoodsMap[item.sellerGoodsId].inventory}}</span>
+                </td>
+                <td>
+                    <span class="color-danger"
+                          data-ng-if="item.goodsNumber > sellerGoodsMap[item.sellerGoodsId].inventory">
+                        {{'wms:ui.heading.sellerGoods' | i18next}}{{'wms:ui.tips.inventoryShortage' | i18next}}
+                    </span>
+                    <span data-ng-if="item.isSplit"
+                          data-ng-i18next="wms:ui.tips.orderIsSplit"></span>
+                </td>
+            </tr>
+            <tr data-ng-repeat="comboGoods in allComboSellerGoodsMap[item.sellerGoodsId] track by $index"
+                class="active"
+                data-ng-if="sellerGoodsMap[item.sellerGoodsId].isCombo">
+                <td></td>
+                <td colspan="2">
+                    {{sellerGoodsMap[comboGoods.sellerGoodsId].name}}
+                    <span class="space"></span>
+                    * {{comboGoods.goodsNumber}}
+                </td>
+                <td>{{encodeTypeMap[sellerGoodsMap[comboGoods.sellerGoodsId].encodeType]}}</td>
+                <!--<td>{{'wms:ui.label.withinNumber' | i18next}} : {{comboGoods.goodsNumber}}</td>-->
+                <td colspan="3"></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </section>
+    <section class="panel panel-default table-dynamic" data-ng-if="orderPickOrderRefList.length" >
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.label.finishSplitOrder"></span>
+            <span>({{order.orderSn}})</span>
+            <a href="#/wms/order_list_verify" class="ti-arrow-left pull-right"></a>
+        </div>
+        <table class="table table-bordered table-responsive" data-ng-repeat="ref in orderPickOrderRefList">
+            <thead>
+            <tr>
+                <td colspan="2" data-ng-if="pickOrderMap[ref.pickOrderId]">
+                    <strong>{{'wms:ui.label.logisticSn' | i18next}}:
+                        {{pickOrderMap[ref.pickOrderId].id}}</strong>
+
+                    <span class="space"></span>
+                    <strong >
+                        {{'wms:ui.label.status' | i18next}}:
+                        <span data-ng-if="pickOrderMap[ref.pickOrderId].status"
+                              data-ng-class="{ 'label label-info': pickOrderMap[ref.pickOrderId].status == 1,
+                                               'label label-warning': pickOrderMap[ref.pickOrderId].status == 2,
+                                               'label label-success': pickOrderMap[ref.pickOrderId].status == 3}">
+                        {{'wms:ui.logisticOrderStatus.'+pickOrderMap[ref.pickOrderId].status | i18next}}</span>
+                    </strong>
+                </td>
+                <td>
+                    <div data-ng-if="pickOrderMap[ref.pickOrderId].status == 1 && !pickOrderMap[ref.pickOrderId].pickerId">
+                        <a href="javascript:;" data-ng-show="!pickOrderMap[ref.pickOrderId][pickOrderMap[ref.pickOrderId].id+'logisticCompanyId']"
+                           data-ng-click="switchNode(pickOrderMap[ref.pickOrderId],'logisticCompanyId',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            {{logisticCompanyMap[pickOrderMap[ref.pickOrderId].logisticCompanyId].name}}
+                            <span class="ti-pencil"></span>
+                        </a>
+                        <span data-ng-show="pickOrderMap[ref.pickOrderId][pickOrderMap[ref.pickOrderId].id+'logisticCompanyId']">
+                                <select class="ui-class" id="inputLogisticCompanyId"
+                                        data-ng-model="pickOrderMap[ref.pickOrderId].logisticCompanyId"
+                                        data-ng-options="freight.logisticCompanyId as logisticCompanyMap[freight.logisticCompanyId].name
+                                        for freight in sellerFreightGroupMap">
+                                </select>
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateLogisticCompanyId(pickOrderMap[ref.pickOrderId], 'logisticCompanyId')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(pickOrderMap[ref.pickOrderId],'logisticCompanyId',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                    </div>
+                    <div data-ng-if="pickOrderMap[ref.pickOrderId].status > 1 || pickOrderMap[ref.pickOrderId].pickerId">
+                        {{logisticCompanyMap[pickOrderMap[ref.pickOrderId].logisticCompanyId].name}}
+                    </div>
+                </td>
+                <td>{{pickOrderMap[ref.pickOrderId].expressSn}}</td>
+                <td>
+                    <a href="javascript:;" class="btn btn-sm btn-danger pull-right"
+                       data-ng-click="pickOrderWithdraw(ref.pickOrderId)"
+                       data-ng-if="pickOrderMap[ref.pickOrderId].status == 1 && !pickOrderMap[ref.pickOrderId].pickerId" >
+                        <span class="glyphicon glyphicon-repeat"></span>
+                        {{'wms:ui.button.withdraw' | i18next}}</a>
+                </td>
+            </tr>
+            <tr>
+                <th class="col-sm-2"><div class="th">#</div></th>
+                <th class="col-sm-3">
+                    <div class="th" data-ng-i18next="wms:ui.heading.goods"></div>
+                </th>
+                <th class="col-sm-2">
+                    <div class="th" data-ng-i18next="wms:ui.label.encodeType"></div>
+                </th>
+                <th class="col-sm-2">
+                    <div class="th" data-ng-i18next="wms:ui.label.goodsNumber"></div>
+                </th>
+                <th class="col-sm-5">
+                    <div class="th" data-ng-i18next="global:ui.label.notes"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody data-ng-repeat="item in pickOrderGoodsMap[ref.pickOrderId] track by $index"
+                   data-ng-if="!pickOrderGoodsMap[item.sellerGoodsId]">
+            <tr>
+                <td>
+                    {{$index+1}}
+                </td>
+                <td>{{sellerGoodsMap[item.sellerGoodsId].name}}</td>
+                <td>{{encodeTypeMap[sellerGoodsMap[item.sellerGoodsId].encodeType]}}</td>
+                <td>{{item.goodsNumber}}</td>
+                <td>
+                    <span data-ng-if="item.goodsNumber > sellerGoodsMap[item.sellerGoodsId].inventory"
+                          class="color-danger"
+                          data-ng-i18next="wms:ui.tips.inventoryShortage"></span>
+                </td>
+            </tr>
+            <tr data-ng-repeat="comboGoods in allComboSellerGoodsMap[item.sellerGoodsId] track by $index"
+                class="active"
+                data-ng-if="sellerGoodsMap[item.sellerGoodsId].isCombo">
+                <td></td>
+                <td>{{sellerGoodsMap[comboGoods.sellerGoodsId].name}}
+                    <span class="space"></span>
+                    * {{comboGoods.goodsNumber}}
+                </td>
+                <td>{{encodeTypeMap[sellerGoodsMap[comboGoods.sellerGoodsId].encodeType]}}</td>
+                <!--<td>{{'wms:ui.label.withinNumber' | i18next}} : {{comboGoods.goodsNumber}}</td>-->
+                <td colspan="4"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="panel-body" data-ng-if="orderGoodsListNoSplit.length == 0">
+            <div class="row">
+                <div class="col-xs-12">
+                    <a href="javascript:;" class="btn btn-primary btn-direction btn-right pull-right "
+                       data-ng-click="getNextVerifyOrder()">
+                        {{'wms:ui.label.nextVerifyOrder' | i18next}}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+</div>

@@ -1,0 +1,79 @@
+<form class="form-horizontal" data-ng-submit="save(location)">
+
+    <div class="form-group" >
+        <label class="col-sm-2 control-label" data-ng-i18next="wms:ui.heading.repositoryName"></label>
+        <div class="col-sm-8">
+            {{repository.name}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="location.name" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.name"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="location.name" data-ng-model="location.name" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="location.locationCode" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.locationCode"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="location.locationCode" data-ng-model="location.locationCode" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label"
+               data-ng-i18next="wms:ui.label.activityBasedClassification"></label>
+        <div class="col-sm-8">
+            <label class="ui-radio" data-ng-repeat="ABC in ABCList" >
+                <input name="ABCList" type="radio" value="{{ABC}}"
+                       data-ng-model="location.activityBasedClassification" ><span>{{ABC}}</span>
+            </label>
+        </div>
+    </div>
+    <div class="form-group" >
+        <label  class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.isEnabled"></label>
+        <div class="col-sm-8">
+            <label class="ui-radio">
+                <input name="radio1" type="radio" value="false" data-ng-checked="!location.disabled">
+                <span data-ng-i18next="wms:ui.enum.true"></span>
+            </label>
+            <label class="ui-radio">
+                <input name="radio1" type="radio" value="true" data-ng-checked="location.disabled">
+                <span data-ng-i18next="wms:ui.enum.false"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label  class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.disabled"></label>
+        <div class="col-sm-8">
+            <label class="ui-switch ui-switch-danger">
+                <input type="checkbox" data-ng-model="location.disabled"><i></i>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group" data-ng-show="location.id">
+        <label  class="col-sm-2 control-label"
+               data-ng-i18next="global:ui.label.createdTime"></label>
+        <div class="col-sm-8">{{location.created}}
+        </div>
+    </div>
+    <div class="form-group" data-ng-show="location.id">
+        <label  class="col-sm-2 control-label"
+               data-ng-i18next="global:ui.label.modifiedTime"></label>
+        <div class="col-sm-8">{{location.modified}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="location.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!location.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

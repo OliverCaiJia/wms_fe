@@ -1,0 +1,70 @@
+<div class="page page-table page-invoice" data-ng-controller="WmsLogisticOrderGoodsListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.label.expressOrderGoods"></span>
+            <a href="#/wms/pick_order_list" class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel panel-body" >
+            <div class="row">
+                <div class="col-sm-4">
+                    <p><strong data-ng-i18next="wms:ui.label.logisticSn"></strong>:
+                        <span>{{pickOrder.id}}</span>
+                    </p>
+                    <p>
+                        <strong data-ng-i18next="wms:ui.label.status"></strong>:
+                        <span data-ng-if="pickOrder.status >= 0"
+                              data-ng-class="{ 'label label-danger': pickOrder.status == 1,
+                                                   'label label-warning': pickOrder.status == 2,
+                                                   'label label-success': pickOrder.status == 3}">
+                            {{'wms:ui.logisticOrderStatus.'+pickOrder.status | i18next}}</span>
+                    </p>
+
+                    <p><strong data-ng-i18next="wms:ui.label.comment"></strong>:
+                        <span>{{logisticOrder.comment}}</span>
+                    </p>
+                </div>
+                <div class="col-sm-8">
+                    <p >
+                        <strong data-ng-i18next="wms:ui.label.consigneeName"></strong>:
+                        <span>{{logisticOrder.consigneeName}}</span>
+                    </p>
+                    <p >
+                        <strong data-ng-i18next="wms:ui.label.consigneeAddress"></strong>:
+                        <span >{{logisticOrder.consigneeAddress | limitTo:20}}
+                                {{logisticOrder.consigneeAddress.length > 20 ? '...' : ''}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                <tr>
+                    <th>
+                        <div class="th" data-ng-i18next="wms:ui.label.image"></div>
+                    </th>
+                    <th>
+                        <div class="th" data-ng-i18next="wms:ui.heading.goods"></div>
+                    </th>
+                    <th>
+                        <div class="th" data-ng-i18next="wms:ui.label.goodsNumber"></div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="item in orderGoodsList track by $index">
+                    <td>
+                        <img class="img-responsive img80_80" data-ng-src="{{goodsMap[item.sellerGoodsId].image}}" alt="" />
+                    </td>
+                    <td>{{goodsMap[item.sellerGoodsId].name}}</td>
+                    <td>{{item.goodsNumber}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+</div>

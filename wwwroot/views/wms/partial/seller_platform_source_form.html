@@ -1,0 +1,65 @@
+<form class="form-horizontal" data-ng-submit="add(sellerPlatformSource)">
+    <a class="glyphicon glyphicon-remove pull-right"
+       title="{{'global:ui.button.cancel' | i18next}}"
+       data-ng-click="switchCollapse(createSellerPlatformSource)">
+    </a>
+    <div class="row form-group col-sm-12">
+        <label for="sellerPlatformSource.platformSourceId" class="col-sm-2 control-label"
+               data-ng-i18next="wms:ui.heading.platformSource"></label>
+        <div class="col-sm-8">
+            <select id="sellerPlatformSource.platformSourceId" class="form-control"
+                    data-ng-model="sellerPlatformSource.platformSourceId"
+                    data-ng-options="platformSource.id as platformSource.name for platformSource in platformSourceMap">
+            </select>
+        </div>
+    </div>
+    <div class="row form-group col-sm-12">
+        <label class="col-sm-2 control-label"
+               data-ng-i18next="wms:ui.label.subscribeService"></label>
+        <div class="col-sm-8">
+            <label class="ui-radio"><input name="subscribeService" type="radio" value="1"
+                                           data-ng-model="sellerPlatformSource.subscribeService">
+                <span>{{'global:ui.button.yes' | i18next}}</span>
+            </label>
+            <label class="ui-radio"><input name="subscribeService" type="radio" value="0"
+                                           data-ng-model="sellerPlatformSource.subscribeService">
+                <span>{{'global:ui.button.no'  | i18next}}</span>
+            </label>
+        </div>
+    </div>
+    <div class="row form-group col-sm-12" data-ng-if="sellerPlatformSource.subscribeService == 0">
+        <label for="sellerPlatformSource.appKey" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.appKey"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="sellerPlatformSource.appKey" data-ng-model="sellerPlatformSource.appKey" />
+        </div>
+    </div>
+    <div class="row form-group col-sm-12" data-ng-if="sellerPlatformSource.subscribeService == 0">
+        <label for="sellerPlatformSource.secret" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.secret"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="sellerPlatformSource.secret" data-ng-model="sellerPlatformSource.secret" />
+        </div>
+    </div>
+    <div class="row form-group col-sm-12" data-ng-if="sellerPlatformSource.subscribeService == 1">
+        <label for="sellerPlatformSource.platformUserId" class="col-sm-2 control-label"
+               data-ng-i18next="wms:ui.label.platformUserId"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="sellerPlatformSource.platformUserId"
+                   data-ng-model="sellerPlatformSource.platformUserId" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-6">
+            <a class="btn btn-default btn-md" data-ng-click="switchCollapse(createSellerPlatformSource)">
+                <span class="glyphicon glyphicon-remove"></span>
+                <span data-ng-i18next="global:ui.button.cancel"></span>
+            </a>
+            <div class="space"></div>
+            <button class="btn btn-primary btn-md ">
+                <span class="ti-save"></span>
+                {{'global:ui.button.save' | i18next}}{{'wms:ui.heading.sellerPlatformSource' | i18next}}
+            </button>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,69 @@
+<div class="page page-table page-invoice" data-ng-controller="WmsGoodsPutawayCtrl">
+
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span data-ng-i18next="wms:ui.label.goodsPutaway"></span>【{{sellerGoods.shelfLocation}}】
+            <a href="#/wms/seller_goods_manage_list?sellerId={{sellerGoods.sellerId}}"
+               data-ng-if="sellerGoods" class="ti-arrow-left pull-right">
+                {{'wms:ui.label.backTo' | i18next}}{{'wms:ui.heading.sellerAvailableGoods' | i18next}}
+            </a>
+        </div>
+
+        <div class="panel-body">
+            <form class="form-horizontal" data-ng-submit="scanShelfLocation()">
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label"
+                            data-ng-if="sellerGoods.id">
+                        <span data-ng-i18next="global:ui.button.scan"></span>
+                        <span data-ng-i18next="wms:ui.label.shelfLocation"></span>
+                    </label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control "
+                               autofocus
+                               id="scanShelfLocationInput"
+                               data-ng-model="shelfLocation" />
+                    </div>
+                </div>
+            </form>
+            <form class="form-horizontal " data-ng-submit="scanGoodsCode()">
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label"
+                            data-ng-if="sellerGoods.id">
+                        {{'global:ui.button.scan' | i18next}}
+                        {{'wms:ui.statusEnum.encodeType.'+ sellerGoods.encodeType | i18next}}
+                    </label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control "
+                               autofocus
+                               id="scanCodeInput"
+                               data-ng-model="goodsCode" />
+                    </div>
+                </div>
+            </form>
+
+            <div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img class="img-responsive" width="100%" data-ng-src="{{sellerGoods.image}}" alt="" />
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="media">
+                            <div class="media-body">
+                                <p>
+                                    <span data-ng-i18next="wms:ui.label.name"></span>
+                                    <strong>{{sellerGoods.name}}</strong>
+                                </p>
+                                <p>
+                                    <span data-ng-i18next="wms:ui.label.barCode"></span>
+                                    <strong>{{sellerGoods.barCode}}</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

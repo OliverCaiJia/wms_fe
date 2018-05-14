@@ -1,0 +1,84 @@
+<div class="page" data-ng-controller="WmsSellerPlatformSourceEditCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.sellerPlatformSource"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <span>({{platformSource.name}})</span>
+            <a href="#/wms/seller_platform_source_list" class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"
+                           data-ng-i18next="wms:ui.label.subscribeService"></label>
+                    <div class="col-sm-8 checkbox">
+                        <label class="ui-radio">
+                            <input name="subscribeService" type="radio" value="1" data-ng-change="updateSubscribeService()"
+                                   data-ng-model="sellerPlatformSource.subscribeService">
+                            <span>{{'global:ui.button.yes' | i18next}}</span>
+                        </label>
+                        <label class="ui-radio">
+                            <input name="subscribeService" type="radio" value="0" data-ng-change="updateSubscribeService()"
+                                   data-ng-model="sellerPlatformSource.subscribeService">
+                            <span>{{'global:ui.button.no'  | i18next}}</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group" data-ng-if="sellerPlatformSource.subscribeService == 0">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.appKey"></label>
+                    <div class="col-sm-8 checkbox">
+                        <form data-ng-submit="updateAppKey(sellerPlatformSource, 'appKey')" >
+                            <a href="javascript:;" data-ng-show="!sellerPlatformSource[sellerPlatformSource.id+'appKey']"
+                               data-ng-click="switchNode(sellerPlatformSource,'appKey',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{sellerPlatformSource.appKey}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="sellerPlatformSource[sellerPlatformSource.id+'appKey']">
+                                <input id="inputAppKey" data-ng-model="sellerPlatformSource.appKey" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateAppKey(sellerPlatformSource, 'appKey')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerPlatformSource,'appKey',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group" data-ng-if="sellerPlatformSource.subscribeService == 0">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.secret"></label>
+                    <div class="col-sm-8 checkbox">
+                        <form data-ng-submit="updateSecret(sellerPlatformSource, 'secret')" >
+                            <a href="javascript:;" data-ng-show="!sellerPlatformSource[sellerPlatformSource.id+'secret']"
+                               data-ng-click="switchNode(sellerPlatformSource,'secret',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{sellerPlatformSource.secret}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="sellerPlatformSource[sellerPlatformSource.id+'secret']">
+                                <input id="inputSecret" data-ng-model="sellerPlatformSource.secret" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateSecret(sellerPlatformSource, 'secret')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerPlatformSource,'secret',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group" data-ng-if="sellerPlatformSource.subscribeService == 1">
+                    <label class="col-sm-4 control-label"
+                           data-ng-i18next="wms:ui.label.platformUserId"></label>
+                    <div class="col-sm-8 checkbox">
+                        <span>{{sellerPlatformSource.platformUserId}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

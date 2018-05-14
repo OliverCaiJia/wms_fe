@@ -1,0 +1,36 @@
+<form class="form-horizontal" data-ng-submit="add(goodsBlacklist)">
+    <div class="form-group">
+        <label for="goodsBlacklist.id" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.id"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="goodsBlacklist.id" data-ng-model="goodsBlacklist.id" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="goodsBlacklist.sellerId" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.sellerId"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="goodsBlacklist.sellerId" data-ng-model="goodsBlacklist.sellerId" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="goodsBlacklist.platformSourceId" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.platformSourceId"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="goodsBlacklist.platformSourceId" data-ng-model="goodsBlacklist.platformSourceId" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="goodsBlacklist.uniqueCode" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.uniqueCode"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="goodsBlacklist.uniqueCode" data-ng-model="goodsBlacklist.uniqueCode" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="goodsBlacklist.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!goodsBlacklist.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,40 @@
+<form class="form-horizontal" data-ng-submit="add(sellerFreightGroup)">
+    <a class="glyphicon glyphicon-remove pull-right"
+       title="{{'global:ui.button.cancel' | i18next}}"
+       data-ng-click="switchCollapse(createSellerFreightGroup)">
+    </a>
+    <div class="row form-group col-sm-12">
+        <label for="sellerFreightGroup.logisticCompanyId" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.heading.logisticCompany"></label>
+        <div class="col-sm-8 checkbox">
+            <select class="col-sm-12" id="sellerFreightGroup.logisticCompanyId"
+                    data-ng-model="sellerFreightGroup.logisticCompanyId"
+                    data-ng-change="getFreightGroupListByLogisticCompanyId()"
+                    data-ng-options="logisticCompany.id as logisticCompany.name for logisticCompany in logisticCompanyMap">
+            </select>
+        </div>
+    </div>
+    <div class="row form-group col-sm-12">
+        <label for="sellerFreightGroup.freightGroupId" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.heading.freightGroup"></label>
+        <div class="col-sm-8 checkbox">
+            <select class="col-sm-12" id="sellerFreightGroup.freightGroupId"
+                    data-ng-model="sellerFreightGroup.freightGroupId"
+                    data-ng-options="freightGroup.id as freightGroup.name for freightGroup in freightGroupList">
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-6">
+            <a class="btn btn-default btn-md" data-ng-click="switchCollapse(createSellerFreightGroup)">
+                <span class="glyphicon glyphicon-remove"></span>
+                <span data-ng-i18next="global:ui.button.cancel"></span>
+            </a>
+            <div class="space"></div>
+            <button class="btn btn-primary btn-md ">
+                <span class="ti-save"></span>
+                {{'global:ui.button.save' | i18next}}{{'wms:ui.heading.sellerFreightGroup' | i18next}}
+            </button>
+        </div>
+    </div>
+</form>

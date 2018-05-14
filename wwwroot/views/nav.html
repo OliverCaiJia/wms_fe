@@ -1,0 +1,294 @@
+<div class="nav-wrapper" data-ng-show="!sellerId">
+    <ul id="nav"
+        class="nav"
+        data-slim-scroll
+        data-collapse-nav
+        data-show-menu-active
+        data-highlight-active>
+        <!--warehouse-->
+
+        <li data-ng-show="username && !sellerId">
+            <a href="">
+                <i class="ti-zoom-in"></i>
+                <span data-ng-i18next="wms:ui.heading.pickGoods"></span>
+            </a>
+            <ul>
+                <li>
+                    <a href="#/wms/logistic_order_pick_search">
+                        <i class="ti-angle-right"></i>
+                        {{'wms:ui.label.scanningExpressPickEntrance' | i18next}}
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#/wms/pick_order_wait_pick_no_print">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.heading.noPrintPickOrderList"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#/wms/pick_order_wait_pick_printed">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.heading.printedPickOrderList"></span>
+                    </a>
+                </li>
+
+                <!--<li>-->
+                    <!--<a href="#/wms/pick_order_wait_pick_list">-->
+                        <!--<i class="ti-angle-right"></i>-->
+                        <!--<span data-ng-i18next="wms:ui.heading.waitPickLogisticOrderList"></span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <li>
+                    <a href="#/wms/pick_order_wait_pack_list">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.heading.waitPackNoScanLogisticOrderList"></span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li data-ng-show="username && !sellerId">
+            <a href="">
+                <i class="ti-zoom-in"></i>
+                <span data-ng-i18next="wms:ui.label.performExpressSn"></span>
+            </a>
+            <ul>
+                <li>
+                    <a href="#/wms/pick_order_list">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.heading.pickOrder"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li data-ng-show="username && !sellerId">
+            <a href="">
+                <i class="ti-gift"></i>
+                <span data-ng-i18next="wms:ui.heading.packGoods"></span>
+            </a>
+            <ul>
+                <li>
+                    <a href="#/wms/express_order_pack">
+                        <i class="ti-angle-right"></i>
+                        {{'wms:ui.label.scanningExpressPackEntrance' | i18next}}
+                    </a>
+                </li>
+                <li>
+                    <a href="#/wms/pick_order_wait_delivery_list">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.heading.packagedOrderList"></span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li data-ng-show="username && !sellerId">
+            <a href="">
+                <i class="ti-package"></i>
+                <span data-ng-i18next="wms:ui.heading.prepackGoods"></span>
+            </a>
+            <ul>
+                <li>
+                    <a href="#/wms/print_select_seller">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.label.printExpressOrder"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li data-ng-show="username && !sellerId">
+            <a href="">
+                <i class="ti-zoom-in"></i>
+                <span data-ng-i18next="wms:ui.heading.expressAction"></span>
+            </a>
+            <ul>
+                <li>
+                    <a href="#/wms/express_order_list">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.label.exportExpressOrder"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/wms/express_order_import">
+                        <i class="ti-angle-right"></i>
+                        {{'wms:ui.label.importRefExpress' | i18next}}</a>
+                </li>
+                <li>
+                    <a href="#/wms/logistic_order_import_list">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.label.logisticSnRefExpressSnList"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/wms/logistic_order_ref_express">
+                        <i class="ti-angle-right"></i>
+                        {{'wms:ui.label.logisticSnRefExpressSn' | i18next}}
+                    </a>
+                </li>
+                <li>
+                    <a href="#/wms/pick_order_list">
+                        <i class="ti-angle-right"></i>
+                        {{'wms:ui.heading.expressOrder' | i18next}}
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li data-ng-show="username && !sellerId">
+            <a href="javascript:;">
+                <i class="fa fa-table"></i>
+                <span data-ng-i18next="wms:ui.label.warehouseGoodsManage"></span>
+            </a>
+            <ul>
+                <li data-ng-show="!sellerId">
+                    <a href="#/wms/container_list">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.heading.containerList"></span>
+                    </a>
+                </li>
+                <li data-ng-show="!sellerId" data-ng-repeat="item in sellerList">
+                    <a href="#/wms/seller_goods_manage_list?sellerId={{item.id}}">
+                        <i class="ti-angle-right"></i>
+                        【{{item.name}}】
+                        <span data-ng-i18next="wms:ui.heading.seller"></span>
+                    </a>
+                </li>
+                <li data-ng-show="!sellerId">
+                    <a href="#/wms/goods_upload_images_list">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.label.waitToUploadGoodsImagesList"></span>
+                    </a>
+                </li>
+
+
+                <li data-ng-show="!sellerId">
+                    <a href="#/wms/goods_breakage_log_list">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.heading.goodsBreakageLogList"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li data-ng-show="username && !sellerId">
+            <a href="javascript:;">
+                <i class="fa fa-users"></i>
+                <span data-ng-i18next="global:ui.nav.sellerManage"></span>
+            </a>
+            <ul>
+                <li>
+                    <a href="#/wms/seller_list">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.heading.sellerList"></span>
+                    </a>
+                </li>
+                <li data-ng-show="!sellerId" data-ng-repeat="item in sellerList">
+                    <a href="#/wms/seller_detail?sellerId={{item.id}}">
+                        <i class="ti-angle-right"></i>
+                        【{{item.name}}】
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li data-ng-show="username && !sellerId">
+            <a href="javascript:;">
+                <i class="ti-user"></i>
+                <span data-ng-i18next="global:ui.nav.memberManage"></span>
+            </a>
+            <ul>
+                <li data-ng-show="!sellerId">
+                    <a href="#/wms/member_list">
+                        <i class="ti-angle-right"></i>
+                        <span>{{'wms:ui.heading.warehouse' | i18next}}{{'wms:ui.heading.memberList' | i18next}}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li data-ng-show="username && !sellerId">
+            <a href="javascript:;">
+                <i class="ti-truck"></i>
+                <span data-ng-i18next="global:ui.nav.logisticManage"></span>
+            </a>
+            <ul>
+                <li data-ng-show="!sellerId">
+                    <a href="#/wms/freight_group_list">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.heading.freightGroup"></span>
+                    </a>
+                </li>
+                <li data-ng-show="!sellerId">
+                    <a href="#/wms/logistic_company_list">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.heading.logisticCompany"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li data-ng-show="username && !sellerId">
+            <a href="javascript:;">
+                <i class="fa fa-wrench"></i>
+                <span data-ng-i18next="global:ui.nav.checkDevice"></span>
+            </a>
+            <ul>
+                <li>
+                    <a href="#/wms/check_device_scale">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.label.checkScale"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/wms/check_device_printer">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="wms:ui.label.checkPrinter"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!--common-->
+        <li>
+            <a href="javascript:;">
+                <i class="ti-id-badge"></i>
+                <span data-ng-i18next="global:ui.nav.account"></span>
+            </a>
+            <ul data-ng-show="username">
+                <li>
+                    <a href="#/wms/change_password">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="passport:ui.button.changePassword"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:" data-ng-click="signOut()">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="passport:ui.button.signOut"></span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul data-ng-show="!username">
+                <li>
+                    <a href="#/wms/signin">
+                        <i class="ti-angle-right"></i>
+                        <span data-ng-i18next="passport:ui.button.signIn"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+    </ul>
+</div>
+<div class="nav-wrapper" data-ng-show="sellerId" data-ng-include="'views/seller_nav.html'">
+
+
+</div>

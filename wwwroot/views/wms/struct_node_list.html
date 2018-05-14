@@ -1,0 +1,51 @@
+<div class="page page-table" data-ng-controller="WmsStructNodeListCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.structNode"></span>
+            <a href="#/wms/struct_root_list" class="ti-arrow-left pull-right"></a>
+        </div>
+
+        <div class="panel-body">
+            <div class="callout callout-info">
+                {{structRoot.name}}
+            </div>
+            <div class="form-group text-center" data-ng-if="structNodeList.length == 0">
+                <button class="btn btn-primary" data-ng-click="insertNew(0, '', 2, 1);"
+                        data-ng-i18next="global:ui.button.create"></button>
+            </div>
+
+            <div data-ng-repeat="node in structNodeList track by $index">
+                <div class="form-group row" >
+                    <div class="col-xs-4">
+                        <span data-ng-class="'col-xs-offset-'+node.depth"></span>
+                        <a href="javascript:" class="ti-menu"
+                           data-ng-click="switchCollapse(node)"></a>
+                        <span>{{node.fieldName}}</span>
+                    </div>
+                    <div class="col-xs-8">
+                        <span >{{node.dataType}}</span>
+                    </div>
+                </div>
+                <div class="well" data-ng-show="node.inEditing">
+                    <div data-ng-if="node.id">
+                        <div data-ng-include="'views/wms/partial/struct_node_edit_form.html'"></div>
+                        <hr>
+                        <span data-ng-i18next="global:ui.heading.moreAction"></span>:
+                        <button class="btn btn-default"
+                                data-ng-click="addBrotherAbove(node, $index);"
+                                data-ng-i18next="global:ui.button.addBrotherAbove"></button>
+                        <button class="btn btn-default"
+                                data-ng-click="addBrotherBelow(node, $index)"
+                                data-ng-i18next="global:ui.button.addBrotherBelow"></button>
+                    </div>
+                    <div data-ng-if="!node.id">
+                        <div data-ng-include="'views/wms/partial/struct_node_form.html'"></div>
+                    </div>
+                </div>
+                <div class="divider divider-dashed divider-xs pull-in"></div>
+            </div>
+        </div>
+    </section>
+
+</div>

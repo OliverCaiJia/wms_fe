@@ -1,0 +1,135 @@
+<div class="page" data-ng-controller="WmsSellerComboGoodsDetailCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            【{{seller.name}}】
+            <span data-ng-i18next="wms:ui.heading.sellerGoods"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/seller_goods_list" class="ti-arrow-left pull-right" data-ng-if="isSeller"></a>
+            <a href="#/wms/seller_goods_manage_list?sellerId={{sellerId}}" class="ti-arrow-left pull-right" data-ng-if="!isSeller">
+                {{'wms:ui.label.backTo' | i18next}}{{'wms:ui.heading.sellerGoodsList' | i18next}}</a>
+            </a>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="row col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.barCode"></label>
+                        <div class="col-sm-8">
+
+                            <form data-ng-submit="updateSellerGoodsBarcode(sellerGoods, 'barCode')" >
+                                <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'barCode']"
+                                   data-ng-click="switchNode(sellerGoods,'barCode',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{sellerGoods.barCode}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="sellerGoods[sellerGoods.id+'barCode']">
+                            <input id="inputBarCode" data-ng-model="sellerGoods.barCode" />
+                            <a href="javascript:;" class="ti-save"
+                               data-ng-click="updateSellerGoodsBarcode(sellerGoods, 'barCode')"
+                               title="{{'global:ui.button.save' | i18next}}"></a>
+                            <a href="javascript:;" class="ti-close"
+                               data-ng-click="switchNode(sellerGoods,'barCode',false)"
+                               title="{{'global:ui.button.cancel' | i18next}}"></a>
+                        </span>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.encodeType"></label>
+                        <div class="col-sm-8">
+                            {{encodeTypeMap[sellerGoods.encodeType]}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.name"></label>
+                        <div class="col-sm-8 checkbox">
+                            {{sellerGoods.name}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.abbrName"></label>
+                        <div class="col-sm-8 checkbox">
+                            {{sellerGoods.abbrName}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-sm-6">
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label"
+                                data-ng-i18next="wms:ui.label.isCombo"></label>
+                        <div class="col-sm-8">
+                            <span data-ng-if="sellerGoods.isCombo">{{'global:ui.button.yes' | i18next}}</span>
+                            <span data-ng-if="!sellerGoods.isCombo">{{'global:ui.button.no' | i18next}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-if="!isSeller" >
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.comboPrice"></label>
+                        <div class="col-sm-8">
+                            {{sellerGoods.price | number:2}}
+                        </div>
+                    </div>
+                    <div class="form-group" data-ng-if="isSeller" >
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.comboPrice"></label>
+                        <div class="col-sm-8">
+
+                            <form data-ng-submit="updateSellerGoodsPrice(sellerGoods,'price')" >
+                                <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'price']"
+                                   data-ng-click="switchNode(sellerGoods,'price',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{sellerGoods.price | number:2}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="sellerGoods[sellerGoods.id+'price']">
+                                <input id="inputPrice" data-ng-model="sellerGoods.price" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateSellerGoodsPrice(sellerGoods,'price')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerGoods,'price',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.inventory"></label>
+                        <div class="col-sm-8">
+                            {{sellerGoods.inventory}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.shelfLocation"></label>
+                        <div class="col-sm-8">
+                            {{sellerGoods.shelfLocation}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-sm-12">
+                    <div class="divider divider-dashed divider-xs pull-in"></div>
+                    <div><span data-ng-i18next="global:ui.heading.moreAction"></span>:
+                    <a href="#/wms/seller_goods_edit?id={{sellerGoods.id}}" data-ng-if="sellerGoods.id">
+                        {{'wms:ui.heading.goodsDetail' | i18next}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="row" data-ng-if="isSeller" data-ng-include="'views/wms/partial/seller_combo_goods_edit.html'">
+    </div>
+
+    <div class="row" data-ng-if="!isSeller"  data-ng-include="'views/wms/partial/seller_combo_goods_detail.html'">
+    </div>
+
+</div>

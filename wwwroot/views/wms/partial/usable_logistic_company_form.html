@@ -1,0 +1,24 @@
+<form class="form-horizontal" data-ng-submit="add(usableLogisticCompany)">
+    <div class="form-group">
+        <label for="usableLogisticCompany.name" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.name"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="usableLogisticCompany.name" data-ng-model="usableLogisticCompany.name" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="usableLogisticCompany.code" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.code"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="usableLogisticCompany.code" data-ng-model="usableLogisticCompany.code" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="usableLogisticCompany.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!usableLogisticCompany.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

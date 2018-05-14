@@ -1,0 +1,415 @@
+<div class="page" data-ng-controller="WmsSellerGoodsEditCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.sellerGoods"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/seller_goods_list" class="ti-arrow-left pull-right" data-ng-if="isSeller"></a>
+            <a href="#/wms/seller_goods_manage_list?sellerId={{sellerGoods.sellerId}}"
+               class="ti-arrow-left pull-right" data-ng-if="!isSeller">
+                {{'wms:ui.label.backTo' | i18next}}{{'wms:ui.heading.sellerGoodsList' | i18next}}</a>
+            </a>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="row col-sm-6">
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.barCode"></label>
+                        <div class="col-sm-8">
+                            
+                            <form data-ng-submit="updateBarCode(sellerGoods, 'barCode')" >
+                                <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'barCode']"
+                                   data-ng-click="switchNode(sellerGoods,'barCode',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{sellerGoods.barCode}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="sellerGoods[sellerGoods.id+'barCode']">
+                            <input id="inputBarCode" data-ng-model="sellerGoods.barCode" />
+                            <a href="javascript:;" class="ti-save"
+                               data-ng-click="updateBarCode(sellerGoods, 'barCode')"
+                               title="{{'global:ui.button.save' | i18next}}"></a>
+                            <a href="javascript:;" class="ti-close"
+                               data-ng-click="switchNode(sellerGoods,'barCode',false)"
+                               title="{{'global:ui.button.cancel' | i18next}}"></a>
+                        </span>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.encodeType"></label>
+                        <div class="col-sm-8">
+                            {{encodeTypeMap[sellerGoods.encodeType]}}
+                            <!--<div data-ng-if="sellerGoods.inventory < 1">-->
+                                <!--<form data-ng-submit="updateEncodeType(sellerGoods, 'encodeType')" >-->
+                                    <!--<a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'encodeType']"-->
+                                       <!--data-ng-click="switchNode(sellerGoods,'encodeType',true)"-->
+                                       <!--title="{{'global:ui.button.edit' | i18next}}">-->
+                                        <!--{{encodeTypeMap[sellerGoods.encodeType]}}-->
+                                        <!--<span class="ti-pencil"></span>-->
+                                    <!--</a>-->
+                                    <!--<span data-ng-show="sellerGoods[sellerGoods.id+'encodeType']">-->
+                                    <!--<select class="ui-class" id="inputEncodeType"-->
+                                                <!--data-ng-model="sellerGoods.encodeType"-->
+                                                <!--data-ng-options="encodeType as encodeTypeMap[encodeType] for encodeType in encodeTypeList">-->
+                                    <!--</select>-->
+                                    <!--<a href="javascript:;" class="ti-save"-->
+                                       <!--data-ng-click="updateEncodeType(sellerGoods, 'encodeType')"-->
+                                       <!--title="{{'global:ui.button.save' | i18next}}"></a>-->
+                                    <!--<a href="javascript:;" class="ti-close"-->
+                                       <!--data-ng-click="switchNode(sellerGoods,'encodeType',false)"-->
+                                       <!--title="{{'global:ui.button.cancel' | i18next}}"></a>-->
+                                <!--</span>-->
+                                <!--</form>-->
+                            <!--</div>-->
+
+                            <!--<div data-ng-if="sellerGoods.inventory > 0">-->
+                                <!--{{encodeTypeMap[sellerGoods.encodeType]}}-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.name"></label>
+                        <div class="col-sm-8">
+                            <form data-ng-submit="updateName(sellerGoods, 'name')" >
+                                <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'name']"
+                                   data-ng-click="switchNode(sellerGoods,'name',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{sellerGoods.name}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="sellerGoods[sellerGoods.id+'name']">
+                                <input id="inputName" data-ng-model="sellerGoods.name" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateName(sellerGoods, 'name')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerGoods,'name',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.abbrName"></label>
+                        <div class="col-sm-8">
+                            <form data-ng-submit="updateAbbrName(sellerGoods, 'abbrName')" >
+                                <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'abbrName']"
+                                   data-ng-click="switchNode(sellerGoods,'abbrName',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{sellerGoods.abbrName}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="sellerGoods[sellerGoods.id+'abbrName']">
+                                <input id="inputAbbrName" data-ng-model="sellerGoods.abbrName" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateAbbrName(sellerGoods, 'abbrName')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerGoods,'abbrName',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.isCombo"></label>
+                        <div class="col-sm-8 checkbox" >
+                            <span class="label label-info" data-ng-if="sellerGoods.isCombo">{{'global:ui.button.yes' | i18next}}</span>
+                            <a href="#/wms/seller_combo_goods_detail?id={{sellerGoods.id}}"
+                               data-ng-if="sellerGoods.isCombo"
+                               ><span data-ng-i18next="wms:ui.label.comboDetail"></span></a>
+                            <span data-ng-if="!sellerGoods.isCombo">{{'global:ui.button.no' | i18next}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" data-ng-if="!isSeller">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.price"></label>
+                        <div class="col-sm-8 checkbox">
+                            {{sellerGoods.price | number:2}}
+                        </div>
+                    </div>
+
+                    <div class="form-group" data-ng-if="isSeller">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.price"></label>
+                        <div class="col-sm-8">
+                            <form data-ng-submit="updatePrice(sellerGoods, 'price')" >
+                                <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'price']"
+                                   data-ng-click="switchNode(sellerGoods,'price',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{sellerGoods.price | number:2}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="sellerGoods[sellerGoods.id+'price']">
+                                <input id="inputPrice" data-ng-model="sellerGoods.price" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updatePrice(sellerGoods, 'price')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerGoods,'price',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                            </form>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.inventory"></label>
+                        <div class="col-sm-8 checkbox">
+                            <div data-ng-if="!isSeller" >
+                                {{sellerGoods.inventory}}
+                                <span class="space"></span>
+                                <a href="#/wms/seller_goods_increase?sellerGoodsId={{sellerGoods.id}}"
+                                   class="btn btn-sm btn-line-primary">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    <span data-ng-i18next="wms:ui.label.increaseInventory"></span>
+                                </a>
+                                <span class="space"></span>
+                                <a href="#/wms/seller_goods_reduce?sellerGoodsId={{sellerGoods.id}}"
+                                   data-ng-if="sellerGoods.encodeType == 'bar' && !sellerGoods.isCombo"
+                                   class="btn btn-sm btn-line-danger">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                    <span data-ng-i18next="wms:ui.label.reduceInventory"></span>
+                                </a>
+                            </div>
+                            <div data-ng-if="isSeller">
+                                {{sellerGoods.inventory}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.shelfLocation"></label>
+                        <div class="col-sm-8">
+                            <div data-ng-if="!isSeller">
+                                <form data-ng-submit="updateShelfLocation(sellerGoods, 'shelfLocation')" >
+                                    <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'shelfLocation']"
+                                       data-ng-click="switchNode(sellerGoods,'shelfLocation',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{sellerGoods.shelfLocation}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                    <span data-ng-show="sellerGoods[sellerGoods.id+'shelfLocation']">
+                                    <input id="inputShelfLocation" data-ng-model="sellerGoods.shelfLocation" />
+                                    <a href="javascript:;" class="ti-save"
+                                       data-ng-click="updateShelfLocation(sellerGoods, 'shelfLocation')"
+                                       title="{{'global:ui.button.save' | i18next}}"></a>
+                                    <a href="javascript:;" class="ti-close"
+                                       data-ng-click="switchNode(sellerGoods,'shelfLocation',false)"
+                                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                </span>
+                                </form>
+                            </div>
+                            <div data-ng-if="isSeller">
+                                {{sellerGoods.shelfLocation}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.image"></label>
+                        <div class="col-sm-8 checkbox">
+                            <form data-ng-submit="updateImage(sellerGoods, 'image')" >
+                                <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'image']"
+                                   data-ng-click="switchNode(sellerGoods,'image',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    <span class="ti-pencil"></span>
+                                    <img class="img-responsive" width="200" data-ng-src="{{imgHost}}{{sellerGoods.image}}" alt="" />
+                                </a>
+                            </form>
+                            <span data-ng-show="sellerGoods[sellerGoods.id+'image']"><input type="file" data-nv-file-select="" data-uploader="uploader"   /></span>
+                            <div class="row" data-ng-repeat="queueImage in uploader.queue" data-ng-show="sellerGoods[sellerGoods.id+'image']">
+                                <div data-ng-show="uploader.isHTML5" data-ng-thumb="{file: queueImage._file, width: 300}"></div>
+                                <div data-ng-show="uploader.isHTML5" data-nowrap>
+                                    <p>
+                                        {{ queueImage.file.size/1024/1024|number:2 }} MB
+                                    </p>
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" data-ng-style="{ 'width': queueImage.progress + '%' }"></div>
+                                    </div>
+                                    <p>
+                                        <span data-ng-show="queueImage.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span data-ng-show="queueImage.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span data-ng-show="queueImage.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </p>
+                                    <p>
+                                        <span data-ng-if="(queueImage.file.size/1024/1024) > 2">{{'wms:ui.label.moreThan2MB' | i18next}}</span>
+                                        <button type="button" class="btn btn-success" data-ng-click="uploadGoodsImages(sellerGoods,queueImage)"
+                                                data-ng-show="(queueImage.file.size/1024/1024) <= 2"
+                                                data-ng-disabled="(queueImage.file.size/1024/1024) > 2 || queueImage.isReady || queueImage.isUploading || queueImage.isSuccess">
+                                            <span class="glyphicon glyphicon-upload"></span> <span data-ng-i18next="global:ui.button.upload"></span>
+                                        </button>
+                                        <span class="space"></span>
+                                        <button type="button" class="btn btn-danger" data-ng-click="queueImage.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> <span data-ng-i18next="global:ui.button.remove"></span>
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row col-sm-6">
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.length"></label>
+                        <div class="col-sm-8">
+                            <form data-ng-submit="updateLength(sellerGoods, 'length')" >
+                                <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'length']"
+                                   data-ng-click="switchNode(sellerGoods,'length',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{sellerGoods.length}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="sellerGoods[sellerGoods.id+'length']">
+                                <input id="inputLength" data-ng-model="sellerGoods.length" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateLength(sellerGoods, 'length')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerGoods,'length',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.width"></label>
+                        <div class="col-sm-8">
+                            <form data-ng-submit="updateWidth(sellerGoods, 'width')" >
+                                <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'width']"
+                                   data-ng-click="switchNode(sellerGoods,'width',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{sellerGoods.width}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="sellerGoods[sellerGoods.id+'width']">
+                                <input id="inputWidth" data-ng-model="sellerGoods.width" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateWidth(sellerGoods, 'width')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerGoods,'width',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.height"></label>
+                        <div class="col-sm-8">
+                            <form data-ng-submit="updateHeight(sellerGoods, 'height')" >
+                                <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'height']"
+                                   data-ng-click="switchNode(sellerGoods,'height',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{sellerGoods.height}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="sellerGoods[sellerGoods.id+'height']">
+                                <input id="inputHeight" data-ng-model="sellerGoods.height" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateHeight(sellerGoods, 'height')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerGoods,'height',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.logisticRequire"></label>
+                        <div class="col-sm-8">
+                            <label class="ui-checkbox" data-ng-repeat="require in logisticRequireEnum track by $index">
+                                <input name="checkbox1" type="checkbox" value="sellerGoods.logisticRequire"
+                                       data-ng-model="logisticRequireList[require]"
+                                       data-ng-click="checkLogisticRequire()">
+                                <span>{{'wms:ui.logisticRequireEnum.'+require | i18next}}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.weight"></label>
+
+                        <div class="col-sm-8 checkbox">
+                            <form data-ng-submit="updateWeight(sellerGoods, 'weight')" >
+                                <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'weight']"
+                                   data-ng-click="switchNode(sellerGoods,'weight',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{sellerGoods.weight}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="sellerGoods[sellerGoods.id+'weight']">
+                                <input id="inputWeight" data-ng-model="sellerGoods.weight" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateWeight(sellerGoods, 'weight')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerGoods,'weight',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                                <span class="space"></span>
+                                <a class="btn btn-primary" data-ng-click="updateWeightByScale(sellerGoods)">
+                                    {{'wms:ui.label.autoWeight' | i18next}}</a>
+                            </form>
+                            <div class="divider divider-lg pull-in"></div>
+                            <div class="panel-heading  bg-info" data-ng-if="deviceWeight.weight">
+                                <h3>{{'wms:ui.label.weightResult' | i18next}}： {{deviceWeight.weight}} {{'global:ui.unit.g' | i18next}}</h3>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"
+                               data-ng-i18next="wms:ui.label.prepackWeight"></label>
+                        <div class="col-sm-8 checkbox">
+                            <form data-ng-submit="updatePrepackWeight(sellerGoods, 'prepackWeight')" >
+                                <a href="javascript:;" data-ng-show="!sellerGoods[sellerGoods.id+'prepackWeight']"
+                                   data-ng-click="switchNode(sellerGoods,'prepackWeight',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{sellerGoods.prepackWeight}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="sellerGoods[sellerGoods.id+'prepackWeight']">
+                                <input id="inputPrepackWeight" data-ng-model="sellerGoods.prepackWeight" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updatePrepackWeight(sellerGoods, 'prepackWeight')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerGoods,'prepackWeight',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                                <span class="space"></span>
+                                <a class="btn btn-primary" data-ng-click="updatePrepackWeightByScale(sellerGoods)">
+                                    {{'wms:ui.label.autoWeight' | i18next}}</a>
+                            </form>
+                            <div class="divider divider-lg pull-in"></div>
+                            <div class="panel-heading  bg-info" data-ng-if="deviceWeight.prepackWeight">
+                                <h3>{{'wms:ui.label.weightResult' | i18next}}： {{deviceWeight.prepackWeight}} {{'global:ui.unit.g' | i18next}}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

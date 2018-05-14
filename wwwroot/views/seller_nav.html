@@ -1,0 +1,167 @@
+<ul
+        class="nav"
+        data-slim-scroll
+        data-collapse-nav
+        data-show-menu-active
+        data-highlight-active>
+    <!--seller-->
+
+    <li data-ng-show="username && sellerId">
+        <a href="javascript:;">
+            <i class="ti-view-list-alt"></i>
+            <span data-ng-i18next="global:ui.nav.orderManage"></span>
+        </a>
+        <ul>
+            <li>
+                <a href="#/wms/order_list_wait_verify">
+                    <i class="ti-angle-right"></i>
+                    {{'wms:ui.orderStatus.0' | i18next}}<span data-ng-i18next="wms:ui.heading.order"></span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#/wms/order_list_success_verify">
+                    <i class="ti-angle-right"></i>
+                    <span data-ng-i18next="wms:ui.heading.waitCreatePickOrder"></span>
+                </a>
+            </li>
+            <li>
+                <a href="#/wms/order_list_part_split">
+                    <i class="ti-angle-right"></i>
+                    {{'wms:ui.orderStatus.2' | i18next}}<span data-ng-i18next="wms:ui.heading.order"></span>
+                </a>
+            </li>
+            <li>
+                <a href="#/wms/order_list_success_split">
+                    <i class="ti-angle-right"></i>
+                    {{'wms:ui.orderStatus.3' | i18next}}<span data-ng-i18next="wms:ui.heading.order"></span>
+                </a>
+            </li>
+
+
+            <li>
+                <a href="#/wms/platform_order_upload_list">
+                    <i class="ti-angle-right"></i>
+                    <span data-ng-i18next="wms:ui.heading.platformOrderUpload"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li data-ng-show="username && sellerId">
+        <a href="">
+            <i class="ti-gift"></i>
+            <span data-ng-i18next="wms:ui.heading.pickOrder"></span>
+        </a>
+        <ul>
+            <li>
+                <a href="#/wms/seller_pick_order_list">
+                    <i class="ti-angle-right"></i>
+                    {{'wms:ui.label.sellerPickList' | i18next}}
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li data-ng-show="username && sellerId">
+        <a href="javascript:;">
+            <i class="fa fa-table"></i>
+            <span data-ng-i18next="wms:ui.label.warehouseGoodsManage"></span>
+        </a>
+        <ul>
+            <li data-ng-show="sellerId">
+                <a href="#/wms/seller_goods_list">
+                    <i class="ti-angle-right"></i>
+                    <span data-ng-i18next="wms:ui.heading.sellerGoodsList"></span>
+                </a>
+            </li>
+
+            <li data-ng-show="sellerId">
+                <a href="#/wms/seller_platform_goods_list">
+                    <i class="ti-angle-right"></i>
+                    <span data-ng-i18next="wms:ui.heading.sellerPlatformGoodsList"></span>
+                </a>
+            </li>
+
+            <li data-ng-show="sellerId">
+                <a href="#/wms/goods_blacklist_list">
+                    <i class="ti-angle-right"></i>
+                    <span data-ng-i18next="wms:ui.heading.goodsBlacklist"></span>
+                </a>
+            </li>
+            <!--<li data-ng-show="sellerId">-->
+            <!--<a href="#/wms/request_inventory_transfer_list?requestSeller={{sellerId}}">-->
+            <!--<i class="ti-angle-right"></i>-->
+            <!--<span data-ng-i18next="wms:ui.heading.requestInventoryTransfer"></span>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li data-ng-show="sellerId">-->
+            <!--<a href="#/wms/response_inventory_transfer_list?responseSeller={{sellerId}}">-->
+            <!--<i class="ti-angle-right"></i>-->
+            <!--<span data-ng-i18next="wms:ui.heading.responseInventoryTransfer"></span>-->
+            <!--</a>-->
+            <!--</li>-->
+        </ul>
+    </li>
+
+    <li data-ng-show="username && sellerId">
+        <a href="javascript:;">
+            <i class="ti-user"></i>
+            <span data-ng-i18next="global:ui.nav.memberManage"></span>
+        </a>
+        <ul>
+            <li data-ng-show="sellerId">
+                <a href="#/wms/seller_member_list?sellerId={{sellerId}}">
+                    <i class="ti-angle-right"></i>
+                    <span>{{'wms:ui.heading.seller' | i18next}}{{'wms:ui.heading.memberList' | i18next}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li data-ng-show="username && sellerId">
+        <a href="javascript:;">
+            <i class="ti-bookmark-alt"></i>
+            <span data-ng-i18next="global:ui.nav.platformSourceManage"></span>
+        </a>
+        <ul>
+            <li data-ng-show="sellerId">
+                <a href="#/wms/seller_platform_source_list">
+                    <i class="ti-angle-right"></i>
+                    <span data-ng-i18next="wms:ui.heading.sellerPlatformSource"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!--common-->
+    <li>
+        <a href="javascript:;">
+            <i class="ti-id-badge"></i>
+            <span data-ng-i18next="global:ui.nav.account"></span>
+        </a>
+        <ul data-ng-show="username">
+            <li>
+                <a href="#/wms/change_password">
+                    <i class="ti-angle-right"></i>
+                    <span data-ng-i18next="passport:ui.button.changePassword"></span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:" data-ng-click="signOut()">
+                    <i class="ti-angle-right"></i>
+                    <span data-ng-i18next="passport:ui.button.signOut"></span>
+                </a>
+            </li>
+        </ul>
+
+        <ul data-ng-show="!username">
+            <li>
+                <a href="#/wms/signin">
+                    <i class="ti-angle-right"></i>
+                    <span data-ng-i18next="passport:ui.button.signIn"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>

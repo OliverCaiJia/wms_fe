@@ -1,0 +1,150 @@
+<div class="panel-body" data-ng-if="verifyOrders.length > 0">
+    <div class="row ">
+        <div class="col-sm-4 ">
+            <div class="btn-group dropdown" uib-dropdown="" is-open="status.isopen11">
+                <button type="button" class="btn btn-default">
+                    <span data-ng-i18next="wms:ui.heading.order"></span>:
+                    {{'wms:ui.label.'+batchVerifyMap.order | i18next}}
+                </button>
+                <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle=""
+                        ng-disabled="disabled" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="javascript:;">
+                        <span data-ng-i18next="wms:ui.label.comment"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="input-group">
+                <input type="text" class="form-control"
+                       data-ng-model="batchVerifyMap.separator"
+                       data-ng-change="previewOrder()">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="btn-group dropdown" uib-dropdown="" is-open="status.isopen12">
+                <button type="button" class="btn btn-default">
+                    <span data-ng-i18next="wms:ui.heading.goods"></span>:
+                    {{'wms:ui.label.'+batchVerifyMap.goods | i18next}}
+                </button>
+                <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle=""
+                        ng-disabled="disabled" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="javascript:;">
+                        <span data-ng-i18next="wms:ui.label.abbrName"></span></a>
+                    </li>
+                    <li><a href="javascript:;">
+                        <span data-ng-i18next="wms:ui.label.name"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-responsive" data-ng-if="verifyOrders.length > 0">
+        <thead>
+        <tr>
+            <th><div class="th"><span data-ng-i18next="wms:ui.label.orderSn"></span></div></th>
+            <th><div class="th"><span data-ng-i18next="wms:ui.label.consigneeName"></span></div></th>
+            <th><div class="th"><span data-ng-i18next="wms:ui.label.comment"></span></div></th>
+            <th><div class="th">解析的商品</div></th>
+            <th><div class="th"><span data-ng-i18next="wms:ui.heading.goods"></span></div></th>
+            <th class="col-sm-2"><div class="th"><span data-ng-i18next="wms:ui.label.goodsNumber"></span></div></th>
+            <th><div class="th"><span data-ng-i18next="global:ui.label.action"></span></div></th>
+            <th><div class="th"><span data-ng-i18next="global:ui.label.action"></span></div></th>
+        </tr>
+        </thead>
+        <tbody data-ng-repeat="item in verifyOrders">
+        <tr>
+            <td rowspan="{{item.sellerGoodsList.length}}">{{item.orderSn}}</td>
+            <td rowspan="{{item.sellerGoodsList.length}}">{{item.consigneeName}}</td>
+            <td title="订单备注" rowspan="{{item.sellerGoodsList.length}}">{{item.comment}}</td>
+            <td title="解析的商品名称"
+                data-ng-class="{'danger':item.previewGoodsNameList[0] != sellerGoodsMap[item.sellerGoodsList[0].sellerGoodsId].name}">
+                {{item.previewGoodsNameList[0]}}
+            </td>
+            <td title="映射的商品" data-ng-class="{'danger':item.sellerGoodsList[0].sellerGoodsId == 0}">
+                <input type="text" class="form-control"  data-ng-model="item.ddd" placeholder="{{'global:ui.button.search' | i18next}}">
+                <select class="form-control" id="item.dataType" data-ng-model="item.sellerGoodsList[0].sellerGoodsId"
+                        data-ng-options="sellerGoods.id as sellerGoods.name for sellerGoods in sellerGoodsList">
+                </select>
+            </td>
+            <td data-ng-class="{'danger':item.sellerGoodsList[0].sellerGoodsId == 0}">
+                <div class="input-group" data-ui-spinner>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" data-spin="up">
+                            <i class="ti-plus"></i>
+                        </button>
+                    </span>
+                    <input type="text" class="spinner-input form-control" maxlength="2" value="1">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" data-spin="down">
+                            <i class="ti-minus"></i>
+                        </button>
+                    </span>
+                </div>
+            </td>
+            <td></td>
+            <td rowspan="{{item.sellerGoodsList.length}}">
+                <a href="javascript:;" class="btn btn-sm  btn-danger" title="取消审核" data-ng-click="cancel()">
+                    <span class="glyphicon glyphicon-ban-circle"></span>
+                    <span>取消审核</span>
+                </a>
+            </td>
+        </tr>
+
+        <tr data-ng-repeat="sellerGoods in item.sellerGoodsList track by $index" data-ng-if="$index > 0">
+            <td title="解析的商品名称"
+                data-ng-class="{'danger':item.previewGoodsNameList[$index] != sellerGoodsMap[item.sellerGoodsList[$index].sellerGoodsId].name}">
+                {{item.previewGoodsNameList[$index]}}
+            </td>
+            <td title="映射的商品" data-ng-class="{'danger':sellerGoods.sellerGoodsId == 0}">
+                <input type="text" class="form-control"  data-ng-model="item.ddd" placeholder="{{'global:ui.button.search' | i18next}}">
+                <select class="form-control"  data-ng-if="$index > 0"
+                        data-ng-model="item.sellerGoodsList[$index].sellerGoodsId"
+                        data-ng-options="sellerGoods.id as sellerGoods.name for sellerGoods in sellerGoodsList">
+                </select>
+            </td>
+            <td data-ng-class="{'danger':sellerGoods.sellerGoodsId == 0}">
+                <div class="input-group" data-ui-spinner>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" data-spin="up">
+                            <i class="ti-plus"></i>
+                        </button>
+                    </span>
+                    <input type="text" class="spinner-input form-control" maxlength="2" value="1">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" data-spin="down">
+                            <i class="ti-minus"></i>
+                        </button>
+                    </span>
+                </div>
+            </td>
+            <td>
+                <a class="btn btn-danger btn-xs" title="移出该商品" data-ng-click="removeOrderGoods()" >
+                    <span class="ti-trash"></span>
+                    <span data-ng-i18next="global:ui.button.remove"></span><span data-ng-i18next="wms:ui.heading.goods"></span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="row">
+        <button autofocus class="btn btn-success" data-ng-click="previewOrderSubmit()">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span data-ng-i18next="global:ui.button.confirm"></span>
+        </button>
+
+        <button autofocus class="btn btn-primary" data-ng-click="close()">
+            <span class="glyphicon glyphicon-cancel"></span>
+            <span data-ng-i18next="global:ui.button.cancel"></span>
+        </button>
+    </div>
+
+</div>

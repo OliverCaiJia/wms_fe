@@ -1,0 +1,36 @@
+<div class="form-horizontal">
+    <div class="row col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.requestSeller"></label>
+            <div class="col-sm-9 checkbox">
+                {{sellerMap[inventoryTransfer.requestSeller].name}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.status"></label>
+            <div class="col-sm-9 checkbox">
+                            <span data-ng-class="{ 'label label-default': inventoryTransfer.status == 0,
+                                                    'label label-danger': inventoryTransfer.status == 1,
+                                                    'label label-warning': inventoryTransfer.status == 2,
+                                                    'label label-success': inventoryTransfer.status == 3}"
+                                  data-ng-i18next="wms:ui.inventoryTransferStatus.{{inventoryTransfer.status}}"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row col-sm-6">
+        <div class="form-group">
+            <label class="col-sm-2 control-label"
+                   data-ng-i18next="wms:ui.label.responseSeller"></label>
+            <div class="col-sm-9 checkbox">
+                {{sellerMap[inventoryTransfer.responseSeller].name}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"
+                   data-ng-i18next="wms:ui.label.operator"></label>
+            <div class="col-sm-8">
+                {{memberMap[inventoryTransfer.operator].name}}
+            </div>
+        </div>
+    </div>
+</div>

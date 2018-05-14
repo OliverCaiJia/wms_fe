@@ -1,0 +1,52 @@
+<div class="page" data-ng-controller="WmsMemberRoleEditCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.memberRole"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/member_role_list" class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+        
+                <div class="form-group">
+                    <label for="memberRole.id" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.id"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="memberRole.id" readonly data-ng-model="memberRole.id" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="memberRole.memberId" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.memberId"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="memberRole.memberId" readonly data-ng-model="memberRole.memberId" />
+                    </div>
+                </div>
+                <div>
+                    <label class="col-sm-4 control-label"
+                           data-ng-i18next="wms:ui.label.roleId"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(memberRole, 'roleId')" >
+                            <a href="javascript:;" data-ng-show="!memberRole[memberRole.id+'roleId']"
+                               data-ng-click="switchNode(memberRole,'roleId',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{memberRole.roleId}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="memberRole[memberRole.id+'roleId']">
+                                <input id="inputRoleId" data-ng-model="memberRole.roleId" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(memberRole, 'roleId')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(memberRole,'roleId',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

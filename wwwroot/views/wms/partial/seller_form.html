@@ -1,0 +1,81 @@
+<form class="form-horizontal" data-ng-submit="add(seller)">
+    <a class="glyphicon glyphicon-remove pull-right"
+       title="{{'global:ui.button.cancel' | i18next}}"
+       data-ng-click="switchCollapse(createSeller)">
+    </a>
+    <div class="row form-group col-sm-12">
+        <label for="seller.name" class="col-sm-4 control-label">
+            <span data-ng-i18next="wms:ui.heading.seller"></span><span data-ng-i18next="wms:ui.label.name"></span></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="seller.name" data-ng-model="seller.name" />
+        </div>
+    </div>
+    <div class="row form-group col-sm-12">
+        <label for="seller.comment" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.comment"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="seller.comment" data-ng-model="seller.comment" />
+        </div>
+    </div>
+    <div class="row form-group col-sm-12">
+        <label for="seller.creditLine" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.creditLine"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="seller.creditLine" data-ng-model="seller.creditLine" />
+        </div>
+    </div>
+    <div class="row form-group col-sm-12"><hr></div>
+
+    <div class="row form-group col-sm-12">
+        <label for="seller.senderName" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.senderName"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="seller.senderName" data-ng-model="seller.senderName" />
+        </div>
+    </div>
+    <div class="row form-group col-sm-12">
+        <label for="seller.phoneNumber" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.phoneNumber"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="seller.phoneNumber" data-ng-model="seller.phoneNumber" />
+        </div>
+    </div>
+    <div class="row form-group col-sm-12">
+        <label class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.province-city-district"></label>
+        <div class="col-sm-8">
+            <select class="ui-class" id="province"
+                    data-ng-if="provinceList"
+                    data-ng-change="seller.city == 0;seller.district == 0;getCityList()"
+                    data-ng-model="seller.province"
+                    data-ng-options="province.id as province.name for province in provinceList">
+            </select>
+            <select class="ui-class" id="city"
+                    data-ng-if="cityList"
+                    data-ng-model="seller.city"
+                    data-ng-change="seller.district == 0;getDistrictList()"
+                    data-ng-options="city.id as city.name for city in cityList">
+            </select>
+            <select class="ui-class" id="district"
+                    data-ng-if="districtList.length"
+                    data-ng-model="seller.district"
+                    data-ng-options="district.id as district.name for district in districtList">
+            </select>
+        </div>
+    </div>
+    <div class="row form-group col-sm-12">
+        <label for="seller.address" class="col-sm-4 control-label" data-ng-i18next="wms:ui.heading.senderAddress"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="seller.address" data-ng-model="seller.address" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-6">
+            <a class="btn btn-default btn-md" data-ng-click="switchCollapse(createSeller)">
+                <span class="glyphicon glyphicon-remove"></span>
+                <span data-ng-i18next="global:ui.button.cancel"></span>
+            </a>
+            <div class="space"></div>
+            <button class="btn btn-primary btn-md ">
+                <span class="ti-save"></span>
+                {{'global:ui.button.save' | i18next}}{{'wms:ui.heading.seller' | i18next}}
+            </button>
+        </div>
+    </div>
+</form>

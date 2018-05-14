@@ -1,0 +1,75 @@
+<form class="form-horizontal" data-ng-submit="add(provider)">
+    <div class="form-group">
+        <label for="provider.code" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.code"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="provider.code" data-ng-model="provider.code" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="provider.name" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.name"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="provider.name" data-ng-model="provider.name" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="provider.scheme" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.scheme"></label>
+        <div class="col-sm-8">
+            <select class="form-control" id="provider.scheme" data-ng-model="provider.scheme"
+                    data-ng-options="scheme for scheme in schemeList">
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="provider.hostname" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.hostname"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="provider.hostname" data-ng-model="provider.hostname" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="provider.port" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.port"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="provider.port" data-ng-model="provider.port" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="provider.filename" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.filename"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="provider.filename" data-ng-model="provider.filename" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="provider.appKey" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.appKey"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="provider.appKey" data-ng-model="provider.appKey" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="provider.appSecret" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.secret"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="provider.appSecret" data-ng-model="provider.appSecret" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="provider.format" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.format"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="provider.format" data-ng-model="provider.format" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="provider.version" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.version"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="provider.version" data-ng-model="provider.version" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="provider.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!provider.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

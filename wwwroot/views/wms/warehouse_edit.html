@@ -1,0 +1,197 @@
+<div class="page" data-ng-controller="WmsWarehouseEditCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.warehouse"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/warehouse_list" class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+        
+                <div class="form-group">
+                    <label for="warehouse.id" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.id"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="warehouse.id" readonly data-ng-model="warehouse.id" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.name"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(warehouse, 'name')" >
+                            <a href="javascript:;" data-ng-show="!warehouse[warehouse.id+'name']"
+                               data-ng-click="switchNode(warehouse,'name',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{warehouse.name}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="warehouse[warehouse.id+'name']">
+                                <input id="inputName" data-ng-model="warehouse.name" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(warehouse, 'name')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(warehouse,'name',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.provinceId"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(warehouse, 'provinceId')" >
+                            <a href="javascript:;" data-ng-show="!warehouse[warehouse.id+'provinceId']"
+                               data-ng-click="switchNode(warehouse,'provinceId',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{warehouse.provinceId}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="warehouse[warehouse.id+'provinceId']">
+                                <input id="inputProvinceId" data-ng-model="warehouse.provinceId" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(warehouse, 'provinceId')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(warehouse,'provinceId',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.cityId"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(warehouse, 'cityId')" >
+                            <a href="javascript:;" data-ng-show="!warehouse[warehouse.id+'cityId']"
+                               data-ng-click="switchNode(warehouse,'cityId',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{warehouse.cityId}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="warehouse[warehouse.id+'cityId']">
+                                <input id="inputCityId" data-ng-model="warehouse.cityId" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(warehouse, 'cityId')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(warehouse,'cityId',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.districtId"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(warehouse, 'districtId')" >
+                            <a href="javascript:;" data-ng-show="!warehouse[warehouse.id+'districtId']"
+                               data-ng-click="switchNode(warehouse,'districtId',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{warehouse.districtId}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="warehouse[warehouse.id+'districtId']">
+                                <input id="inputDistrictId" data-ng-model="warehouse.districtId" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(warehouse, 'districtId')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(warehouse,'districtId',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.disabled"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(warehouse, 'disabled')" >
+                            <a href="javascript:;" data-ng-show="!warehouse[warehouse.id+'disabled']"
+                               data-ng-click="switchNode(warehouse,'disabled',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{warehouse.disabled}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="warehouse[warehouse.id+'disabled']">
+                                <input id="inputDisabled" data-ng-model="warehouse.disabled" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(warehouse, 'disabled')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(warehouse,'disabled',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.telephone"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(warehouse, 'telephone')" >
+                            <a href="javascript:;" data-ng-show="!warehouse[warehouse.id+'telephone']"
+                               data-ng-click="switchNode(warehouse,'telephone',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{warehouse.telephone}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="warehouse[warehouse.id+'telephone']">
+                                <input id="inputTelephone" data-ng-model="warehouse.telephone" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(warehouse, 'telephone')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(warehouse,'telephone',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.contact"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(warehouse, 'contact')" >
+                            <a href="javascript:;" data-ng-show="!warehouse[warehouse.id+'contact']"
+                               data-ng-click="switchNode(warehouse,'contact',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{warehouse.contact}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="warehouse[warehouse.id+'contact']">
+                                <input id="inputContact" data-ng-model="warehouse.contact" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(warehouse, 'contact')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(warehouse,'contact',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="warehouse.created" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.created"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="warehouse.created" readonly data-ng-model="warehouse.created" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="warehouse.modified" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.modified"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="warehouse.modified" readonly data-ng-model="warehouse.modified" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

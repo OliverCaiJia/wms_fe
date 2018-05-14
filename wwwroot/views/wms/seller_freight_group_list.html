@@ -1,0 +1,101 @@
+<div class="page page-table" data-ng-controller="WmsSellerFreightGroupListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-if="seller.id">【{{seller.name}}】</span>
+            <span data-ng-i18next="wms:ui.heading.sellerFreightGroup"></span>
+            <a href="#/wms/seller_list" class="ti-arrow-left pull-right">
+                {{'wms:ui.label.backTo' | i18next}}{{'wms:ui.heading.sellerList' | i18next}}
+            </a>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <button class="btn btn-primary" data-ng-click="switchCollapse(createSellerFreightGroup)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span data-ng-i18next="global:ui.button.add"></span><span data-ng-i18next="wms:ui.heading.sellerFreightGroup"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-show="createSellerFreightGroup.inEditing">
+            <div class="well">
+                <div data-ng-include="'views/wms/partial/seller_freight_group_form.html'"></div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.heading.logisticCompany"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.heading.freightGroup"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in currentPageItems track by $index">
+                <td>{{logisticCompanyMap[item.logisticCompanyId].name}}</td>
+                <td>
+                    <div>
+                        <form data-ng-submit="updateFreightGroupId(item, 'freightGroupId')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'freightGroupId']"
+                               data-ng-click="switchNode(item,'freightGroupId',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{freightGroupMap[item.freightGroupId].name}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'freightGroupId']">
+                                <select class="ui-class" id="inputFreightGroupId"
+                                        data-ng-model="item.freightGroupId"
+                                        data-ng-options="freightGroup.id as freightGroup.name for freightGroup in companyFreightGroup[item.logisticCompanyId]">
+                                </select>
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateFreightGroupId(item, 'freightGroupId')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'freightGroupId',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <uib-pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredItems.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="searchOption.numPerPage"
+                                    rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    boundary-links="true"></uib-pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+</div>

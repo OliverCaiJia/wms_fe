@@ -1,0 +1,58 @@
+<form class="form-horizontal" data-ng-submit="save(repository)">
+    <div class="form-group">
+        <label class="col-sm-2 control-label"
+               data-ng-i18next="wms:ui.label.useAttribute"></label>
+        <div class="col-sm-10">
+            <label class="ui-radio" data-ng-repeat="useAttribute in useAttributeList" >
+                <input name="useAttribute" type="radio" value="{{useAttribute}}"
+                       data-ng-model="repository.useAttribute" ><span>
+                                {{"wms:ui.useAttribute."+useAttribute | i18next}}</span>
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="repository.name" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.name"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="repository.name" data-ng-model="repository.name" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="repository.repositoryCode" class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.repositoryCode"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="repository.repositoryCode" data-ng-model="repository.repositoryCode" />
+        </div>
+    </div>
+    <div class="form-group" data-ng-if="repository.id">
+        <label  class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.disabled"></label>
+        <div class="col-sm-8">
+            <label class="ui-switch ui-switch-danger" >
+                <input type="checkbox" data-ng-model="repository.disabled"><i></i>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group" data-ng-if="repository.id">
+        <label  class="col-sm-2 control-label" data-ng-i18next="global:ui.label.createdTime"></label>
+        <div class="col-sm-8">
+            <span >{{repository.created}}</span>
+        </div>
+    </div>
+
+    <div class="form-group" data-ng-if="repository.id">
+        <label  class="col-sm-2 control-label" data-ng-i18next="global:ui.label.modifiedTime"></label>
+        <div class="col-sm-8">
+            <span >{{repository.modified}}</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="repository.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!repository.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

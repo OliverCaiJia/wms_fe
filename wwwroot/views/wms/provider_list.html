@@ -1,0 +1,297 @@
+<div class="page page-table" data-ng-controller="WmsProviderListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.provider"></span>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <button class="btn btn-primary" data-ng-click="switchCollapse(createProvider)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span data-ng-i18next="global:ui.button.create"></span>
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-show="createProvider.inEditing">
+            <div class="well">
+                <div data-ng-include="'views/wms/partial/provider_form.html'"></div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.code"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.name"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.scheme"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.hostname"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.port"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.filename"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.appKey"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.secret"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.format"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.version"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in currentPageItems track by $index">
+                <td>{{item.code}}</td>
+                <td>
+                    <div>
+                        <form data-ng-submit="updateName(item, 'name')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'name']"
+                               data-ng-click="switchNode(item,'name',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.name}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'name']">
+                                <input id="inputName" data-ng-model="item.name" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateName(item, 'name')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'name',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form data-ng-submit="updateScheme(item, 'scheme')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'scheme']"
+                               data-ng-click="switchNode(item,'scheme',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.scheme}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'scheme']">
+                                <select class="ui-class" id="inputScheme"
+                                        data-ng-model="item.scheme"
+                                        data-ng-options="scheme for scheme in schemeList">
+                                </select>
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateScheme(item, 'scheme')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'scheme',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form data-ng-submit="updateHostname(item, 'hostname')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'hostname']"
+                               data-ng-click="switchNode(item,'hostname',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.hostname}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'hostname']">
+                                <input id="inputHostname" data-ng-model="item.hostname" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateHostname(item, 'hostname')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'hostname',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form data-ng-submit="updatePort(item, 'port')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'port']"
+                               data-ng-click="switchNode(item,'port',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.port}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'port']">
+                                <input id="inputPort" data-ng-model="item.port" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updatePort(item, 'port')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'port',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form data-ng-submit="updateFilename(item, 'filename')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'filename']"
+                               data-ng-click="switchNode(item,'filename',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.filename}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'filename']">
+                                <input id="inputFilename" data-ng-model="item.filename" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateFilename(item, 'filename')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'filename',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form data-ng-submit="updateAppKey(item, 'appKey')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'appKey']"
+                               data-ng-click="switchNode(item,'appKey',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.appKey}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'appKey']">
+                                <input id="inputAppKey" data-ng-model="item.appKey" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateAppKey(item, 'appKey')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'appKey',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form data-ng-submit="updateAppSecret(item, 'appSecret')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'appSecret']"
+                               data-ng-click="switchNode(item,'appSecret',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.appSecret}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'appSecret']">
+                                <input id="inputAppSecret" data-ng-model="item.appSecret" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateAppSecret(item, 'appSecret')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'appSecret',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form data-ng-submit="updateFormat(item, 'format')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'format']"
+                               data-ng-click="switchNode(item,'format',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.format}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'format']">
+                                <input id="inputFormat" data-ng-model="item.format" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateFormat(item, 'format')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'format',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form data-ng-submit="updateVersion(item, 'version')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'version']"
+                               data-ng-click="switchNode(item,'version',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.version}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'version']">
+                                <input id="inputVersion" data-ng-model="item.version" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateVersion(item, 'version')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'version',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <uib-pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredItems.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="searchOption.numPerPage"
+                                    rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    boundary-links="true"></uib-pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+</div>

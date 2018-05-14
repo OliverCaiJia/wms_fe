@@ -1,0 +1,115 @@
+<div class="form-horizontal">
+    <div class="form-group" data-ng-if="!apiParam.structRootId
+                                        && apiParam.depth > 1
+                                        && !apiParam.dataType
+                                        && apiParam.structNodeId">
+        <label for="apiParam.structNodeId" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.heading.structNode"></label>
+        <div class="col-sm-8 checkbox">
+            <form data-ng-submit="updateStructNodeId(apiParam, 'structNodeId')" >
+                <a href="javascript:;" data-ng-show="!apiParam[apiParam.id+'structNodeId']"
+                   data-ng-click="switchNode(apiParam,'structNodeId',true)"
+                   title="{{'global:ui.button.edit' | i18next}}">
+                    {{structNodeMap[apiParam.structNodeId].fieldName}}
+                    <span class="ti-pencil"></span>
+                </a>
+                <span data-ng-show="apiParam[apiParam.id+'structNodeId']">
+                    <select class="ui-class" id="apiParam.structNodeId"
+                            data-ng-model="apiParam.structNodeId"
+                            data-ng-options="sn.id as sn.fieldName for sn in structNodeMapByRootId[structNodeMap[apiParam.structNodeId].rootId]" >
+                    </select>
+                    <a href="javascript:;" class="ti-save"
+                       data-ng-click="updateStructNodeId(apiParam, 'structNodeId')"
+                       title="{{'global:ui.button.save' | i18next}}"></a>
+                    <a href="javascript:;" class="ti-close"
+                       data-ng-click="switchNode(apiParam,'structNodeId',false)"
+                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                </span>
+            </form>
+        </div>
+    </div>
+    <div class="form-group" data-ng-if="apiParam.dataType">
+        <label for="apiParam.dataType" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.dataType"></label>
+        <div class="col-sm-8 checkbox">
+            <form data-ng-submit="updateDataType(apiParam, 'dataType')" >
+                <a href="javascript:;" data-ng-show="!apiParam[apiParam.id+'dataType']"
+                   data-ng-click="switchNode(apiParam,'dataType',true)"
+                   title="{{'global:ui.button.edit' | i18next}}">
+                    {{apiParam.dataType}}
+                    <span class="ti-pencil"></span>
+                </a>
+                <span data-ng-show="apiParam[apiParam.id+'dataType']">
+                    <select class="ui-class" id="apiParam.dataType"
+                            data-ng-model="apiParam.dataType"
+                            data-ng-options="dataType for dataType in dataTypeList" >
+                    </select>
+                    <a href="javascript:;" class="ti-save"
+                       data-ng-click="updateDataType(apiParam, 'dataType')"
+                       title="{{'global:ui.button.save' | i18next}}"></a>
+                    <a href="javascript:;" class="ti-close"
+                       data-ng-click="switchNode(apiParam,'dataType',false)"
+                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                </span>
+            </form>
+        </div>
+    </div>
+
+    <div class="form-group" data-ng-if="apiParam.dataType == 'STRUCT'
+                                     || apiParam.dataType == 'STRUCT_LIST'">
+        <label for="apiParam.structRootId" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.heading.structRoot"></label>
+        <div class="col-sm-8 checkbox">
+            <form>
+                <a href="javascript:;" data-ng-show="!apiParam[apiParam.id+'structRootId']"
+                   data-ng-click="switchNode(apiParam,'structRootId',true)"
+                   title="{{'global:ui.button.edit' | i18next}}">
+                    {{structRootMap[apiParam.structRootId].name}}
+                    <span class="ti-pencil"></span>
+                </a>
+                <span data-ng-show="apiParam[apiParam.id+'structRootId']">
+                    <select class="ui-class col-sm-5" id="apiParam.structRootId"
+                            data-ng-model="apiParam.structRootId"
+                            data-ng-options="structRoot.id as structRoot.name for structRoot in structRootList | filter:apiParam.searchStructName">
+                    </select>
+                    <div class="col-sm-5">
+                        <input type="text" class="col-sm-12" id="apiParam.searchStructName"
+                               data-ng-i18next="[placeholder]global:ui.button.searchStructName"
+                               data-ng-model="apiParam.searchStructName">
+                    </div>
+                    <a href="javascript:;" class="ti-save"
+                       data-ng-click="updateStructRootId(apiParam, 'structRootId')"
+                       title="{{'global:ui.button.save' | i18next}}"></a>
+                    <a href="javascript:;" class="ti-close"
+                       data-ng-click="switchNode(apiParam,'structRootId',false)"
+                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                </span>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="form-group" data-ng-if="apiParam.dataType">
+        <label for="apiParam.varKey" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.varKey"></label>
+        <div class="col-sm-8 checkbox">
+            <form data-ng-submit="updateVarKey(apiParam, 'varKey')" >
+                <a href="javascript:;" data-ng-show="!apiParam[apiParam.id+'varKey']"
+                   data-ng-click="switchNode(apiParam,'varKey',true)"
+                   title="{{'global:ui.button.edit' | i18next}}">
+                    {{apiParam.varKey}}
+                    <span class="ti-pencil"></span>
+                </a>
+                <span data-ng-show="apiParam[apiParam.id+'varKey']">
+                    <input id="apiParam.varKey" data-ng-model="apiParam.varKey">
+                    <a href="javascript:;" class="ti-save"
+                       data-ng-click="updateVarKey(apiParam, 'varKey')"
+                       title="{{'global:ui.button.save' | i18next}}"></a>
+                    <a href="javascript:;" class="ti-close"
+                       data-ng-click="switchNode(apiParam,'varKey',false)"
+                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                </span>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="page page-table" data-ng-controller="WmsApiParamListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.apiParam"></span>
+            <a href="#/wms/api_list" class="ti-arrow-left pull-right"></a>
+        </div>
+
+        <div class="panel-body">
+            <div class="callout callout-info">
+                {{api.resourceName}}【{{api.action}}】(<span data-ng-repeat="param in apiParamList"
+                      data-ng-if="param.depth == 1"><i data-ng-if="!$first">, </i>{{param.varKey}}</span>)
+            </div>
+            <div class="form-group text-center" data-ng-if="apiParamList.length == 0">
+                <button class="btn btn-primary" data-ng-click="insertNew(0, 2, 1);"
+                        data-ng-i18next="global:ui.button.create"></button>
+            </div>
+
+            <div data-ng-repeat="apiParam in apiParamList track by $index">
+                <div class="form-group row">
+                    <div class="col-xs-4">
+                        <span data-ng-class="'col-xs-offset-'+apiParam.depth"></span>
+                        <a href="javascript:" class="ti-menu"
+                           data-ng-click="switchCollapse(apiParam)"></a>
+                        <span data-ng-if="apiParam.dataType">{{apiParam.varKey}}</span>
+                        <span data-ng-if="!apiParam.dataType">
+                            {{structNodeMap[apiParam.structNodeId].fieldName}}
+                        </span>
+                    </div>
+                    <div class="col-xs-2">
+                        <span data-ng-if="apiParam.structNodeId">{{structNodeMap[apiParam.structNodeId].dataType}}</span>
+                        <span data-ng-if="!apiParam.structNodeId">{{apiParam.dataType}}</span>
+                    </div>
+                    <div class="col-xs-6">
+                        <div data-ng-if="apiParam.dataType == 'STRUCT' || apiParam.dataType == 'STRUCT_LIST'">
+                            <span>{{structRootMap[apiParam.structRootId].name}}</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="well" data-ng-show="apiParam.inEditing">
+                    <div data-ng-if="!apiParam.id" data-ng-include="'views/wms/partial/api_param_form.html'"></div>
+                    <div data-ng-if="apiParam.id">
+                        <div data-ng-include="'views/wms/partial/api_param_edit_form.html'"></div>
+                        <hr>
+                        <span data-ng-i18next="global:ui.heading.moreAction"></span>:
+                        <button class="btn btn-default"
+                                data-ng-click="addBrotherAbove(apiParam, $index);"
+                                data-ng-i18next="global:ui.button.addBrotherAbove"></button>
+                        <button class="btn btn-default"
+                                data-ng-click="addBrotherBelow(apiParam, $index)"
+                                data-ng-i18next="global:ui.button.addBrotherBelow"></button>
+                        <button class="btn btn-default"
+                                data-ng-if="apiParam.dataType.length > 0 && apiParam.dataType != 'VARIABLE'"
+                                data-ng-click="addChild(apiParam, $index)"
+                                data-ng-i18next="global:ui.button.addChild"></button>
+                        <button class="btn btn-danger" data-ng-if="apiParam.rightValue - apiParam.leftValue == 1"
+                                data-ng-click="remove(apiParam.id)"
+                                data-ng-i18next="global:ui.button.remove"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

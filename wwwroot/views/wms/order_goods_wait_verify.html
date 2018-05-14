@@ -1,0 +1,178 @@
+<div class="page page-table s" data-ng-controller="WmsOrderGoodsWaitVerifyCtrl">
+    <div data-ng-include="'views/wms/order_edit.html'"></div>
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-body" data-ng-show="!createOrderGoods.inEditing">
+            <div class="row">
+                <div class="col-md-4" data-ng-if="order.status == 0"
+                     data-ng-include="'views/wms/partial/order_seller_goods.html'">
+                </div>
+
+                <div data-ng-class="{'col-md-8': order.status == 0,
+                                         'col-md-12': order.status > 0}">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading" >
+                            <span>{{'wms:ui.heading.orderGoods' | i18next}}({{orderGoodsList.length}})</span>
+                        </div>
+                        <table class="table table-bordered table-responsive" data-ng-if="orderGoodsList.length">
+                            <thead>
+                            <tr>
+                                <th >
+                                    <div class="th">#</div>
+                                </th>
+                                <th class="col-sm-5">
+                                    <div class="th" data-ng-i18next="wms:ui.heading.goods"></div>
+                                </th>
+
+                                <th class="col-sm-3">
+                                    <div class="th">
+                                        {{'wms:ui.label.goodsNumber' | i18next}}
+                                        <!--<a class="btn btn-info btn-xs pull-right"-->
+                                           <!--data-ng-click="refreshOrder()">-->
+                                            <!--<span class="glyphicon glyphicon-refresh"></span>-->
+                                            <!--{{'global:ui.button.refresh' | i18next}}{{'wms:ui.label.number' | i18next}}-->
+                                        <!--</a>-->
+                                    </div>
+                                </th>
+                                <th class="col-sm-1">
+                                    <div class="th" data-ng-i18next="wms:ui.label.price"></div>
+                                </th>
+                                <th class="col-sm-1">
+                                    <div class="th" data-ng-i18next="wms:ui.label.orderGoodsPrice"></div>
+                                </th>
+                                <th class="col-sm-2">
+                                    <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody data-ng-repeat="item in orderGoodsList track by $index">
+                            <tr >
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    {{item.goodsName}}
+                                    <a href="javascript:;" data-ng-if="sellerGoodsMap[item.sellerGoodsId].isCombo && !item.isShowCombo"
+                                       data-ng-click="showCombo(item,true)">
+                                        <span class="danger icon icon-lg fa fa-chevron-circle-down"></span></a>
+
+                                    <a href="javascript:;" data-ng-if="sellerGoodsMap[item.sellerGoodsId].isCombo && item.isShowCombo"
+                                       data-ng-click="showCombo(item,false)">
+                                        <span class="danger icon icon-lg fa fa-chevron-circle-up"></span></a>
+
+
+                                </td>
+                                <td>
+                                    <span data-ng-if="item.id && order.status != 0">{{item.goodsNumber}}</span>
+                                    <div data-ng-if="item.id && order.status == 0" class="input-group">
+                                                <span class="btn btn-default input-group-addon"
+                                                      data-ng-click="changeOrderGoodsNumber(item,-1)">
+                                                    <i class="ti-minus"></i></span>
+                                        <input type="text" class="form-control"
+                                               data-ng-model="item.goodsNumber"
+                                               data-ng-blur="updateOrderGoodsNumber(item,'goodsNumber')">
+                                        <span class="btn btn-default input-group-addon"
+                                              data-ng-click="changeOrderGoodsNumber(item,1)">
+                                                    <i class="ti-plus"></i></span>
+                                    </div>
+                                </td>
+                                <td>{{item.price | number:2}}</td>
+                                <td>
+                                    {{item.goodsNumber * item.price | number:2}}
+                                </td>
+                                <td>
+                                    <button href="#/wms/order_goods_related_seller_goods?id={{item.id}}"
+                                            class="btn btn-sm btn-danger"
+                                            data-ng-if="item.id && order.status == 0"
+                                            data-ng-click="removeOrderGoods(item)">
+                                        <span class="ti-trash"></span>
+                                        <span data-ng-i18next="global:ui.button.remove"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr data-ng-repeat="comboGoods in allComboSellerGoodsMap[item.sellerGoodsId] track by $index"
+                                class="active"
+                                data-ng-if="sellerGoodsMap[item.sellerGoodsId].isCombo && item.isShowCombo">
+                                <td></td>
+                                <td colspan="6">{{sellerGoodsMap[comboGoods.sellerGoodsId].name}}
+                                    <span class="space"></span>
+                                    * {{comboGoods.goodsNumber}}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="table-filters">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <p><strong>{{'wms:ui.label.totalPrice' | i18next}}</strong>
+                                        <span class="space"></span>
+                                        <strong><span data-ng-if="orderGoodsList">{{orderGoodsList | calTotalPrice | number:2}}</span></strong>
+                                        <strong><span data-ng-if="!orderGoodsList">{{order.totalWeight| number:2}}</span></strong>
+                                    </p>
+                                    <p><strong>{{'wms:ui.label.paidPrice' | i18next}}</strong>
+                                        <span class="space"></span>
+                                        <strong><span>{{order.paidPrice | number:2}}</span></strong>
+                                    </p>
+                                </div>
+                                <div class="col-xs-6 ">
+                                    <button class="btn btn-success btn-w-md btn-lg pull-right"
+                                            data-ng-if="order.status == 0 && orderGoodsList.length > 0"
+                                            data-ng-click="verifyOrder()"
+                                            data-ng-i18next="wms:ui.label.verifyOrderSuccess"></button>
+                                    <a href="#/wms/split_order?orderId={{order.id}}"
+                                       data-ng-if="order.status==1"
+                                       class="btn btn-line-success btn-w-md btn-lg pull-right">
+                                        {{'wms:ui.label.performSplit' | i18next}}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row" data-ng-if="order.status == 0 && orderGoodsList.length > 0">
+                                <div class="col-xs-6">
+                                    <label data-ng-i18next="wms:ui.heading.logisticCompany" data-ng-if="isCreatePickOrder"></label>
+                                    <span class="space"></span>
+                                    <label class="ui-radio" data-ng-repeat="freight in sellerFreightGroupMap" data-ng-if="isCreatePickOrder" >
+                                        <input name="logisticCompanyId" type="radio"
+                                               data-ng-model="order.logisticCompanyId" value="{{freight.logisticCompanyId}}">
+                                        <span>{{logisticCompanyMap[freight.logisticCompanyId].name}}</span>
+                                    </label>
+
+                                </div>
+                                <div class="col-xs-6">
+                                    <label class="ui-checkbox pull-right"
+                                           data-ng-if="order.status == 0 && orderGoodsList.length > 0">
+                                        <input name="checkbox1" type="checkbox" checked=""
+                                               data-ng-model="isCreatePickOrder"
+                                                data-ng-click="changeCreatePick()">
+                                        <span data-ng-i18next="wms:ui.label.autoCreatePickOrder"></span>
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="alert alert-danger " data-ng-if="orderPaidPriceDiff < 0">
+                                <span data-ng-i18next="wms:ui.label.grossProfit"></span>
+                                <strong> {{orderPaidPriceDiff | number:2}} </strong>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <h3 class="panel-title" data-ng-i18next="global:ui.heading.relatedLink"></h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled">
+                <li>
+                    <a class="btn" href="#/wms/seller_platform_goods_list"
+                       data-ng-i18next="wms:ui.heading.sellerPlatformGoodsList"></a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+
+</div>
+
+

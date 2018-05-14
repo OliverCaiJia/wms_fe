@@ -1,0 +1,46 @@
+<div class="page page-table" data-ng-controller="WmsResponseInventoryTransferGoodsListCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.responseInventoryTransfer"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/response_inventory_transfer_list?responseSeller={{inventoryTransfer.responseSeller}}"
+               class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <div data-ng-include="'views/wms/partial/inventory_transfer_detail.html'"></div>
+        </div>
+    </section>
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.inventoryTransferGoods"></span>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.heading.goods"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="global:ui.label.name"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.goodsNumber"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in transferGoodsList track by $index">
+                <td>
+                    <img class="img-responsive img80_80"  data-ng-src="{{imgHost}}{{goodsMap[item.sellerGoodsId].image}}" />
+                </td>
+                <td>{{goodsMap[item.sellerGoodsId].name}}</td>
+                <td>{{item.goodsNumber}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+</div>

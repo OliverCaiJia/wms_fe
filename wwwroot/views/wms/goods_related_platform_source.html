@@ -1,0 +1,123 @@
+<div class="page page-table" data-ng-controller="WmsGoodsRelatedPlatformSourceCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.label.relatedPlatformSource"></span>
+            <span>({{goods.name}})</span>
+            <a href="#/wms/available_goods_list" class="ti-arrow-left pull-right"></a>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <button class="btn btn-primary"
+                            data-ng-show="!createSellerGoods.inEditing"
+                            data-ng-click="switchCollapse(createSellerGoods)">
+                        <span class="glyphicon glyphicon-plus" data-ng-show="!createSellerGoods.inEditing"></span>
+                        <span data-ng-i18next="global:ui.button.add"></span><span data-ng-i18next="wms:ui.heading.platformSource"></span>
+                    </button>
+                    <button class="btn btn-default"
+                            data-ng-show="createSellerGoods.inEditing"
+                            data-ng-click="switchCollapse(createSellerGoods)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        <span data-ng-i18next="global:ui.button.cancel"></span>
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-show="createSellerGoods.inEditing">
+            <div class="well">
+                <form class="form-horizontal" data-ng-submit="add(sellerGoods)">
+
+                    <a class="glyphicon glyphicon-remove pull-right"
+                       title="{{'global:ui.button.cancel' | i18next}}"
+                       data-ng-click="switchCollapse(createSellerGoods)">
+                    </a>
+
+                    <div class="row form-group col-sm-12">
+                        <label class="col-sm-2 control-label"
+                               data-ng-i18next="wms:ui.heading.platformSource"></label>
+                        <div class="col-sm-10">
+                            <label class="ui-radio" data-ng-repeat="platformSource in platformSourceMap">
+                                <input name="radio1" type="radio" value="{{platformSource.id}}" data-ng-model="sellerGoods.platformSourceId">
+                                <span>{{platformSource.name}}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row form-group col-sm-12">
+                        <label for="sellerGoods.uniqueCode" class="col-sm-2 control-label"
+                               data-ng-i18next="wms:ui.label.uniqueCode"></label>
+                        <div class="col-sm-10">
+                            <input class="form-control" id="sellerGoods.uniqueCode" data-ng-model="sellerGoods.uniqueCode" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-8">
+                            <a class="btn btn-default btn-md" data-ng-click="switchCollapse(createSellerGoods)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                                <span data-ng-i18next="global:ui.button.cancel"></span>
+                            </a>
+                            <div class="space"></div>
+
+                            <button class="btn btn-primary btn-w-md"
+                                    data-ng-i18next="global:ui.button.create"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.heading.platformSource"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.uniqueCode"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in sellerGoodsList track by $index">
+                <td>{{platformSourceMap[item.platformSourceId].name}}</td>
+                <td>
+                    <div>
+                        <form data-ng-submit="updateUniqueCode(item, 'uniqueCode')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'uniqueCode']"
+                               data-ng-click="switchNode(item,'uniqueCode',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.uniqueCode}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'uniqueCode']">
+                                <input id="inputUniqueCode" data-ng-model="item.uniqueCode" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateUniqueCode(item, 'uniqueCode')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'uniqueCode',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <a class="btn btn-xs btn-danger" data-ng-click="delete(item.id, $index)">
+                        <span class="ti-trash"></span>
+                        <span data-ng-i18next="global:ui.button.remove"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </section>
+
+</div>

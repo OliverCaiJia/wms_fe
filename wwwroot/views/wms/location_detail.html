@@ -1,0 +1,12 @@
+<div class="page" data-ng-controller="WmsLocationDetailCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.location"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/location_list?repositoryId={{repository.id}}" class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body" data-ng-include="'views/wms/partial/location_form.html'"></div>
+
+    </section>
+</div>

@@ -1,0 +1,174 @@
+<div class="page page-table" data-ng-controller="WmsLocationListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.location"></span>
+            <a href="#/wms/repository_list?warehouseId={{repository.warehouseId}}" class="ti-arrow-left pull-right"></a>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <button class="btn btn-primary" data-ng-click="switchCollapse(createLocation)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span data-ng-i18next="global:ui.button.create"></span>
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-show="createLocation.inEditing">
+            <div class="well">
+                <div data-ng-include="'views/wms/partial/location_form.html'"></div>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.heading.repositoryName"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.name"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.locationCode"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.activityBasedClassification"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.disabled"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in currentPageItems track by $index">
+                <td>{{repository.name}}</td>
+                <td>
+                    <div>
+                        <form data-ng-submit="update(item, 'name')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'name']"
+                               data-ng-click="switchNode(item,'name',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.name}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'name']">
+                                <input id="inputName" data-ng-model="item.name" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(item, 'name')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'name',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form data-ng-submit="update(item, 'locationCode')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'locationCode']"
+                               data-ng-click="switchNode(item,'locationCode',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.locationCode}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'locationCode']">
+                                <input id="inputLocationCode" data-ng-model="item.locationCode" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(item, 'locationCode')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'locationCode',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form data-ng-submit="update(item, 'activityBasedClassification')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'activityBasedClassification']"
+                               data-ng-click="switchNode(item,'activityBasedClassification',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.activityBasedClassification}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'activityBasedClassification']">
+                                <select class="ui-class" id="inputActivityBasedClassification"
+                                    data-ng-model="item.activityBasedClassification"
+                                    data-ng-options="ABC for ABC in ABCList">
+                                </select>
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(item, 'activityBasedClassification')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(item,'activityBasedClassification',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <span data-ng-class="{'label label-danger':item.disabled}">{{'wms:ui.enum.'+ item.disabled | i18next}}</span>
+                </td>
+                <td>
+                    <a href="#/wms/location_detail?id={{item.id}}"
+                       class="btn btn-xs btn-primary">
+                        <span class="ti-pencil"></span>
+                        <span data-ng-i18next="global:ui.label.detail"></span>
+                    </a>
+                    <a class="btn btn-xs btn-danger" data-ng-click="delete(item.id, $index)">
+                        <span class="ti-trash"></span>
+                        <span data-ng-i18next="global:ui.button.remove"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <uib-pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredItems.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="searchOption.numPerPage"
+                                    rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    boundary-links="true"></uib-pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+</div>

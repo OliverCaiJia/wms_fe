@@ -1,0 +1,96 @@
+<div class="panel panel-default" data-ng-controller="WmsSellerAvailableGoodsGroupEditCtrl">
+    <div class="panel-footer">
+        <span class="glyphicon glyphicon-th"></span>
+        <span data-ng-i18next="wms:ui.heading.sellerAvailableGoodsGroup"></span><span data-ng-i18next="global:ui.label.detail"></span>
+        <a href="#/wms/seller_available_goods_group_list" class="ti-arrow-left pull-right">
+            {{'global:ui.label.goBack' | i18next}}{{'wms:ui.heading.sellerAvailableGoodsGroup' | i18next}}</a>
+    </div>
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <div class=" col-sm-6 form-group">
+                <label class="col-sm-4 control-label"
+                       data-ng-i18next="wms:ui.label.groupName"></label>
+                <div class="col-sm-8 checkbox">
+                    <form data-ng-submit="updateGroupName(sellerAvailableGoodsGroup, 'groupName')" >
+                        <a href="javascript:;" data-ng-show="!sellerAvailableGoodsGroup[sellerAvailableGoodsGroup.id+'groupName']"
+                           data-ng-click="switchNode(sellerAvailableGoodsGroup,'groupName',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            {{sellerAvailableGoodsGroup.groupName}}
+                            <span class="ti-pencil"></span>
+                        </a>
+                        <span data-ng-show="sellerAvailableGoodsGroup[sellerAvailableGoodsGroup.id+'groupName']">
+                                <input id="inputGroupName" data-ng-model="sellerAvailableGoodsGroup.groupName" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateGroupName(sellerAvailableGoodsGroup, 'groupName')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerAvailableGoodsGroup,'groupName',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-sm-6 form-group">
+                <label class="col-sm-4 control-label"
+                       data-ng-i18next="wms:ui.label.barCode"></label>
+                <div class="col-sm-8 checkbox">
+                    <form data-ng-submit="updateBarCode(sellerAvailableGoodsGroup, 'barCode')" >
+                        <a href="javascript:;" data-ng-show="!sellerAvailableGoodsGroup[sellerAvailableGoodsGroup.id+'barCode']"
+                           data-ng-click="switchNode(sellerAvailableGoodsGroup,'barCode',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            {{sellerAvailableGoodsGroup.barCode}}
+                            <span class="ti-pencil"></span>
+                        </a>
+                        <span data-ng-show="sellerAvailableGoodsGroup[sellerAvailableGoodsGroup.id+'barCode']">
+                                <input id="inputBarCode" data-ng-model="sellerAvailableGoodsGroup.barCode" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateBarCode(sellerAvailableGoodsGroup, 'barCode')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(sellerAvailableGoodsGroup,'barCode',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-sm-6 form-group" data-ng-if="sellerAvailableGoodsGroup.id">
+                <label  class="col-sm-4 control-label"
+                        data-ng-i18next="wms:ui.label.isDisabled"></label>
+                <div class="col-sm-8 ">
+
+                    <a href="javascript:;" class="btn btn-xs btn-success"
+                       data-ng-if="!sellerAvailableGoodsGroup.disabled"
+                       data-ng-click="updateDisabled(sellerAvailableGoodsGroup,!sellerAvailableGoodsGroup.disabled)">
+                        <span class="fa fa-toggle-on"></span>
+                        <span >{{'wms:ui.label.enabled' | i18next}}</span>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs btn-danger"
+                       data-ng-if="sellerAvailableGoodsGroup.disabled"
+                       data-ng-click="updateDisabled(sellerAvailableGoodsGroup,!sellerAvailableGoodsGroup.disabled)">
+                        <span class="fa fa-toggle-off"></span>
+                        <span >{{'wms:ui.label.disabled' | i18next}}</span>
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="col-sm-6 form-group" data-ng-if="sellerAvailableGoodsGroup.id">
+                <label  class="col-sm-4 control-label"
+                        data-ng-i18next="wms:ui.label.isLocked"></label>
+                <div class="col-sm-8 checkbox">
+                    <span data-ng-if="!sellerAvailableGoodsGroup.isLocked">
+                        <i class="icon ti-unlock"></i>
+                        {{'wms:ui.label.unLocked' | i18next}}
+                    </span>
+                    <span data-ng-if="sellerAvailableGoodsGroup.isLocked">
+                        <i class="icon ti-lock"></i>
+                        {{'wms:ui.label.locked' | i18next}}
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

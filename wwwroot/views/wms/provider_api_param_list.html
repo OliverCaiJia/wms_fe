@@ -1,0 +1,67 @@
+<div class="page page-table" data-ng-controller="WmsProviderApiParamListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.providerApiParam"></span>
+            <a href="#/wms/provider_api_list?apiId={{providerApi.apiId}}" class="ti-arrow-left pull-right"
+                    data-ng-if="providerApi"></a>
+        </div>
+
+        <div class="panel-body">
+            <div class="callout callout-info">
+                {{provider.name}} ({{api.resourceName}}【{{api.action}}】)
+            </div>
+            <div class="form-group text-center" data-ng-if="providerApiParamList.length == 0">
+                <button class="btn btn-primary" data-ng-click="insertNew(0, 2, 1);"
+                        data-ng-i18next="global:ui.button.create"></button>
+            </div>
+
+            <div data-ng-repeat="item in providerApiParamList track by $index">
+                <div class="form-group row">
+                    <div class="col-xs-4">
+                        <span data-ng-class="'col-xs-offset-'+item.depth"></span>
+                        <a href="javascript:" class="ti-menu"
+                           data-ng-click="switchCollapse(item)"></a>
+                        <span>{{item.varKey}}</span>
+                    </div>
+                    <div class="col-xs-1">
+                        <span>{{item.dataType}}</span>
+                    </div>
+                    <div class="col-xs-1">
+                        <span data-ng-if="item.required == true || item.required == '1'"
+                              data-ng-i18next="wms:ui.label.required"></span>
+                    </div>
+                    <div class="col-xs-4">
+                        <span>{{apiParamMap[item.apiParamId].name}}</span>
+                    </div>
+                    <div class="col-xs-2">
+                        <span>{{item.defaultValue}}</span>
+                    </div>
+                </div>
+                <div class="well" data-ng-show="item.inEditing">
+                    <div data-ng-if="!item.id" data-ng-include="'views/wms/partial/provider_api_param_form.html'"></div>
+                    <div data-ng-if="item.id">
+                        <div data-ng-include="'views/wms/partial/provider_api_param_edit_form.html'"></div>
+                        <hr>
+                        <span data-ng-i18next="global:ui.heading.moreAction"></span>:
+                        <button class="btn btn-default"
+                                data-ng-click="addBrotherAbove(item, $index);"
+                                data-ng-i18next="global:ui.button.addBrotherAbove"></button>
+                        <button class="btn btn-default"
+                                data-ng-click="addBrotherBelow(item, $index)"
+                                data-ng-i18next="global:ui.button.addBrotherBelow"></button>
+                        <button class="btn btn-default"
+                                data-ng-if="item.dataType.length > 0 && item.dataType != 'VARIABLE'"
+                                data-ng-click="addChild(item, $index)"
+                                data-ng-i18next="global:ui.button.addChild"></button>
+                        <button class="btn btn-danger" data-ng-if="item.rightValue - item.leftValue == 1"
+                                data-ng-click="remove(item.id)"
+                                data-ng-i18next="global:ui.button.remove"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</div>

@@ -1,0 +1,68 @@
+<div class="page" data-ng-controller="WmsModuleActionEditCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.moduleAction"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/module_action_list" class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+        
+                <div class="form-group">
+                    <label for="moduleAction.id" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.id"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="moduleAction.id" readonly data-ng-model="moduleAction.id" />
+                    </div>
+                </div>
+                <div>
+                    <label class="col-sm-4 control-label"
+                           data-ng-i18next="wms:ui.label.alias"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="updateAlias(moduleAction, 'alias')" >
+                            <a href="javascript:;" data-ng-show="!moduleAction[moduleAction.id+'alias']"
+                               data-ng-click="switchNode(moduleAction,'alias',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{moduleAction.alias}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="moduleAction[moduleAction.id+'alias']">
+                                <input id="inputAlias" data-ng-model="moduleAction.alias" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateAlias(moduleAction, 'alias')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(moduleAction,'alias',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div>
+                    <label class="col-sm-4 control-label"
+                           data-ng-i18next="wms:ui.label.name"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="updateName(moduleAction, 'name')" >
+                            <a href="javascript:;" data-ng-show="!moduleAction[moduleAction.id+'name']"
+                               data-ng-click="switchNode(moduleAction,'name',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{moduleAction.name}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="moduleAction[moduleAction.id+'name']">
+                                <input id="inputName" data-ng-model="moduleAction.name" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateName(moduleAction, 'name')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(moduleAction,'name',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

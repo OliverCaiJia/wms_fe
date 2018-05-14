@@ -1,0 +1,51 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.name"></label>
+        <div class="col-sm-8 checkbox">
+            <form data-ng-submit="updateFieldName(node, 'fieldName')" >
+                <a href="javascript:;" data-ng-show="!node[node.id+'fieldName']"
+                   data-ng-click="switchNode(node,'fieldName',true)"
+                   title="{{'global:ui.button.edit' | i18next}}">
+                    {{node.fieldName}}
+                    <span class="ti-pencil"></span>
+                </a>
+                <span data-ng-show="node[node.id+'fieldName']">
+                    <input id="inputFieldName" data-ng-model="node.fieldName" />
+                    <a href="javascript:;" class="ti-save"
+                       data-ng-click="updateFieldName(node, 'fieldName')"
+                       title="{{'global:ui.button.save' | i18next}}"></a>
+                    <a href="javascript:;" class="ti-close"
+                       data-ng-click="switchNode(node,'fieldName',false)"
+                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                </span>
+            </form>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.dataType"></label>
+        <div class="col-sm-8 checkbox">
+            <form data-ng-submit="updateDataType(node, 'dataType')" >
+                <a href="javascript:;" data-ng-show="!node[node.id+'dataType']"
+                   data-ng-click="switchNode(node,'dataType',true)"
+                   title="{{'global:ui.button.edit' | i18next}}">
+                    {{node.dataType}}
+                    <span class="ti-pencil"></span>
+                </a>
+                <span data-ng-show="node[node.id+'dataType']">
+                    <select class="ui-class" id="node.dataType"
+                            data-ng-model="node.dataType"
+                            data-ng-options="dataType for dataType in dataTypeList" >
+                    </select>
+                    <a href="javascript:;" class="ti-save"
+                       data-ng-click="updateDataType(node, 'dataType')"
+                       title="{{'global:ui.button.save' | i18next}}"></a>
+                    <a href="javascript:;" class="ti-close"
+                       data-ng-click="switchNode(node,'dataType',false)"
+                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                </span>
+            </form>
+        </div>
+    </div>
+</div>

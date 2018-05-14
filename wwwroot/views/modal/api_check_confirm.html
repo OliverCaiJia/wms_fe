@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 data-ng-i18next="global:ui.modal.confirm"></h3>
+</div>
+<div class="modal-body">
+    <ul class="alert alert-warning">
+        <li class="angular-ui-tree-nodes" data-ng-repeat='oneLineMsg in apiResult.message.split("\n") track by $index'>
+            {{ oneLineMsg }}
+        </li>
+    </ul>
+</div>
+<div class="modal-footer">
+    <button autofocus class="btn btn-success" data-ng-click="confirm()">
+        <span class="glyphicon glyphicon-ok"></span>
+        <span data-ng-i18next="global:ui.button.confirm"></span>
+    </button>
+
+    <button autofocus class="btn btn-primary" data-ng-click="close()">
+        <span class="glyphicon glyphicon-close"></span>
+        <span data-ng-i18next="global:ui.button.cancel"></span>
+    </button>
+</div>

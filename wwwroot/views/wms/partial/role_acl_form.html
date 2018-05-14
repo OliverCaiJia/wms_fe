@@ -1,0 +1,30 @@
+<form class="form-horizontal" data-ng-submit="add(roleAcl)">
+    <div class="form-group">
+        <label for="roleAcl.id" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.id"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="roleAcl.id" data-ng-model="roleAcl.id" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="roleAcl.roleId" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.roleId"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="roleAcl.roleId" data-ng-model="roleAcl.roleId" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="roleAcl.moduleActionId" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.moduleActionId"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="roleAcl.moduleActionId" data-ng-model="roleAcl.moduleActionId" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="roleAcl.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!roleAcl.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

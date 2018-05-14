@@ -1,0 +1,132 @@
+<div class="page " data-ng-controller="WmsPickOrderWaitPickNoPrintCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.waitPickLogisticOrderList"></span>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                     <span data-ng-if="chosenOrderIdLength > 0">
+                        {{'wms:ui.label.chosen' | i18next}}: {{chosenOrderIdLength}}
+                    </span>
+                    <button class="btn btn-success"
+                            data-ng-if="chosenOrderIdLength > 0"
+                            data-ng-click="printCheck()">
+                        <span class="ti-printer"></span>
+                        {{'wms:ui.label.performExpressSn' | i18next}}
+                    </button>
+                    <h4 class="text-info" data-ng-if="items.length > 0 && chosenOrderIdLength == 0">
+                        {{'wms:ui.tips.batchCreateExpressSn' | i18next}}</h4>
+
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <section class="table-responsive">
+                <table class="table table-bordered table-striped cf">
+                    <thead class="cf">
+                    <tr>
+                        <th>
+                            <div class="th">
+                                <label class="">
+                                    <input name="printBox" type="checkbox" value=""
+                                           data-ng-click="checkAll()"
+                                           data-ng-model="verifyAllGoodsIds" >
+                                    <span data-ng-i18next="wms:ui.label.logisticSn"></span>
+                                </label>
+                            </div>
+                        </th>
+                        <th><div class="th">{{'wms:ui.heading.logisticCompany' | i18next}}</div></th>
+                        <th><div class="th">{{'wms:ui.label.expressSn' | i18next}}</div></th>
+                        <th><div class="th">{{'wms:ui.label.phoneNumber' | i18next}}</div></th>
+                        <th><div class="th">{{'wms:ui.label.consigneeName' | i18next}}</div></th>
+                        <th><div class="th">{{'wms:ui.label.comment' | i18next}}</div></th>
+                        <th><div class="th">{{'wms:ui.label.status' | i18next}}</div></th>
+                        <th><div class="th">{{'global:ui.label.action' | i18next}}</div></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in currentPageItems track by $index">
+                        <td>
+                            <label>
+                                <input name="printBox" type="checkbox" value="{{item.id}}"
+                                       data-ng-if="item.printable && item.expressSn"
+                                       data-ng-click="calArrayTrue()"
+                                       data-ng-model="verifyOrderIds[item.id]" >
+                                <span>{{item.id}}</span>
+                            </label>
+                        </td>
+                        <td> {{logisticCompanyMap[item.logisticCompanyId].name}}</td>
+                        <td>
+                            {{item.expressSn}}
+                            <button class="btn btn-xs btn-primary" data-ng-if="!item.expressSn && item.logisticCompanyId>0"
+                                data-ng-click="setExpressSn(item)">
+                                <span data-ng-i18next="wms:ui.tips.setExpressSn" data-ng-if="!item.isSetting"></span>
+                                <span data-ng-i18next="wms:ui.label.obtaining" data-ng-if="item.isSetting"></span>
+                            </button>
+                        </td>
+                        <td>{{item.phoneNumber | limitTo:3}}****{{item.phoneNumber | limitTo:-4}}</td>
+                        <td>{{item.consigneeName}}</td>
+                        <td>{{item.comment}}</td>
+                        <td><span data-ng-class="{ 'label label-danger': item.status == 1,
+                                           'label label-warning': item.status == 2,
+                                           'label label-success': item.status == 3}">
+                        {{'wms:ui.logisticOrderStatus.'+item.status | i18next}}</span>
+                        </td>
+                        <td>
+
+                            <button class="btn btn-sm btn-primary"
+                                    data-ng-if="item.printable && item.expressSn"
+                                    data-ng-click="printOrder(item.id)">
+                                <span class="ti-printer"></span>
+                                <span data-ng-i18next="global:ui.button.print"></span>
+                            </button>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <footer class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                        <uib-pagination class="pagination-sm"
+                                        ng-model="currentPage"
+                                        total-items="filteredItems.length"
+                                        max-size="4"
+                                        ng-change="select(currentPage)"
+                                        items-per-page="searchOption.numPerPage"
+                                        rotate="false"
+                                        previous-text="&lsaquo;" next-text="&rsaquo;"
+                                        boundary-links="true"></uib-pagination>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+</div>

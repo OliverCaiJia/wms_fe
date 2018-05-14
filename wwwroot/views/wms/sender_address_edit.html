@@ -1,0 +1,125 @@
+<div class="page" data-ng-controller="WmsSenderAddressEditCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.senderAddress"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/seller_list" class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.senderName"></label>
+                    <div class="col-sm-8 checkbox">
+                        <form data-ng-submit="updateName(senderAddress, 'name')" >
+                            <a href="javascript:;" data-ng-show="!senderAddress[senderAddress.id+'name']"
+                               data-ng-click="switchNode(senderAddress,'name',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{senderAddress.name}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="senderAddress[senderAddress.id+'name']">
+                                <input id="inputName" data-ng-model="senderAddress.name" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateName(senderAddress, 'name')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(senderAddress,'name',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"
+                          data-ng-i18next="wms:ui.label.phoneNumber"></label>
+                    <div class="col-sm-8 checkbox">
+                        <form data-ng-submit="updatePhoneNumber(senderAddress, 'phoneNumber')" >
+                            <a href="javascript:;" data-ng-show="!senderAddress[senderAddress.id+'phoneNumber']"
+                               data-ng-click="switchNode(senderAddress,'phoneNumber',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{senderAddress.phoneNumber}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="senderAddress[senderAddress.id+'phoneNumber']">
+                                <input id="inputPhoneNumber" data-ng-model="senderAddress.phoneNumber" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updatePhoneNumber(senderAddress, 'phoneNumber')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(senderAddress,'phoneNumber',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"
+                          data-ng-i18next="wms:ui.label.province-city-district"></label>
+                    <div class="col-sm-8 checkbox">
+                        <a href="javascript:;" data-ng-show="!senderAddress[senderAddress.id+'prefixAddress']"
+                           data-ng-click="switchNode(senderAddress,'prefixAddress',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            <span data-ng-repeat="province in provinceList"
+                                  data-ng-if="senderAddress.province == province.id">{{province.name}}</span>
+                            <span data-ng-repeat="city in cityList"
+                                  data-ng-if="senderAddress.city == city.id">{{city.name}}</span>
+                            <span data-ng-repeat="district in districtList"
+                                  data-ng-if="senderAddress.district == district.id">{{district.name}}</span>
+                            <span class="ti-pencil"></span>
+                        </a>
+                            <span data-ng-show="senderAddress[senderAddress.id+'prefixAddress']">
+                                <select class="ui-class" id="province"
+                                        data-ng-if="provinceList"
+                                        data-ng-change="senderAddress.city == 0;senderAddress.district == 0;getCityList()"
+                                        data-ng-model="senderAddress.province"
+                                        data-ng-options="province.id as province.name for province in provinceList">
+                                </select>
+                                <select class="ui-class" id="city"
+                                        data-ng-if="cityList"
+                                        data-ng-model="senderAddress.city"
+                                        data-ng-change="senderAddress.district == 0;getDistrictList()"
+                                        data-ng-options="city.id as city.name for city in cityList">
+                                </select>
+                                <select class="ui-class" id="district"
+                                        data-ng-if="districtList.length"
+                                        data-ng-model="senderAddress.district"
+                                        data-ng-options="district.id as district.name for district in districtList">
+                                </select>
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="savePrefixAddress(senderAddress, 'prefixAddress')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                    <a href="javascript:;" class="ti-close"
+                                       data-ng-click="switchNode(senderAddress,'prefixAddress',false)"
+                                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"
+                           data-ng-i18next="wms:ui.heading.senderAddress"></label>
+                    <div class="col-sm-8 checkbox">
+                        <form data-ng-submit="updateAddress(senderAddress, 'address')" >
+                            <a href="javascript:;" data-ng-show="!senderAddress[senderAddress.id+'address']"
+                               data-ng-click="switchNode(senderAddress,'address',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{senderAddress.address}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="senderAddress[senderAddress.id+'address']">
+                                <input id="inputAddress" data-ng-model="senderAddress.address" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateAddress(senderAddress, 'address')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(senderAddress,'address',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,193 @@
+<section class="panel panel-default" data-ng-controller="WmsOrderEditCtrl">
+    <div class="panel-heading">
+        <span class="glyphicon glyphicon-th"></span>
+        <span data-ng-i18next="wms:ui.heading.order"></span>
+        <span>{{order.orderSn}}</span>
+        <span>【{{platformSourceMap[order.platformSourceId].name}}】</span>
+        <a href="#/wms/order_list_wait_verify" data-ng-if="order.id && order.status == 0" class="ti-arrow-left pull-right"></a>
+        <a href="#/wms/order_list_success_verify" data-ng-if="order.id && order.status == 1" class="ti-arrow-left pull-right"></a>
+        <a href="#/wms/order_list_part_split" data-ng-if="order.id && order.status == 2" class="ti-arrow-left pull-right"></a>
+        <a href="#/wms/order_list_success_split" data-ng-if="order.id && order.status == 3" class="ti-arrow-left pull-right"></a>
+    </div>
+    <div class="panel panel-body" >
+        <div class="form-horizontal row" data-ng-if="order.id">
+                <div class="col-sm-4">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"
+                               data-ng-i18next="wms:ui.label.comment"></label>
+                        <div class="col-sm-9 checkbox">
+                            <div class="input-group" >
+                                <span>{{order.comment}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"
+                               data-ng-i18next="wms:ui.label.status"></label>
+                        <div class="col-sm-9 checkbox">
+                            <span data-ng-if="order.status >= 0"
+                                  data-ng-class="{ 'label label-default': order.status == 0,
+                                       'label label-danger': order.status == 1,
+                                       'label label-warning': order.status == 2,
+                                       'label label-success': order.status == 3}">
+                            {{'wms:ui.orderStatus.'+order.status | i18next}}
+                            </span>
+                            <span class="space"></span>
+
+                            <a class="btn btn-sm btn-line-primary" data-ng-if="isSplitOrderPages && order.status == 0"
+                               href="#/wms/order_goods_wait_verify?orderId={{order.id}}">
+                                {{'wms:ui.label.verifyOrder' | i18next}}</a>
+
+                            <a class="btn btn-sm btn-line-primary" data-ng-if="isSplitOrderPages && order.status > 0"
+                               href="#/wms/order_goods_list?orderId={{order.id}}">
+                                {{'wms:ui.heading.orderGoods' | i18next}}</a>
+
+                            <a href="#/wms/split_order?orderId={{order.id}}"
+                               data-ng-if="isOrderGoodsListPages && order.status > 0"
+                               class="btn btn-sm btn-line-primary">
+                                <span data-ng-if="order.status == 1 || order.status == 2">
+                                    {{'wms:ui.label.performSplit' | i18next}}
+                                </span>
+                                <span data-ng-if="order.status == 3">
+                                    {{'wms:ui.heading.pickOrder' | i18next}}
+                                </span>
+                            </a>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class=" col-sm-4 ">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"
+                               data-ng-i18next="wms:ui.label.consigneeName"></label>
+                        <div class="col-sm-9 checkbox">
+                            <form data-ng-submit="updateConsigneeName(order, 'consigneeName')" data-ng-if="order.status <= 1" >
+                                <a href="javascript:;" data-ng-show="!order[order.id+'consigneeName']"
+                                   data-ng-click="switchNode(order,'consigneeName',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{order.consigneeName}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="order[order.id+'consigneeName']">
+                                    <input data-ng-model="order.consigneeName" />
+                                    <a href="javascript:;" class="ti-save"
+                                       data-ng-click="updateConsigneeName(order, 'consigneeName')"
+                                       title="{{'global:ui.button.save' | i18next}}"></a>
+                                    <a href="javascript:;" class="ti-close"
+                                       data-ng-click="switchNode(order,'consigneeName',false)"
+                                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                </span>
+                            </form>
+                            <span data-ng-if="order.status > 1">{{order.consigneeName}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"
+                               data-ng-i18next="wms:ui.label.phoneNumber"></label>
+                        <div class="col-sm-9 checkbox">
+                            <form data-ng-submit="updatePhoneNumber(order, 'phoneNumber')" data-ng-if="order.status <= 1">
+                                <a href="javascript:;" data-ng-show="!order[order.id+'phoneNumber']"
+                                   data-ng-click="switchNode(order,'phoneNumber',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{order.phoneNumber}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="order[order.id+'phoneNumber']">
+                                    <input id="inputPhoneNumber" data-ng-model="order.phoneNumber" />
+                                    <a href="javascript:;" class="ti-save"
+                                       data-ng-click="updatePhoneNumber(order, 'phoneNumber')"
+                                       title="{{'global:ui.button.save' | i18next}}"></a>
+                                    <a href="javascript:;" class="ti-close"
+                                       data-ng-click="switchNode(order,'phoneNumber',false)"
+                                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                </span>
+                            </form>
+                            <span data-ng-if="order.status > 1">{{order.phoneNumber}}</span>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class=" col-sm-4 ">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"
+                               data-ng-i18next="wms:ui.label.province-city-district"></label>
+                        <div class="col-sm-9 checkbox">
+                            <div data-ng-if="order.status > 1">
+                                <span data-ng-repeat="province in provinceList" data-ng-if="order.province == province.id">{{province.name}}</span>
+                                <span data-ng-repeat="city in cityList" data-ng-if="order.city == city.id">{{city.name}}</span>
+                                <span data-ng-repeat="district in districtList" data-ng-if="order.district == district.id">{{district.name}}</span>
+                            </div>
+                            <a href="javascript:;" data-ng-show="!order[order.id+'address']"
+                               data-ng-if="order.status < 2"
+                               data-ng-click="switchNode(order,'address',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                <span data-ng-repeat="province in provinceList" data-ng-if="order.province == province.id">{{province.name}}</span>
+                                <span data-ng-repeat="city in cityList" data-ng-if="order.city == city.id">{{city.name}}</span>
+                                <span data-ng-repeat="district in districtList" data-ng-if="order.district == district.id">{{district.name}}</span>
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="order[order.id+'address']">
+                                <select class="ui-class" id="province"
+                                        data-ng-disabled="order.status >1"
+                                        data-ng-if="provinceList"
+                                        data-ng-change="order.city == 0;order.district == 0;getCityList(order)"
+                                        data-ng-model="order.province"
+                                        data-ng-options="province.id as province.name for province in provinceList">
+                                </select>
+                                <select class="ui-class" id="city"
+                                        data-ng-disabled="order.status >1"
+                                        data-ng-if="cityList"
+                                        data-ng-model="order.city"
+                                        data-ng-change="order.district == 0;getDistrictList(order)"
+                                        data-ng-options="city.id as city.name for city in cityList">
+                                </select>
+                                <select class="ui-class" id="district"
+                                        data-ng-disabled="order.status >1"
+                                        data-ng-if="districtList.length"
+                                        data-ng-model="order.district"
+                                        data-ng-options="district.id as district.name for district in districtList">
+                                </select>
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="saveAddress(order, 'address')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                    <a href="javascript:;" class="ti-close"
+                                       data-ng-click="switchNode(order,'address',false)"
+                                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"
+                               data-ng-i18next="wms:ui.label.consigneeAddress"></label>
+                        <div class="col-sm-9 ">
+                            <form data-ng-submit="updateConsigneeAddress(order, 'consigneeAddress')" data-ng-if="order.status <= 1">
+                                <a href="javascript:;" data-ng-show="!order[order.id+'consigneeAddress']"
+                                   data-ng-click="switchNode(order,'consigneeAddress',true)"
+                                   title="{{'global:ui.button.edit' | i18next}}">
+                                    {{order.consigneeAddress}}
+                                    <span class="ti-pencil"></span>
+                                </a>
+                                <span data-ng-show="order[order.id+'consigneeAddress']">
+                                <input id="inputConsigneeAddress" data-ng-model="order.consigneeAddress" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateConsigneeAddress(order, 'consigneeAddress')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(order,'consigneeAddress',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                            </form>
+                            <span data-ng-if="order.status > 1">{{order.consigneeAddress}}</span>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="alert alert-danger"
+             data-ng-if="isSplitOrderPages && order.status == 0">{{'wms:message.orderVerifyFirst' | i18next}}</div>
+    </div>
+
+</section>

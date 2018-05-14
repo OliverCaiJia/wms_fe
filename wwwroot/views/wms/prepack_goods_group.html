@@ -1,0 +1,98 @@
+<div class="page page-table" data-ng-controller="WmsPrepackGoodsGroupCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.label.goodsGroupPackEntrance"></span>
+            <span data-ng-if="seller.id">【{{seller.name}}】</span>
+            <a href="#/wms/seller_list" class="ti-arrow-left pull-right">
+                {{'wms:ui.label.backTo' | i18next}}{{'wms:ui.heading.sellerList' | i18next}}
+            </a>
+        </div>
+
+        <div class="panel-body">
+            <form class="form-horizontal" data-ng-submit="addPrepackOrder()">
+                <div class="form-group">
+                    <label for="barCode" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.barCode"></label>
+                    <div class="col-sm-4 ">
+                        <input class="form-control" id="barCode" data-ng-model="barCode"
+                               placeholder="{{'wms:ui.label.pleaseScanning' | i18next}}{{'wms:ui.label.barCode' | i18next}}" />
+                    </div>
+                    <div class="col-sm-2 ">
+                        <button class="btn btn-primary btn-w-md">
+                            <span data-ng-i18next="wms:ui.label.pleaseScanning"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.name"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in currentPageItems">
+                <td>{{item.groupName}}</td>
+                <td>
+                    <a class="btn btn-sm btn-line-primary" data-ng-click="packGoods(item)">
+                        <span class="ti-gift"></span>
+                        <span data-ng-i18next="wms:ui.label.goToPackGoods"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <uib-pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredItems.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="searchOption.numPerPage"
+                                    rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    boundary-links="true"></uib-pagination>
+                </div>
+            </div>
+        </footer>
+
+    </section>
+
+</div>

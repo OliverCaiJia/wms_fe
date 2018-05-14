@@ -1,0 +1,128 @@
+<div class="page page-table" data-ng-controller="WmsPickOrderWaitDeliveryListCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.packagedOrderList"></span>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+
+            <section class="table-responsive table-dynamic">
+                <table class="table table-bordered table-striped cf">
+                    <thead >
+                    <tr>
+                        <th>
+                            <div class="th">
+                                <span data-ng-i18next="wms:ui.label.logisticSn"></span>
+                            </div>
+                        </th>
+                        <th><div class="th">{{'wms:ui.heading.logisticCompany' | i18next}}</div></th>
+                        <th><div class="th">{{'wms:ui.label.expressSn' | i18next}}</div></th>
+                        <th><div class="th">{{'wms:ui.label.phoneNumber' | i18next}}</div></th>
+                        <th><div class="th">{{'wms:ui.label.consigneeName' | i18next}}</div></th>
+                        <th><div class="th">{{'wms:ui.label.comment' | i18next}}</div></th>
+                        <th><div class="th">{{'wms:ui.label.status' | i18next}}</div></th>
+                        <th><div class="th">{{'wms:ui.label.weight' | i18next}}</div></th>
+                        <th><div class="th">
+                            {{'wms:ui.label.modifiedTime' | i18next}}
+                            <span class="fa fa-angle-up"
+                                  data-ng-click=" order('modified') "
+                                  data-ng-class="{active: row == 'modified'}"></span>
+                            <span class="fa fa-angle-down"
+                                  data-ng-click=" order('-modified') "
+                                  data-ng-class="{active: row == '-modified'}"></span>
+                        </div></th>
+                        <th><div class="th">{{'global:ui.label.action' | i18next}}</div></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in currentPageItems track by $index">
+                        <td>
+                            <span>{{item.id}}</span>
+                        </td>
+                        <td> {{logisticCompanyMap[item.logisticCompanyId].name}}</td>
+                        <td><span data-ng-if="!item.expressSn">{{'global:ui.label.null' | i18next}}</span> {{item.expressSn}}</td>
+                        <td>{{item.phoneNumber | limitTo:3}}****{{item.phoneNumber | limitTo:-4}}</td>
+                        <td> {{item.consigneeName}}</td>
+                        <td>{{item.comment}}</td>
+                        <td>
+                            <div data-ng-if="item.status == '3'">
+                                <span class="label label-success" data-ng-if="item.totalWeight > 0">
+                                    {{'wms:ui.logisticOrderStatus.'+item.status | i18next}}
+                                </span>
+                                <span class="label label-info" data-ng-if="!item.totalWeight">
+                                    {{'wms:ui.logisticOrderStatus.'+item.status | i18next}}，{{'wms:ui.label.waiteWeight' | i18next}}
+                                </span>
+                            </div>
+                            <div data-ng-if="item.status != '3'">
+                                <span data-ng-class="{ 'label label-danger': item.status == 1,
+                                               'label label-warning': item.status == 2}">
+                                    {{'wms:ui.logisticOrderStatus.'+item.status | i18next}}
+                                </span>
+                            </div>
+                        </td>
+                        <td>{{item.totalWeight}}</td>
+                        <td>{{item.modified}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-success" data-ng-click="printOrder(item.id)">
+                                <span class="ti-printer"></span>
+                                <span data-ng-i18next="global:ui.button.print"></span>
+                            </button>
+                            <span class="space"></span>
+                            <button class="btn btn-sm btn-line-primary" data-ng-if="!item.totalWeight"
+                                    data-ng-click="weighAgain(item)">
+                                <span class="fa fa-balance-scale"></span>
+                                <span data-ng-i18next="wms:ui.label.weightAgain"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <footer class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                        <uib-pagination class="pagination-sm"
+                                        ng-model="currentPage"
+                                        total-items="filteredItems.length"
+                                        max-size="4"
+                                        ng-change="select(currentPage)"
+                                        items-per-page="searchOption.numPerPage"
+                                        rotate="false"
+                                        previous-text="&lsaquo;" next-text="&rsaquo;"
+                                        boundary-links="true"></uib-pagination>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+</div>

@@ -1,0 +1,45 @@
+<form class="form-horizontal" data-ng-submit="add(providerApi)">
+    <div class="form-group">
+        <label for="providerApi.providerId" class="col-sm-4 control-label" data-ng-i18next="wms:ui.heading.provider"></label>
+        <div class="col-sm-8">
+            <select class="form-control" id="providerApi.providerId"
+                    data-ng-model="providerApi.providerId"
+                    data-ng-options="provider.id as provider.name for provider in providerMap" >
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="providerApi.action" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.actionName"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="providerApi.action" data-ng-model="providerApi.action" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="providerApi.hostname" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.hostname"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="providerApi.hostname" data-ng-model="providerApi.hostname" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="providerApi.filename" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.filename"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="providerApi.filename" data-ng-model="providerApi.filename" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="providerApi.version" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.version"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="providerApi.version" data-ng-model="providerApi.version" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="providerApi.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!providerApi.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

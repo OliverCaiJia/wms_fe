@@ -1,0 +1,72 @@
+<div class="page page-table" data-ng-controller="WmsRequestInventoryTransferGoodsListCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.requestInventoryTransfer"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/request_inventory_transfer_list?requestSeller={{inventoryTransfer.requestSeller}}"
+               class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <div data-ng-include="'views/wms/partial/inventory_transfer_detail.html'"></div>
+        </div>
+    </section>
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.inventoryTransferGoods"></span>
+        </div>
+
+        <div class="panel-body" data-ng-if="inventoryTransfer.status == 0">
+            <div class="row">
+                <div class="col-xs-6">
+                    <button class="btn btn-primary" data-ng-click="switchCollapse(createInventoryTransferGoods)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span data-ng-i18next="global:ui.button.create"></span>
+                    </button>
+                </div>
+                <div class="col-xs-6"></div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-show="createInventoryTransferGoods.inEditing">
+            <div data-ng-include="'views/wms/partial/inventory_transfer_goods_form.html'"></div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.heading.goods"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="global:ui.label.name"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.goodsNumber"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in transferGoodsList track by $index">
+                <td>
+                    <img class="img-responsive img80_80"  data-ng-src="{{imgHost}}{{acceptorGoodsMap[item.acceptorGoodsId].image}}" />
+                </td>
+                <td>{{acceptorGoodsMap[item.acceptorGoodsId].name}}</td>
+                <td>{{item.goodsNumber}}</td>
+                <td>
+                    <a class="btn btn-xs btn-danger" data-ng-if="inventoryTransfer.status == 0"
+                       data-ng-click="delete(item.id, $index)">
+                        <span class="ti-trash"></span>
+                        <span data-ng-i18next="global:ui.button.remove"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+</div>

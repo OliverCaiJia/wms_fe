@@ -1,0 +1,87 @@
+<div class="page" data-ng-controller="WmsRoleDetailCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.role"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/role_list" class="ti-arrow-left pull-right"></a>
+        </div>
+
+        <div class="panel panel-body" >
+            <div class="form-horizontal " >
+
+                <div class="col-sm-12 row">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               data-ng-i18next="wms:ui.label.name"></label>
+                        <div class="col-sm-8 checkbox">
+                            <div class="input-group" >
+                                <span>{{role.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 row">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               data-ng-i18next="wms:ui.label.sellerRole"></label>
+                        <div class="col-sm-8 checkbox">
+                            <div class="input-group" >
+
+                                <span class="label label-info" data-ng-if="!role.sellerRole">
+                                {{'global:ui.label.'+role.sellerRole | i18next}}
+                            </span>
+                                <span class="label label-success" data-ng-if="role.sellerRole">
+                                {{'global:ui.label.'+role.sellerRole | i18next}}
+                            </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.userName"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.heading.seller"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="memberRole in memberRoleList track by $index">
+                        <td>
+                            <a href="#/wms/member_role_list?memberId={{memberRole.memberId}}" target="_blank">
+                                {{memberMap[memberRole.memberId].name}}
+                            </a>
+                        </td>
+                        <td>
+                            <span data-ng-if="memberMap[memberRole.memberId].sellerId > 0">
+                                {{sellerMap[memberMap[memberRole.memberId].sellerId].name}}
+                            </span>
+                        </td>
+                        <td>
+                            <a class="btn btn-xs btn-danger" data-ng-click="delete(memberRole.id, $index)">
+                                <span class="ti-trash"></span>
+                                <span data-ng-i18next="global:ui.button.remove"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

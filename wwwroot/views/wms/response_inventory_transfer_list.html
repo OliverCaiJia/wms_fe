@@ -1,0 +1,111 @@
+<div class="page page-table" data-ng-controller="WmsResponseInventoryTransferListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.responseInventoryTransfer"></span>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.requestSeller"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.voucher"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.status"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.operator"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in currentPageItems track by $index">
+                <td>{{sellerMap[item.requestSeller].name}}</td>
+                <td>
+                    <a data-ng-if="item.voucher" target="_blank" href="{{imgHost}}{{item.voucher}}">
+                        <img class="img-responsive img80_80"  data-ng-src="{{imgHost}}{{item.voucher}}" />
+                    </a>
+                </td>
+                <td>
+                    <span data-ng-class="{ 'label label-default': item.status == 0,
+                                            'label label-danger': item.status == 1,
+                                            'label label-warning': item.status == 2,
+                                            'label label-success': item.status == 3}"
+                          data-ng-i18next="wms:ui.inventoryTransferStatus.{{item.status}}"></span>
+                </td>
+                <td>{{memberMap[item.operator].name}}</td>
+                <td>
+                    <p>
+                        <a href="#/wms/response_inventory_transfer_goods_list?inventoryTransferId={{item.id}}"
+                           class="btn btn-xs btn-primary">
+                            <span class="ti-menu"></span>
+                            <span data-ng-i18next="wms:ui.heading.goods"></span>
+                        </a>
+                    </p>
+                    <p data-ng-if="item.status == 1">
+                        <a href="javascript:;" class="btn btn-sm btn-line-primary" data-ng-click="pass(item)">
+                            <span data-ng-i18next="global:ui.button.pass"></span>
+                        </a>
+                    </p>
+                    <p data-ng-if="item.status == 1">
+                        <a href="javascript:;" class="btn btn-sm btn-line-danger" data-ng-click="reject(item)">
+                            <span data-ng-i18next="global:ui.button.reject"></span>
+                        </a>
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <uib-pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredItems.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="searchOption.numPerPage"
+                                    rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    boundary-links="true"></uib-pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+</div>

@@ -1,0 +1,84 @@
+<div class="page page-table page-invoice" data-ng-controller="WmsInventoryTransferPickGoodsCtrl">
+
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span>{{sellerMap[inventoryTransfer.requestSeller].name}}</span>->
+            <span>{{sellerMap[inventoryTransfer.responseSeller].name}}</span>
+            <a href="#/wms/inventory_transfer_list" class="ti-arrow-left pull-right"></a>
+        </div>
+
+        <div class="panel-body">
+            <form class="form-horizontal " data-ng-submit="scanGoodsCode()">
+                <div class="form-group">
+
+                    <label  class="col-sm-2 control-label"
+                            data-ng-if="goodsMap[scanGoodsId].id">
+                        {{'global:ui.button.scan' | i18next}}
+                        {{'wms:ui.statusEnum.encodeType.'+ goodsMap[scanGoodsId].encodeType | i18next}}
+                    </label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control "
+                               autofocus
+                               id="scanBarCodeInput"
+                               data-ng-model="goodsCode" />
+                    </div>
+                </div>
+            </form>
+
+            <div>
+                <div class="form-group row alert"
+                     data-ng-class="{'alert-danger': !goodsNumberMap[scanGoodsId],
+                                     'alert-success': goodsMap[scanGoodsId].goodsNumber == goodsNumberMap[scanGoodsId],
+                                     'alert-warning': goodsMap[scanGoodsId].goodsNumber > goodsNumberMap[scanGoodsId]}">
+
+                    【{{'wms:ui.label.shelfLocation' | i18next}}:{{goodsMap[scanGoodsId].shelfLocation}}】
+                    {{goodsMap[scanGoodsId].name}}
+                    <div class="pull-right" data-ng-if="goodsMap[scanGoodsId].goodsNumber == goodsNumberMap[scanGoodsId]">
+                        <span>{{'wms:ui.scanGoodsStatus.completed' | i18next}}
+                            <span style="font-size:16px;" class="badge badge-success">
+                                {{goodsNumberMap[scanGoodsId]}}/{{goodsMap[scanGoodsId].goodsNumber}}
+                            </span>
+                        </span>
+                    </div>
+                    <div class="pull-right" data-ng-if="goodsMap[scanGoodsId].goodsNumber > goodsNumberMap[scanGoodsId]">
+                        <span>{{'wms:ui.scanGoodsStatus.waitScan' | i18next}}
+                            <span style="font-size:16px;" class="badge badge-warning">
+                                {{goodsNumberMap[scanGoodsId]}}/{{goodsMap[scanGoodsId].goodsNumber}}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img class="img-responsive" width="100%" data-ng-src="{{imgHost}}{{goodsMap[scanGoodsId].image}}" />
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="media">
+                            <div class="media-body">
+                                <span data-ng-i18next="wms:ui.label.barCode"></span>
+                                <strong>{{goodsMap[scanGoodsId].barCode}}</strong>
+                                <i class=""> | </i>
+                                <span data-ng-i18next="wms:ui.label.goodsNumber"></span>
+                                <strong>{{goodsMap[scanGoodsId].goodsNumber}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-if="inventoryTransfer.status == 2">
+            <div class="pull-right">
+                <a href="javascript:;"
+                   class="btn btn-line-danger btn-w-md"
+                   data-ng-click="emptyScanGoods()">
+                    <span class="fa fa-undo"></span>
+                    <span data-ng-i18next="global:ui.button.emptyScanGoods"></span></a>
+                <span class="space"></span>
+            </div>
+        </div>
+
+    </section>
+</div>

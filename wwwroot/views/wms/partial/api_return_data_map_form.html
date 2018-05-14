@@ -1,0 +1,33 @@
+<form class="form-horizontal" data-ng-submit="add(item)">
+    <div class="form-group">
+        <label for="item.varKey" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.varKey"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="item.varKey" data-ng-model="item.varKey" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="item.dataType" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.dataType"></label>
+        <div class="col-sm-8">
+            <select class="form-control" id="item.dataType" data-ng-model="item.dataType"
+                    data-ng-options="dataType for dataType in dataTypeList">
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="item.required" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.required"></label>
+        <div class="col-sm-8">
+            <select class="form-control" id="item.required" data-ng-model="item.required">
+                <option data-ng-i18next="global:ui.button.yes" value="1"></option>
+                <option data-ng-i18next="global:ui.button.no" value="0"></option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,180 @@
+<div class="page page-table" data-ng-controller="WmsWarehouseListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.warehouse"></span>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <button class="btn btn-primary" data-ng-click="switchCollapse(createWarehouse)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span data-ng-i18next="global:ui.button.create"></span>
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-show="createWarehouse.inEditing">
+            <div class="well">
+                <div data-ng-include="'views/wms/partial/warehouse_form.html'"></div>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.name"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.province-city-district"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.address"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.isDisabled"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.telephone"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.contact"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.repositoryList"></div>
+                </th>
+                <th>repositoryList
+                    <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in currentPageItems track by $index">
+                <td>
+                    <div>
+                        <form data-ng-submit="update(item, 'name')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'name']"
+                               data-ng-click="switchNode(item,'name',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.name}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'name']">
+                            <input id="inputName" data-ng-model="item.name" />
+                            <a href="javascript:;" class="ti-save"
+                               data-ng-click="update(item, 'name')"
+                               title="{{'global:ui.button.save' | i18next}}"></a>
+                            <a href="javascript:;" class="ti-close"
+                               data-ng-click="switchNode(item,'name',false)"
+                               title="{{'global:ui.button.cancel' | i18next}}"></a>
+                        </span>
+                        </form>
+                    </div>
+                </td>
+                <td>{{addressMap[item.provinceId].name}} {{addressMap[item.cityId].name}} {{addressMap[item.districtId].name}}</td>
+                <td>{{item.address}}</td>
+                <td>
+                    <span data-ng-class="{'label label-danger':item.disabled}">{{'wms:ui.enum.'+ item.disabled | i18next}}</span>
+                </td>
+                <td>
+                    <div>
+                        <form data-ng-submit="update(item, 'telephone')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'telephone']"
+                               data-ng-click="switchNode(item,'telephone',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.telephone}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'telephone']">
+                            <input id="inputTelephone" data-ng-model="item.telephone" />
+                            <a href="javascript:;" class="ti-save"
+                               data-ng-click="update(item, 'telephone')"
+                               title="{{'global:ui.button.save' | i18next}}"></a>
+                            <a href="javascript:;" class="ti-close"
+                               data-ng-click="switchNode(item,'telephone',false)"
+                               title="{{'global:ui.button.cancel' | i18next}}"></a>
+                        </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form data-ng-submit="update(item, 'contact')" >
+                            <a href="javascript:;" data-ng-show="!item[item.id+'contact']"
+                               data-ng-click="switchNode(item,'contact',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{item.contact}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="item[item.id+'contact']">
+                            <input id="inputContact" data-ng-model="item.contact" />
+                            <a href="javascript:;" class="ti-save"
+                               data-ng-click="update(item, 'contact')"
+                               title="{{'global:ui.button.save' | i18next}}"></a>
+                            <a href="javascript:;" class="ti-close"
+                               data-ng-click="switchNode(item,'contact',false)"
+                               title="{{'global:ui.button.cancel' | i18next}}"></a>
+                        </span>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <a href="#/wms/repository_list?warehouseId={{item.id}}">
+                        <span data-ng-i18next="wms:ui.label.repositoryList"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="#/wms/warehouse_detail?id={{item.id}}"
+                       class="btn btn-xs btn-primary">
+                        <span class="ti-pencil"></span>
+                        <span data-ng-i18next="global:ui.label.detail"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                        <uib-pagination class="pagination-sm"
+                                        ng-model="currentPage"
+                                        total-items="filteredItems.length"
+                                        max-size="4"
+                                        ng-change="select(currentPage)"
+                                        items-per-page="searchOption.numPerPage"
+                                        rotate="false"
+                                        previous-text="&lsaquo;" next-text="&rsaquo;"
+                                        boundary-links="true"></uib-pagination>
+                    </div>
+                </div>
+            </footer>
+
+
+    </section>
+
+</div>

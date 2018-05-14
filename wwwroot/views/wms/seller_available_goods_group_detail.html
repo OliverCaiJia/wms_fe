@@ -1,0 +1,194 @@
+<div class="page" data-ng-controller="WmsSellerAvailableGoodsGroupDetailCtrl">
+    <div data-ng-include="'views/wms/seller_available_goods_group_edit.html'"></div>
+
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="panel panel-info">
+                <div class="panel-footer">
+                    <span class="glyphicon glyphicon-th"></span>
+                    <span data-ng-i18next="wms:ui.heading.sellerAvailableGoodsList"></span>
+                </div>
+                <div class="panel-body" >
+                    <div class="row ">
+                        <div class="form-group col-sm-12">
+                            <form>
+                                <input type="text" class="form-control"
+                                       placeholder="{{'global:ui.button.search' | i18next}}{{'wms:ui.heading.goods' | i18next}}"
+                                       data-ng-model="searchOption.keywords"
+                                       data-ng-keyup="search()" />
+                            </form>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped ">
+                            <thead>
+                            <tr class="info">
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    <div class="th" data-ng-i18next="wms:ui.label.fullName"></div>
+                                </th>
+                                <th>
+                                    <div class="th" data-ng-i18next="wms:ui.label.barCode"></div>
+                                </th>
+                                <th>
+                                    <div class="th" data-ng-i18next="wms:ui.label.price"></div>
+                                </th>
+                                <th>
+                                    <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="item in filteredAvailableGoodsList track by $index"
+                                data-ng-if="item.id && !goodsGroupRefGoodsMap[item.goodsId]">
+                                <td>{{$index+1}}</td>
+                                <td>{{item.goodsName}}</td>
+                                <td>{{item.barCode}}</td>
+                                <td>{{item.price}}</td>
+                                <td>
+                                    <a href="javascript:;" data-ng-click="addGoods(item.goodsId)"
+                                       data-ng-if="!sellerAvailableGoodsGroup.isLocked"
+                                       class="btn btn-sm btn-primary">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        <span data-ng-i18next="global:ui.button.add"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                            <span>
+                                {{'global:ui.pagination.showing' | i18next}}
+                                {{filteredAvailableGoodsList.length}}/{{availableGoodsList.length}}
+                                {{'global:ui.pagination.entries' | i18next}}
+                            </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                            </div>
+                        </div>
+                    </footer>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-xs-6">
+            <div class="panel panel-success">
+                <div class="panel-footer">
+                    <span class="glyphicon glyphicon-th"></span>
+                    <span data-ng-i18next="wms:ui.heading.sellerAvailableGoodsGroup"></span><span data-ng-i18next="global:ui.label.detail"></span>
+                </div>
+                <div class="panel-body">
+                    <div class="row ">
+                        <div class="col-sm-6 form-group checkbox">
+                            <div>
+                                {{'wms:ui.label.existingGroupGoods' | i18next}} : {{goodsGroupRefList.length}}
+                            </div>
+                            <!--<div>-->
+                                <!--{{'wms:ui.label.goodsTotalPrice' | i18next}} : {{goodsGroupRefList | calGoodsTotalPrice:availableGoodsAllMap | number:2}}-->
+                            <!--</div>-->
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <form>
+                                <input type="text" class="form-control"
+                                       placeholder="{{'global:ui.button.search' | i18next}}{{'wms:ui.heading.goods' | i18next}}"
+                                       data-ng-model="searchOption.keywordsRef"
+                                       data-ng-keyup="searchRef()" />
+                            </form>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-responsive">
+                            <thead>
+                            <tr class="success">
+                                <th><div class="th">#</div></th>
+                                <th>
+                                    <div class="th" data-ng-i18next="wms:ui.label.fullName"></div>
+                                </th>
+                                <th>
+                                    <div class="th" data-ng-i18next="wms:ui.label.barCode"></div>
+                                </th>
+                                <th>
+                                    <div class="th" data-ng-i18next="wms:ui.label.goodsNumber"></div>
+                                </th>
+                                <th>
+                                    <div class="th" data-ng-i18next="wms:ui.label.price"></div>
+                                </th>
+                                <th>
+                                    <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="item in filteredGoodsGroupRefList track by $index" data-ng-if="!item.isDelete" >
+                                <td>{{$index+1}}</td>
+                                <td>{{goodsMap[item.goodsId].name}}</td>
+                                <td>{{goodsMap[item.goodsId].barCode}}</td>
+                                <td>
+                                    <span data-ng-if="sellerAvailableGoodsGroup.isLocked" >{{item.goodsNumber}}</span>
+                                    <form data-ng-submit="updateGoodsNumber(item, 'goodsNumber')" >
+                                        <a href="javascript:;" data-ng-show="!item[item.id+'goodsNumber']"
+                                           data-ng-click="switchNode(item,'goodsNumber',true)"
+                                           data-ng-if="!sellerAvailableGoodsGroup.isLocked"
+                                           title="{{'global:ui.button.edit' | i18next}}">
+                                            {{item.goodsNumber}}
+                                            <span class="ti-pencil"></span>
+                                        </a>
+                                        <span data-ng-show="item[item.id+'goodsNumber']">
+                                    <input id="inputGoodsNumber" data-ng-model="item.goodsNumber" />
+                                    <a href="javascript:;" class="ti-save"
+                                       data-ng-click="updateGoodsNumber(item, 'goodsNumber')"
+                                       title="{{'global:ui.button.save' | i18next}}"></a>
+                                    <a href="javascript:;" class="ti-close"
+                                       data-ng-click="switchNode(item,'goodsNumber',false)"
+                                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                </span>
+                                    </form>
+                                </td>
+                                <td>
+                                    {{availableGoodsAllMap[item.goodsId].price}}</td>
+                                <td>
+                                    <a href="javascript:;" data-ng-click="goodsGroupRefDelete(item)"
+                                       data-ng-if="!sellerAvailableGoodsGroup.isLocked"
+                                       class="btn btn-sm btn-danger">
+                                        <span class="ti-trash"></span>
+                                        <span data-ng-i18next="global:ui.button.remove"></span>
+                                    </a>
+                                    <span data-ng-if="sellerAvailableGoodsGroup.isLocked">
+                                        {{'wms:ui.label.locked' | i18next}}
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                            <span>
+                                {{'global:ui.pagination.showing' | i18next}}
+                                {{filteredGoodsGroupRefList.length}}/{{goodsGroupRefList.length}}
+                                {{'global:ui.pagination.entries' | i18next}}
+                            </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+</div>

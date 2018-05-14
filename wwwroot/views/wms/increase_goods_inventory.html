@@ -1,0 +1,211 @@
+<div class="page" data-ng-controller="WmsIncreaseGoodsInventoryCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.goods"></span>【{{goods.name}}】
+            <span data-ng-i18next="wms:ui.label.increaseInventory"></span>
+            <a href="#/wms/goods_list" class="ti-arrow-left pull-right">
+                {{'wms:ui.label.backTo' | i18next}}{{'wms:ui.heading.goodsList' | i18next}}</a>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" data-ng-submit="increaseInventory(goodsInventoryLog)">
+
+                <fieldset>
+                    <legend>
+                        <h5 data-ng-i18next="wms:ui.heading.goods"></h5>
+                    </legend>
+
+                    <div class="form-group">
+                        <label for="goods.name" class="col-sm-2 control-label"
+                               data-ng-i18next="wms:ui.label.fullName"></label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="goods.name" readonly data-ng-model="goods.name" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="goods.barCode" class="col-sm-2 control-label"
+                               data-ng-i18next="wms:ui.label.barCode"></label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="goods.barCode" readonly data-ng-model="goods.barCode" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="goods.barCode" class="col-sm-2 control-label"
+                               data-ng-i18next="wms:ui.label.goodsIsEncode"></label>
+                        <div class="col-sm-8">
+                            <span data-ng-if="goods.id" class="label" data-ng-class="{'label-danger':!goods.isEncode,'label-success':goods.isEncode}">
+                                    {{'global:ui.label.'+goods.isEncode | i18next}}</span>
+                        </div>
+                    </div>
+
+                </fieldset>
+
+                <fieldset>
+                    <legend>
+                        <h5>{{'wms:ui.heading.goods' | i18next}}{{'wms:ui.label.inventory' | i18next}}</h5>
+                    </legend>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               data-ng-i18next="wms:ui.label.totalInventory"></label>
+                        <div class="col-sm-8">
+                            <input class="form-control" readonly
+                                   data-ng-if="!goodsInventoryLog.calcTotalInventory"
+                                   data-ng-model="goods.totalInventory" />
+                            <input class="form-control"  readonly
+                                   data-ng-if="goodsInventoryLog.calcTotalInventory"
+                                   data-ng-model="goodsInventoryLog.calcTotalInventory" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               data-ng-i18next="wms:ui.label.postInventory"></label>
+                        <div class="col-sm-8">
+                            <div class="checkbox">
+                                <input class="form-control" readonly
+                                       data-ng-if="!goodsInventoryLog.calcPostInventory"
+                                       data-ng-model="goods.postInventory" />
+                                <input class="form-control"  readonly
+                                       data-ng-if="goodsInventoryLog.calcPostInventory"
+                                       data-ng-model="goodsInventoryLog.calcPostInventory" />
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>
+                        <h5>{{'wms:ui.heading.seller' | i18next}}{{'wms:ui.label.inventory' | i18next}}</h5>
+                    </legend>
+
+                    <div class="form-group">
+                        <label for="goodsInventoryLog.number" class="col-sm-2 control-label">
+                            <span>{{'wms:ui.label.increaseInventory' | i18next}}</span><span class="text-danger">*</span> </label>
+                        </label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <span class="input-group-addon ti-plus"></span>
+                                <input class="form-control" id="goodsInventoryLog.number"
+                                       data-ng-keyup="calcInventory()"
+                                       data-ng-model="goodsInventoryLog.number" />
+                            </div>
+                            <span class="help-block alert alert-info" data-ng-if="goods.isEncode && goodsInventoryLog.number > 0">
+                                {{'wms:message.willBeRandomlyGeneratedGoods' | i18next}}
+                                【{{'wms:ui.statusEnum.encodeType.'+goods.encodeType | i18next}}】
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" data-ng-if="goods.isEncode">
+                        <label for="goodsInventoryLog.batchNumber" class="col-sm-2 control-label">
+                            <span>{{'wms:ui.label.batchNumber' | i18next}}</span><span class="text-danger">*</span> </label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="goodsInventoryLog.batchNumber"
+                                   data-ng-model="goodsInventoryLog.batchNumber" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="goodsInventoryLog.reason" class="col-sm-2 control-label">
+                            <span>{{'wms:ui.label.reason' | i18next}}</span><span class="text-danger">*</span> </label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="goodsInventoryLog.reason"
+                                   data-ng-model="goodsInventoryLog.reason" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button class="btn btn-primary btn-w-md"
+                                    data-ng-i18next="global:ui.button.save"></button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <div class="divider divider-dashed divider-sm "></div>
+            <div class="form-group text-left" data-ng-if="goods.id">
+                <p><span data-ng-i18next="global:ui.heading.moreAction"></span>:</p>
+                <p data-ng-if="!goods.isEncode"><a href="#/wms/reduce_goods_inventory?goodsId={{goods.id}}" data-ng-if="goods.id">
+                    {{'wms:ui.label.reduceInventory' | i18next}}</a>
+                </p>
+                <p data-ng-if="goods.isEncode">
+                    <a href="#/wms/goods_encode_list?goodsId={{goods.id}}" data-ng-if="goods.id">
+                        <span class="glyphicon glyphicon-barcode"></span>
+                        <span data-ng-if="goods.id">
+                            {{'wms:ui.statusEnum.encodeType.'+goods.encodeType | i18next}}{{'wms:ui.label.manager' | i18next}}
+                        </span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel panel-info table-dynamic">
+        <div class="panel-footer">
+            <strong data-ng-i18next="wms:ui.heading.goodsInventoryLog"></strong>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="global:ui.label.type"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.number"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.inventorySnapshot"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.reason"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.heading.member"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.createdTime"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in currentPageItems">
+                <td>{{'wms:ui.inventoryLogType.'+item.type | i18next}}</td>
+                <td>{{item.number}}</td>
+                <td>{{item.inventorySnapshot}}</td>
+                <td>{{item.reason}}</td>
+                <td>{{memberMap[item.memberId].name}}</td>
+                <td>{{item.created}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{goodsInventoryLogList.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <uib-pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredItems.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    boundary-links="true"></uib-pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>

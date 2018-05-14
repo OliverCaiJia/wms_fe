@@ -1,0 +1,69 @@
+<div class="page page-table s" data-ng-controller="WmsOrderGoodsListCtrl">
+    <div data-ng-include="'views/wms/order_edit.html'"></div>
+    <section class="panel panel-default table-dynamic">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span>{{'wms:ui.heading.orderGoods' | i18next}}({{orderGoodsList.length}})</span>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                <tr>
+                    <th class="col-sm-3">
+                        <div class="th" data-ng-i18next="wms:ui.heading.goods"></div>
+                    </th>
+                    <th class="col-sm-2">
+                        <div class="th" data-ng-i18next="wms:ui.label.encodeType"></div>
+                    </th>
+                    <th class="col-sm-2">
+                        <div class="th" data-ng-i18next="wms:ui.label.price"></div>
+                    </th>
+                    <th class="col-sm-2">
+                        <div class="th" data-ng-i18next="wms:ui.label.goodsNumber"></div>
+                    </th>
+
+                    <th class="col-sm-2">
+                        <div class="th" data-ng-i18next="wms:ui.label.orderGoodsPrice"></div>
+                    </th>
+                    <th class="col-sm-1">
+                        <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="item in orderGoodsList track by $index">
+                    <td>
+                        {{item.goodsName}}
+                    </td>
+                    <td>{{encodeTypeMap[sellerGoodsMap[item.sellerGoodsId].encodeType]}}</td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.goodsNumber}}</td>
+                    <td>
+                        {{item.goodsNumber * item.price | number:2}}
+                    </td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="table-filters">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>{{'wms:ui.label.totalPrice' | i18next}}</strong>
+                            <span class="space"></span>
+                            <strong><span>{{order.totalPrice | number:2}}</span></strong>
+                        </p>
+
+                        <p><strong>{{'wms:ui.label.paidPrice' | i18next}}</strong>
+                            <span class="space"></span>
+                            <strong><span>{{order.paidPrice | number:2}}</span></strong>
+                        </p>
+                    </div>
+                    <div class="col-xs-6 ">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+

@@ -1,0 +1,149 @@
+<div class="page" data-ng-controller="WmsIncreaseAvailableGoodsQuantityCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span>{{'wms:ui.heading.seller' | i18next}}</span>【{{seller.name}}】
+            <span>{{'wms:ui.label.increaseInventory' | i18next}}</span><span>{{'global:ui.label.action' | i18next}}</span>
+            <a href="#/wms/seller_available_goods_list?sellerId={{seller.id}}" class="ti-arrow-left pull-right">
+                {{'wms:ui.label.backTo' | i18next}}{{'wms:ui.heading.sellerAvailableGoodsList' | i18next}}</a>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" data-ng-submit="increaseInventory(availableGoodsInventoryLog)">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.fullName"></label>
+                    <div class="col-sm-8">
+                        <div class="checkbox">{{goods.name}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.encodeType"></label>
+                    <div class="col-sm-8">
+                        <div class="checkbox">
+                            {{'wms:ui.statusEnum.encodeType.'+availableGoods.encodeType | i18next}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="availableGoods.quantity" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.quantity"></label>
+                    <div class="col-sm-8">
+
+                        <input class="form-control" id="availableGoods.quantity" readonly
+                               data-ng-if="!availableGoodsInventoryLog.calcQuantity"
+                               data-ng-model="availableGoods.quantity" />
+
+                        <input class="form-control" readonly
+                               data-ng-if="availableGoodsInventoryLog.calcQuantity"
+                               data-ng-model="availableGoodsInventoryLog.calcQuantity" />
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label for="availableGoodsInventoryLog.number" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.increaseInventory"></label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <span class="input-group-addon ti-plus"></span>
+                            <input class="form-control" id="availableGoodsInventoryLog.number"
+                                   data-ng-keyup="calcQuantity()"
+                                   data-ng-model="availableGoodsInventoryLog.number" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" data-ng-if="availableGoods.encodeType != 'bar'">
+                    <label for="availableGoodsInventoryLog.batchNumber" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.batchNumber"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="availableGoodsInventoryLog.batchNumber"
+                               data-ng-model="availableGoodsInventoryLog.batchNumber" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="availableGoodsInventoryLog.reason" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.reason"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="availableGoodsInventoryLog.reason"
+                               data-ng-model="availableGoodsInventoryLog.reason" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button class="btn btn-primary btn-w-md"
+                                data-ng-i18next="global:ui.button.save"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="panel panel-info table-dynamic">
+        <div class="panel-footer">
+            <strong data-ng-i18next="wms:ui.heading.availableGoodsInventoryLog"></strong>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="global:ui.label.type"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.number"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.availableGoodsInventorySnapshot"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.reason"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.heading.member"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.createdTime"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in currentPageItems">
+                <td>{{'wms:ui.inventoryLogType.'+item.type | i18next}}</td>
+                <td>{{item.number}}</td>
+                <td>{{item.inventorySnapshot}}</td>
+                <td>{{item.reason}}</td>
+                <td>{{memberMap[item.memberId].name}}</td>
+                <td>{{item.created}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <uib-pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredItems.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    boundary-links="true"></uib-pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>

@@ -1,0 +1,25 @@
+<form class="form-horizontal" data-ng-submit="add(node)">
+    <div class="form-group" >
+        <label for="node.fieldName" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.name"></label>
+        <div class="col-sm-8">
+            <input id="node.fieldName" class="form-control" data-ng-model="node.fieldName">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="node.dataType" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.dataType"></label>
+        <div class="col-sm-8">
+            <select class="form-control" id="node.dataType"
+                    data-ng-model="node.dataType"
+                    data-ng-options="dataType for dataType in dataTypeList" >
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

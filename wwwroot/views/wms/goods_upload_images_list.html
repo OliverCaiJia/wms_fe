@@ -1,0 +1,123 @@
+<div class=" page page-table " data-ng-controller="WmsGoodsUploadImagesListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.label.waitToUploadGoodsImagesList"></span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-8">
+                    <form>
+                        <input type="text" class="form-control"
+                               placeholder="{{'global:ui.button.search' | i18next}}{{'wms:ui.label.barCode' | i18next}}"
+                               id="searchBarCode"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+                <div class="col-xs-4">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.heading.seller"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.heading.goods"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.barCode"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in items track by $index" data-ng-if="!item.image" >
+                        <td>{{sellerMap[item.sellerId].name}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.barCode}}</td>
+
+                        <td data-ng-if="uploader[item.id].url">
+                            <p><input type="file" class="btn" data-nv-file-select="" data-uploader="uploader[item.id]" /></p>
+
+                            <div class="row col-md-12" data-ng-repeat="queueImage in uploader[item.id].queue" >
+
+                                <div >
+                                    <div data-ng-show="uploader[item.id].isHTML5" data-ng-thumb="{file: queueImage._file, width: 200}"></div>
+                                </div>
+                                <div  data-ng-show="uploader[item.id].isHTML5" data-nowrap>
+                                    <p>
+                                        {{ queueImage.file.size/1024/1024|number:2 }} MB
+                                    </p>
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" data-ng-style="{ 'width': queueImage.progress + '%' }"></div>
+                                    </div>
+                                    <p data-ng-show="queueImage.isSuccess || queueImage.isCancel || queueImage.isError">
+                                        <span data-ng-show="queueImage.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span data-ng-show="queueImage.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span data-ng-show="queueImage.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </p>
+                                    <p>
+                                        <span data-ng-if="(queueImage.file.size/1024/1024) > 2">{{'wms:ui.label.moreThan2MB' | i18next}}</span>
+                                        <button type="button" class="btn btn-success"
+                                                data-ng-click="uploadGoodsImages(item,queueImage,$index)"
+                                                data-ng-show="(queueImage.file.size/1024/1024) <= 2"
+                                                data-ng-disabled="(queueImage.file.size/1024/1024) > 2 || queueImage.isReady || queueImage.isUploading || queueImage.isSuccess">
+                                            <span class="glyphicon glyphicon-upload"></span> <span data-ng-i18next="global:ui.button.upload"></span>
+                                        </button>
+                                        <span class="space"></span>
+                                        <button type="button" class="btn btn-danger" data-ng-click="queueImage.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> <span data-ng-i18next="global:ui.button.remove"></span>
+                                        </button>
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{items.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="filteredItems.length"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="searchOption.numPerPage"
+                                            rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;"
+                                            boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </section>
+
+</div>

@@ -1,0 +1,84 @@
+<div class="page page-table" data-ng-controller="WmsLogisticOrderWeightCtrl">
+
+    <section class="panel panel-box" >
+
+        <div class="panel-top " data-ng-class="{'bg-info':deviceTotalWeight == 0,'bg-warning':deviceTotalWeight > 0}">
+
+            <form class="form-horizontal" data-ng-submit="getLogisticOrderTotalWeight()">
+                <input class="form-control input-lg"  id="expressBarCode"
+                       placeholder="{{'wms:ui.label.pleaseScanning' | i18next}}{{'wms:ui.label.expressSn' | i18next }}"
+                       autofocus
+                       data-ng-submit="getLogisticOrderTotalWeight()"
+                       data-ng-model="expressBarCode" />
+            </form>
+
+            <div data-ng-if="logisticOrder.status == 2">
+                <h1  data-ng-if="deviceTotalWeight == 0">
+                    {{'wms:ui.tips.putPackageOnScaleAndScanningExpressSn' | i18next}}
+                </h1>
+                <h1 data-ng-if="deviceTotalWeight > 0">
+                    <span class="size-h1">{{'wms:ui.label.weightError' | i18next}}</span>
+                    <h3>{{deviceTotalWeight/1000 | number:3}} kg</h3>
+                </h1>
+                <!--<h1  data-ng-if="deviceTotalWeight > 0 && waitForUpdate">-->
+                    <!--{{'wms:ui.tips.updatingWeightDataNow' | i18next}}-->
+                <!--</h1>-->
+            </div>
+        </div>
+        <div class="panel-top bg-info" data-ng-if="logisticOrder.status == 3">
+            <h3>{{'wms:ui.label.weightSuccess' | i18next}}</h3>
+            <h3>{{'wms:ui.label.packComplete' | i18next}}</h3>
+        </div>
+
+    </section>
+
+    <div class="panel panel-default" data-ng-if="logisticOrder.status == 3">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>
+            {{'wms:ui.heading.logisticOrderGoods' | i18next}}
+        </strong></div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="col-sm-2">
+                        <span class=" " data-ng-i18next="wms:ui.label.abbrName"></span>
+                    </th>
+                    <th class="col-sm-2">
+                        <span class=" " data-ng-i18next="wms:ui.label.fullName"></span>
+                    </th>
+                    <th class="col-sm-1">
+                        <span class=" " data-ng-i18next="wms:ui.label.goodsNumber"></span>
+                    </th>
+                    <th class="col-sm-1">
+                        <span class=" " data-ng-i18next="wms:ui.label.unitWeight"></span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody >
+                <tr data-ng-repeat="item in items">
+                    <td>{{goodsMap[item.goodsId].abbrName}}</td>
+                    <td>{{goodsMap[item.goodsId].name}}</td>
+                    <td>{{item.goodsNumber}}</td>
+                    <td>
+                        {{goodsMap[item.goodsId].weight | number:3}}
+                        <!--{{scanGoodsMap[item.goodsId] | calTotalWeight | number:2}}-->
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <h4 class="pull-right">{{'wms:ui.label.shouldBeHeavy' | i18next}} </h4>
+                    </td>
+                    <td><h4 data-ng-if="logisticOrder.containerId">
+                        {{logisticOrder.totalWeight/1000 | number:3}} kg</h4></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+

@@ -1,0 +1,89 @@
+<div class="page" data-ng-controller="WmsInventoryTransferEditCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.requestInventoryTransfer"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/request_inventory_transfer_list?requestSeller={{inventoryTransfer.requestSeller}}"
+               class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="row col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.requestSeller"></label>
+                        <div class="col-sm-9 checkbox">
+                            {{sellerMap[inventoryTransfer.requestSeller].name}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" data-ng-i18next="wms:ui.label.status"></label>
+                        <div class="col-sm-9 checkbox">
+                            <span data-ng-class="{ 'label label-default': inventoryTransfer.status == 0,
+                                                    'label label-danger': inventoryTransfer.status == 1,
+                                                    'label label-warning': inventoryTransfer.status == 2,
+                                                    'label label-success': inventoryTransfer.status == 3}"
+                                  data-ng-i18next="wms:ui.inventoryTransferStatus.{{inventoryTransfer.status}}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               data-ng-i18next="wms:ui.label.voucher"></label>
+                        <div class="col-sm-9 checkbox">
+                            <span><input type="file" data-nv-file-select="" data-uploader="uploader"/></span>
+                            <div class="row" data-ng-repeat="queueImage in uploader.queue">
+                                <div data-ng-show="uploader.isHTML5" data-ng-thumb="{file: queueImage._file, width: 300}"></div>
+                                <div data-ng-show="uploader.isHTML5" data-nowrap>
+                                    <p>
+                                        {{ queueImage.file.size/1024/1024|number:2 }} MB
+                                    </p>
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" data-ng-style="{ 'width': queueImage.progress + '%' }"></div>
+                                    </div>
+                                    <p>
+                                        <span data-ng-show="queueImage.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span data-ng-show="queueImage.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span data-ng-show="queueImage.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </p>
+                                    <p>
+                                        <span data-ng-if="(queueImage.file.size/1024/1024) > 2">{{'wms:ui.label.moreThan2MB' | i18next}}</span>
+
+                                        <button type="button" class="btn btn-success" data-ng-click="queueImage.upload()"
+                                                data-ng-show="(queueImage.file.size/1024/1024) <= 2"
+                                                data-ng-disabled="(queueImage.file.size/1024/1024) > 2 || queueImage.isReady || queueImage.isUploading || queueImage.isSuccess">
+                                            <span class="glyphicon glyphicon-upload"></span> <span data-ng-i18next="global:ui.button.upload"></span>
+                                        </button>
+                                        <span class="space"></span>
+                                        <button type="button" class="btn btn-danger" data-ng-click="queueImage.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> <span data-ng-i18next="global:ui.button.remove"></span>
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+                            <a data-ng-if="inventoryTransfer.voucher && uploader.queue.length < 1" target="_blank"
+                               href="{{imgHost}}{{inventoryTransfer.voucher}}">
+                                <img class="img-responsive" width="200" data-ng-src="{{imgHost}}{{inventoryTransfer.voucher}}" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               data-ng-i18next="wms:ui.label.responseSeller"></label>
+                        <div class="col-sm-9 checkbox">
+                            {{sellerMap[inventoryTransfer.responseSeller].name}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               data-ng-i18next="wms:ui.label.operator"></label>
+                        <div class="col-sm-8">
+                            {{memberMap[inventoryTransfer.operator].name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

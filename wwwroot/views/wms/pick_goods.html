@@ -1,0 +1,189 @@
+<div class="page page-table page-invoice" data-ng-controller="WmsPickGoodsCtrl">
+
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <!--<span class="glyphicon glyphicon-th"></span>-->
+            <span>{{logisticOrder.expressSn}}
+            </span>
+            <span>【{{logisticOrder.consigneeName}}
+                {{logisticOrder.phoneNumber | limitTo:3}}****{{logisticOrder.phoneNumber | limitTo:-4}}】</span>
+            <a href="#/wms/logistic_order_pick_search" class="ti-arrow-left pull-right"></a>
+        </div>
+
+        <div class="panel-body" >
+            <form class="form-horizontal " data-ng-submit="updateGoodsBarCode()">
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control "
+                               autofocus
+                               placeholder="{{'wms:ui.label.pleaseScanning' | i18next}}{{'wms:ui.statusEnum.encodeType.bar' | i18next}}"
+                               id="scanBarCodeInput"
+                               data-ng-model="goodsBarCode" />
+                    </div>
+                </div>
+            </form>
+
+            <div data-ng-repeat="item in pickOrderGoodsList track by $index" data-ng-if="pickOrder.status == 1" >
+                <div class="form-group row alert " data-ng-if="scanComplete"
+                     data-ng-class="{'alert-danger': !goodsNumberList[item.id],
+                                     'alert-success': goodsScannedNumberList[item.id] == goodsNumberList[item.id],
+                                     'alert-warning':  goodsNumberList[item.id] > goodsScannedNumberList[item.id] && goodsNumberList[item.id] >0}">
+                    <div class="col-sm-12">
+                        {{sellerGoodsMap[item.sellerGoodsId].name}}
+                        <span data-ng-if="sellerGoodsMap[item.sellerGoodsId].isCombo">【{{'wms:ui.label.combo' | i18next}}】</span>
+                        <div class="pull-right" data-ng-if="goodsScannedNumberList[item.id] == goodsNumberList[item.id]">
+                            <span>{{'wms:ui.scanGoodsStatus.completed' | i18next}} <span class="badge badge-success">{{goodsNumberList[item.id]}}</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row alert " data-ng-if="item.sellerGoodsId == scanSellerGoodsId && sellerGoodsMap[item.sellerGoodsId] && !scanComplete"
+                     data-ng-class="{'alert-danger': goodsScannedNumberList[item.id] == 0,
+                                     'alert-success': goodsScannedNumberList[item.id] == goodsNumberList[item.id],
+                                     'alert-warning': goodsNumberList[item.id] > goodsScannedNumberList[item.id]  && goodsScannedNumberList[item.id] >0}">
+
+                    【{{'wms:ui.label.shelfLocation' | i18next}}:{{sellerGoodsMap[item.sellerGoodsId].shelfLocation}}】
+
+                    <span data-ng-if="!sellerGoodsMap[item.sellerGoodsId].isCombo" >
+                        <div class="pull-right" data-ng-if="goodsScannedNumberList[item.id] == goodsNumberList[item.id]">
+                            <span>{{'wms:ui.scanGoodsStatus.completed' | i18next}}
+                                <span style="font-size:16px;" class="badge badge-success">{{goodsScannedNumberList[item.id]}}/{{goodsNumberList[item.id]}}</span>
+                            </span>
+                        </div>
+                        <div class="pull-right" data-ng-if="goodsNumberList[item.id] > goodsScannedNumberList[item.id] && goodsScannedNumberList[item.id] >0">
+                            <span>{{'wms:ui.scanGoodsStatus.waitScan' | i18next}}
+                                <span style="font-size:16px;" class="badge badge-warning">{{goodsScannedNumberList[item.id]}}/{{goodsNumberList[item.id]}}</span>
+                            </span>
+                        </div>
+                        <div class="pull-right" data-ng-if="goodsScannedNumberList[item.id] == 0">
+                            <span>{{'wms:ui.scanGoodsStatus.waitScan' | i18next}}
+                                <span style="font-size:16px;" class="badge badge-danger">{{goodsScannedNumberList[item.id]}}/{{goodsNumberList[item.id]}}</span>
+                            </span>
+                        </div>
+                    </span>
+
+                    <span data-ng-if="sellerGoodsMap[item.sellerGoodsId].isCombo">
+                        <div class="pull-right" data-ng-if="goodsScannedNumberList[item.id] == goodsNumberList[item.id]">
+                           <span>{{'wms:ui.scanGoodsStatus.completed' | i18next}}
+                                <span style="font-size:16px;" class="badge badge-success">{{item.goodsNumber}}/{{item.goodsNumber}}</span>
+                            </span>
+                        </div>
+                    </span>
+                    <br>
+                    <div>{{sellerGoodsMap[item.sellerGoodsId].name}}</div>
+                </div>
+
+                <div class="col-sm-12"
+                     data-ng-if="sellerGoodsMap[item.sellerGoodsId].encodeType == 'bar' && sellerGoodsMap[item.sellerGoodsId].isCombo && item.sellerGoodsId==scanSellerGoodsId" >
+                    <p data-ng-repeat="comboGoods in allComboSellerGoodsMap[item.sellerGoodsId]">
+                        <span >{{sellerGoodsMap[comboGoods.sellerGoodsId].name}} * {{comboGoods.goodsNumber}}</span>
+                            <span class="badge pull-right pull-in"
+                                  data-ng-class="{
+                                  'badge-danger': packOrderGoodsMap[item.id][comboGoods.sellerGoodsId].goodsNumber > packOrderGoodsMap[item.id][comboGoods.sellerGoodsId].scannedNumber,
+                                  'badge-success':packOrderGoodsMap[item.id][comboGoods.sellerGoodsId].scannedNumber == packOrderGoodsMap[item.id][comboGoods.sellerGoodsId].goodsNumber}">
+                            {{packOrderGoodsMap[item.id][comboGoods.sellerGoodsId].scannedNumber}} /
+                            {{packOrderGoodsMap[item.id][comboGoods.sellerGoodsId].goodsNumber}}
+                        </span>
+                    </p>
+                </div>
+
+                <div class="" data-ng-if="item.sellerGoodsId == scanSellerGoodsId && sellerGoodsMap[item.sellerGoodsId] && !scanComplete">
+                    <div class="col-sm-12">
+                        <a href="javascript:;" class="pull-left">
+                            <img class="img-responsive img80_80" data-ng-src="{{imgHost}}{{sellerGoodsMap[item.sellerGoodsId].image}}" alt="" />
+                        </a>
+                        <div class="media">
+                            <div class="media-body">
+                                <ul class="list-unstyled list-info">
+                                    <li>
+                                        <span data-ng-i18next="wms:ui.label.goodsNumber"></span>
+                                        <strong>{{item.goodsNumber}}</strong>
+                                        <span class="space"></span>
+                                        <strong data-ng-if="sellerGoodsMap[item.sellerGoodsId].isCombo">【{{'wms:ui.label.combo' | i18next}}】</strong>
+                                    </li>
+                                    <li>
+                                        <span data-ng-i18next="wms:ui.label.barCode"></span>
+                                        <strong>{{sellerGoodsMap[item.sellerGoodsId].barCode}}</strong>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="col-sm-12" data-ng-if="sellerGoodsMap[item.sellerGoodsId].encodeType == 'unique' || sellerGoodsMap[item.sellerGoodsId].encodeType == 'rfid'"  >-->
+                        <!--<div class="media">-->
+                            <!--<div class="media-body">-->
+                                <!--<ul class="list-unstyled list-info">-->
+                                    <!--<li data-ng-repeat="packOrderGoods in packOrderGoodsMap[item.sellerGoodsId]"-->
+                                        <!--data-ng-if="packOrderGoods.goodsNumber == 1 && packOrderGoods.goodsEncode">-->
+                                        <!--{{'wms:ui.button.scanned' | i18next}}-->
+                                        <!--<span data-ng-if="item.id">-->
+                                        <!--{{'wms:ui.statusEnum.encodeType.'+packOrderGoods.encodeType | i18next}}:-->
+                                        <!--</span>-->
+                                        <!--<strong>{{packOrderGoods.goodsEncode}}</strong>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="col-sm-12">
+                        <div class="media">
+                            <div class="media-body">
+                                <ul class="list-unstyled list-info">
+                                    <li>
+                                        <div class="pull-left">
+                                            <a href="#/wms/pick_goods?pickOrderId={{pickOrder.id}}&sellerGoodsId={{items[$index-1].sellerGoodsId}}"
+                                               class="btn btn-primary btn-direction btn-left"
+                                               data-ng-if="items[$index-1].sellerGoodsId" >
+                                                {{'global:ui.button.lastOne' | i18next}}{{'wms:ui.heading.goods' | i18next}}
+                                            </a>
+                                        </div>
+                                        <div class="pull-right">
+                                            <a href="#/wms/pick_goods?pickOrderId={{pickOrder.id}}&sellerGoodsId={{items[$index+1].sellerGoodsId}}"
+                                               class="btn btn-primary btn-direction btn-right"
+                                               data-ng-if="items[$index+1].sellerGoodsId && goodsScannedNumberList[item.id] == goodsNumberList[item.id]" >
+                                                {{'global:ui.button.nextOne' | i18next}}{{'wms:ui.heading.goods' | i18next}}
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <p>
+                【<label data-ng-i18next="wms:ui.label.comment"></label>】
+                <span >{{logisticOrder.comment}}</span>
+            </p>
+        </div>
+
+        <div class="panel-body" data-ng-if="pickOrder.status == 1">
+            <div class="pull-right">
+                <!--href="#/wms/pick_goods?pickOrderId={{pickOrder.id}}"-->
+                <a href="#/wms/pick_goods?pickOrderId={{pickOrder.id}}"
+                   class="btn btn-line-danger btn-w-md"
+                   data-ng-if="pickOrder.status == 1"
+                   data-ng-click="pickReject()"
+                ><span class="fa fa-undo"></span>
+                    <span data-ng-i18next="global:ui.button.emptyScanGoods"></span></a>
+                <span class="space"></span>
+                <a href="javascript:;"
+                   data-ng-if="scanComplete"
+                   class="btn btn-success btn-w-md"
+                   data-ng-click="pickComplete()"
+                ><span class="glyphicon glyphicon-ok"></span>
+                    <span data-ng-i18next="wms:ui.label.pickComplete"></span></a>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-if="!scanComplete && showBarcode"
+             data-ng-include="'views/wms/goods_barcode_demo.html'">
+
+        </div>
+
+    </section>
+</div>

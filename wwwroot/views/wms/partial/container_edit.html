@@ -1,0 +1,235 @@
+<div class="panel-footer">
+    <span class="glyphicon glyphicon-th"></span>
+    <span data-ng-i18next="wms:ui.heading.container"></span>
+    <span data-ng-i18next="global:ui.label.detail"></span>
+    <a href="#/wms/container_list" class="ti-arrow-left pull-right"></a>
+</div>
+
+<div class="panel-body">
+    <div class="form-horizontal">
+        <div class="row col-sm-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.barCode"></label>
+                <div class="col-sm-9 checkbox">
+                    <form data-ng-submit="updateBarCode(container, 'barCode')" >
+                        <a href="javascript:;" data-ng-show="!container[container.id+'barCode']"
+                           data-ng-click="switchNode(container,'barCode',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            {{container.barCode}}
+                            <span class="ti-pencil"></span>
+                        </a>
+                            <span data-ng-show="container[container.id+'barCode']">
+                                <input id="inputBarCode" data-ng-model="container.barCode" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateBarCode(container, 'barCode')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(container,'barCode',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.name"></label>
+                <div class="col-sm-9 checkbox">
+                    <form data-ng-submit="updateName(container, 'name')" >
+                        <a href="javascript:;" data-ng-show="!container[container.id+'name']"
+                           data-ng-click="switchNode(container,'name',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            {{container.name}}
+                            <span class="ti-pencil"></span>
+                        </a>
+                            <span data-ng-show="container[container.id+'name']">
+                                <input id="inputName" data-ng-model="container.name" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateName(container, 'name')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(container,'name',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.logisticRequire"></label>
+                <div class="col-sm-9 ">
+                    <label class="ui-checkbox" data-ng-repeat="require in logisticRequireEnum track by $index">
+                        <input name="checkbox1" type="checkbox" value="container.logisticRequire"
+                               data-ng-model="logisticRequireList[require]"
+                               data-ng-click="checkLogisticRequire()">
+                        <span>{{'wms:ui.logisticRequireEnum.'+require | i18next}}</span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.totalInventory"></label>
+                <div class="col-sm-9 checkbox">
+                    {{container.totalInventory}}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.postInventory"></label>
+                <div class="col-sm-6">
+                    <div class="input-group" data-ui-spinner>
+                                <span class="input-group-btn">
+                                    <a href="#/wms/reduce_container_inventory?containerId={{container.id}}"
+                                       type="button" class="btn btn-line-primary" data-spin="up">
+                                        <i class="ti-minus"></i>
+                                    </a>
+                                </span>
+                        <input type="text" class="input-primary spinner-input form-control"
+                               readonly
+                               data-ng-model="container.postInventory">
+                                <span class="input-group-btn">
+                                    <a href="#/wms/increase_container_inventory?containerId={{container.id}}"
+                                       type="button" class="btn btn-line-primary" data-spin="down">
+                                        <i class="ti-plus"></i>
+                                    </a>
+                                </span>
+                    </div>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+        </div>
+
+        <div class="row col-sm-6">
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.length"></label>
+                <div class="col-sm-9 checkbox">
+                    <form data-ng-submit="updateLength(container, 'length')" >
+                        <a href="javascript:;" data-ng-show="!container[container.id+'length']"
+                           data-ng-click="switchNode(container,'length',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            {{container.length}}
+                            <span class="ti-pencil"></span>
+                        </a>
+                            <span data-ng-show="container[container.id+'length']">
+                                <input id="inputLength" data-ng-model="container.length" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateLength(container, 'length')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(container,'length',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.width"></label>
+                <div class="col-sm-9 checkbox">
+                    <form data-ng-submit="updateWidth(container, 'width')" >
+                        <a href="javascript:;" data-ng-show="!container[container.id+'width']"
+                           data-ng-click="switchNode(container,'width',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            {{container.width}}
+                            <span class="ti-pencil"></span>
+                        </a>
+                            <span data-ng-show="container[container.id+'width']">
+                                <input id="inputWidth" data-ng-model="container.width" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateWidth(container, 'width')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(container,'width',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.height"></label>
+                <div class="col-sm-9 checkbox">
+                    <form data-ng-submit="updateHeight(container, 'height')" >
+                        <a href="javascript:;" data-ng-show="!container[container.id+'height']"
+                           data-ng-click="switchNode(container,'height',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            {{container.height}}
+                            <span class="ti-pencil"></span>
+                        </a>
+                            <span data-ng-show="container[container.id+'height']">
+                                <input id="inputHeight" data-ng-model="container.height" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateHeight(container, 'height')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(container,'height',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.packingCharge"></label>
+                <div class="col-sm-9 checkbox">
+                    <form data-ng-submit="updatePackingCharge(container, 'packingCharge')" >
+                        <a href="javascript:;" data-ng-show="!container[container.id+'packingCharge']"
+                           data-ng-click="switchNode(container,'packingCharge',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            {{container.packingCharge}}
+                            <span class="ti-pencil"></span>
+                        </a>
+                            <span data-ng-show="container[container.id+'packingCharge']">
+                                <input id="inputPackingCharge" data-ng-model="container.packingCharge" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updatePackingCharge(container, 'packingCharge')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(container,'packingCharge',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                    </form>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label"
+                       data-ng-i18next="wms:ui.label.weight"></label>
+                <div class="col-sm-9 checkbox">
+                    <form data-ng-submit="updateWeight(container, 'weight')" >
+                        <a href="javascript:;" data-ng-show="!container[container.id+'weight']"
+                           data-ng-click="switchNode(container,'weight',true)"
+                           title="{{'global:ui.button.edit' | i18next}}">
+                            {{container.weight}}
+                            <span class="ti-pencil"></span>
+                        </a>
+                        <span data-ng-show="container[container.id+'weight']">
+                                <input id="inputWeight" data-ng-model="container.weight" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="updateWeight(container, 'weight')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(container,'weight',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+
+                        <span class="space"></span>
+                        <a class="btn btn-primary" data-ng-click="updateWeightByScale(container)">
+                            {{'wms:ui.label.autoWeight' | i18next}}</a>
+
+                    </form>
+
+                    <div class="divider divider-lg"></div>
+                    <div class="panel-heading  bg-info" data-ng-if="deviceWeight">
+                        <h3>{{'wms:ui.label.weightResult' | i18next}}： {{deviceWeight}} {{'global:ui.unit.g' | i18next}}</h3>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

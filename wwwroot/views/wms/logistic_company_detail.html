@@ -1,0 +1,29 @@
+<div class="page" data-ng-controller="WmsLogisticCompanyDetailCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.logisticCompany"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/logistic_company_list" class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+        
+                <div class="form-group">
+                    <label for="logisticCompany.id" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.id"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="logisticCompany.id" readonly data-ng-model="logisticCompany.id" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="logisticCompany.name" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.name"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="logisticCompany.name" readonly data-ng-model="logisticCompany.name" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

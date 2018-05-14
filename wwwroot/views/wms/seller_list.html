@@ -1,0 +1,215 @@
+<div class="page page-table" data-ng-controller="WmsSellerListCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.sellerList"></span>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <button class="btn btn-primary"
+                            data-ng-show="!createSeller.inEditing"
+                            data-ng-click="switchCollapse(createSeller)">
+                        <span class="glyphicon glyphicon-plus" data-ng-show="!createSeller.inEditing"></span>
+                        <span data-ng-i18next="global:ui.button.add"></span><span data-ng-i18next="wms:ui.heading.seller"></span>
+                    </button>
+                    <button class="btn btn-default"
+                            data-ng-show="createSeller.inEditing"
+                            data-ng-click="switchCollapse(createSeller)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        <span data-ng-i18next="global:ui.button.cancel"></span>
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-show="createSeller.inEditing">
+            <div class="well">
+                <div data-ng-include="'views/wms/partial/seller_form.html'"></div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                <span>{{'wms:ui.heading.seller' | i18next}}{{'wms:ui.label.name' | i18next}}</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.comment"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.creditLine"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.accountBalance"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.defaultLogisticCompany"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                       <th>
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="item in currentPageItems track by $index">
+                        <td>
+                            <div>
+                                <form data-ng-submit="updateName(item, 'name')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'name']"
+                                       data-ng-click="switchNode(item,'name',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{item.name}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                    <span data-ng-show="item[item.id+'name']">
+                                        <input id="inputName" data-ng-model="item.name" />
+                                        <a href="javascript:;" class="ti-save"
+                                           data-ng-click="updateName(item, 'name')"
+                                           title="{{'global:ui.button.save' | i18next}}"></a>
+                                        <a href="javascript:;" class="ti-close"
+                                           data-ng-click="switchNode(item,'name',false)"
+                                           title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                    </span>
+                                </form>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div>
+                                <form data-ng-submit="updateComment(item, 'comment')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'comment']"
+                                       data-ng-click="switchNode(item,'comment',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{item.comment}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                                    <span data-ng-show="item[item.id+'comment']">
+                                        <input id="inputComment" data-ng-model="item.comment" />
+                                        <a href="javascript:;" class="ti-save"
+                                           data-ng-click="updateComment(item, 'comment')"
+                                           title="{{'global:ui.button.save' | i18next}}"></a>
+                                        <a href="javascript:;" class="ti-close"
+                                           data-ng-click="switchNode(item,'comment',false)"
+                                           title="{{'global:ui.button.cancel' | i18next}}"></a>
+                                    </span>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="javascript:;">{{item.creditLine}}</a>
+                        </td>
+                        <td>
+                            <a href="javascript:;">{{item.accountBalance}}</a>
+                        </td>
+                        <td>
+                            <div>
+                                <form data-ng-submit="updateSellerFreightGroupId(item, 'sellerFreightGroupId')" >
+                                    <a href="javascript:;" data-ng-show="!item[item.id+'sellerFreightGroupId']"
+                                       data-ng-click="switchNode(item,'sellerFreightGroupId',true)"
+                                       title="{{'global:ui.button.edit' | i18next}}">
+                                        {{logisticCompanyMap[sellerFreightGroupMap[item.sellerFreightGroupId].logisticCompanyId].name}}
+                                        <span class="ti-pencil"></span>
+                                    </a>
+                             <span data-ng-show="item[item.id+'sellerFreightGroupId']">
+                                 <select class="ui-class" id="inputSellerFreightGroupId"
+                                         data-ng-model="item.sellerFreightGroupId"
+                                         data-ng-options="sellerFreightGroup.id as logisticCompanyMap[sellerFreightGroup.logisticCompanyId].name
+                                         for sellerFreightGroup in sellerFreightGroupList[item.id]">
+                                 </select>
+                                 <a href="javascript:;" class="ti-save"
+                                    data-ng-click="updateSellerFreightGroupId(item, 'sellerFreightGroupId')"
+                                    title="{{'global:ui.button.save' | i18next}}"></a>
+                                 <a href="javascript:;" class="ti-close"
+                                    data-ng-click="switchNode(item,'sellerFreightGroupId',false)"
+                                    title="{{'global:ui.button.cancel' | i18next}}"></a>
+                             </span>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <p><a href="#/wms/seller_goods_manage_list?sellerId={{item.id}}"
+                                  class="btn btn-sm btn-line-primary">
+                                <span class="ti-menu"></span>
+                                <span data-ng-i18next="wms:ui.heading.sellerGoods"></span>
+                            </a></p>
+
+                            <p><a href="#/wms/seller_available_container_list?sellerId={{item.id}}"
+                                  class="btn btn-sm btn-line-primary">
+                                <span class="fa fa-gift"></span>
+                                <span data-ng-i18next="wms:ui.heading.sellerAvailableContainer"></span>
+                            </a></p>
+                        </td>
+                        <td>
+                            <p><a href="#/wms/sender_address_edit?sellerId={{item.id}}"
+                                   class="btn btn-sm btn-line-primary">
+                                    <span class="ti-email"></span>
+                                    <span data-ng-i18next="wms:ui.heading.senderAddress"></span>
+                            </a></p>
+
+                            <p><a href="#/wms/seller_freight_group_list?sellerId={{item.id}}"
+                               class="btn btn-sm btn-line-primary">
+                                <span class="ti-truck"></span>
+                                <span data-ng-i18next="wms:ui.heading.sellerFreightGroup"></span>
+                            </a></p>
+
+                            <!--<p><a href="#/wms/seller_member_list?sellerId={{item.id}}"-->
+                               <!--class="btn btn-sm btn-line-primary">-->
+                                <!--<span class="ti-user"></span>-->
+                                <!--<span>{{'wms:ui.heading.seller' | i18next}}{{'wms:ui.heading.member' | i18next}}</span>-->
+                            <!--</a></p>-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="searchOption.numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <uib-pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredItems.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="searchOption.numPerPage"
+                                    rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    boundary-links="true"></uib-pagination>
+                </div>
+            </div>
+        </footer>
+            </div>
+        </div>
+
+    </section>
+
+</div>

@@ -1,0 +1,53 @@
+<div class="page-signin" data-ng-controller="WmsSignInCtrl">
+
+    <div class="signin-header">
+        <section class="logo text-center">
+            <h1><a href="#/" data-ng-i18next="global:ui.siteName"></a></h1>
+        </section>
+    </div>
+
+    <div class="signin-body">
+        <div class="container">
+            <div class="form-container">
+
+                <form class="form-horizontal" data-ng-submit="signIn()">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="input-group input-group-first">
+                                <span class="input-group-addon">
+                                    <span class="ti-user"></span>
+                                </span>
+                                <input autofocus type="text"
+                                       class="form-control input-lg"
+                                       data-ng-i18next="[placeholder]passport:ui.label.username"
+                                       data-ng-model="member.name"
+                                />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <span class="ti-lock"></span>
+                                </span>
+                                <input type="password"
+                                       class="form-control input-lg"
+                                       data-ng-i18next="[placeholder]passport:ui.label.password"
+                                       data-ng-model="member.password"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="divider divider-xl"></div>
+                        <div class="form-group">
+                            <button type="submit"
+                                    class="btn btn-primary btn-lg btn-block text-center"
+                                    data-ng-i18next="passport:ui.button.signIn"></button>
+                        </div>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>

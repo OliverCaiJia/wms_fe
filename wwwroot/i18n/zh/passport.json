@@ -1,0 +1,44 @@
+{
+  "message": {
+    "validationError": {
+      "password": {
+        "notEqual": "两次输入的密码不一样"
+      }
+    },
+    "apiError": {
+      "10301": "用户名与密码不匹配",
+      "10202": "密码不正确",
+      "10201": "用户不存在",
+      "10102": "该邮件已注册",
+      "10101": "该用户名已注册"
+    },
+    "onResetPasswordSuccess": "密码重置成功,请检查您的邮箱",
+    "onChangePasswordSuccess": "密码更改成功",
+    "onSignOutSuccess": "退出成功",
+    "onSignUpSuccess": "注册成功",
+    "onSignInSuccess": "恭喜您，登录成功"
+  },
+  "ui": {
+    "tips": {
+      "signUpFirst": "您当前操作需要登录后才能使用",
+      "otherUserSignIn": "换个账号",
+      "welcomeBack": "欢迎回来",
+      "reSignIn": "验证已超时，请重新登录",
+      "agreePolicy": "按下注册按钮意味着您同意我们的服务条款"
+    },
+    "button": {
+      "changePassword": "修改密码",
+      "resetPassword": "重设密码",
+      "forgotPassword": "忘记密码",
+      "signOut": "退出",
+      "signIn": "登录"
+    },
+    "label": {
+      "email": "邮箱",
+      "passwordConfirmation": "确认密码",
+      "originalPassword": "原始密码",
+      "password": "密码",
+      "username": "用户名"
+    }
+  }
+}

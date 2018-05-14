@@ -1,0 +1,78 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        <label for="item.varKey" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.varKey"></label>
+        <div class="col-sm-8 checkbox">
+            <form data-ng-submit="updateVarKey(item, 'varKey')" >
+                <a href="javascript:;" data-ng-show="!item[item.id+'varKey']"
+                   data-ng-click="switchNode(item,'varKey',true)"
+                   title="{{'global:ui.button.edit' | i18next}}">
+                    {{item.varKey}}
+                    <span class="ti-pencil"></span>
+                </a>
+                <span data-ng-show="item[item.id+'varKey']">
+                    <input id="item.varKey" data-ng-model="item.varKey">
+                    <a href="javascript:;" class="ti-save"
+                       data-ng-click="updateVarKey(item, 'varKey')"
+                       title="{{'global:ui.button.save' | i18next}}"></a>
+                    <a href="javascript:;" class="ti-close"
+                       data-ng-click="switchNode(item,'varKey',false)"
+                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                </span>
+            </form>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="item.required" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.required"></label>
+        <div class="col-sm-8 checkbox">
+            <form data-ng-submit="updateRequired(item, 'required')" >
+                <a href="javascript:;" data-ng-show="!item[item.id+'required']"
+                   data-ng-click="switchNode(item,'required',true)"
+                   title="{{'global:ui.button.edit' | i18next}}">
+                    <span data-ng-if="item.required == true || item.required == '1'" data-ng-i18next="global:ui.button.yes"></span>
+                    <span data-ng-if="item.required == false || item.required == '0'" data-ng-i18next="global:ui.button.no"></span>
+                    <span class="ti-pencil"></span>
+                </a>
+                <span data-ng-show="item[item.id+'required']">
+                    <select class="ui-class" id="item.required" data-ng-model="item.required">
+                        <option data-ng-i18next="global:ui.button.yes" value="1"></option>
+                        <option data-ng-i18next="global:ui.button.no" value="0"></option>
+                    </select>
+                    <a href="javascript:;" class="ti-save"
+                       data-ng-click="updateRequired(item, 'required')"
+                       title="{{'global:ui.button.save' | i18next}}"></a>
+                    <a href="javascript:;" class="ti-close"
+                       data-ng-click="switchNode(item,'required',false)"
+                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                </span>
+            </form>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="item.dataType" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.dataType"></label>
+        <div class="col-sm-8 checkbox">
+            <form data-ng-submit="updateDataType(item, 'dataType')" >
+                <a href="javascript:;" data-ng-show="!item[item.id+'dataType']"
+                   data-ng-click="switchNode(item,'dataType',true)"
+                   title="{{'global:ui.button.edit' | i18next}}">
+                    {{item.dataType}}
+                    <span class="ti-pencil"></span>
+                </a>
+                <span data-ng-show="item[item.id+'dataType']">
+                    <select class="ui-class" id="item.dataType"
+                            data-ng-model="item.dataType"
+                            data-ng-options="dataType for dataType in dataTypeList" >
+                    </select>
+                    <a href="javascript:;" class="ti-save"
+                       data-ng-click="updateDataType(item, 'dataType')"
+                       title="{{'global:ui.button.save' | i18next}}"></a>
+                    <a href="javascript:;" class="ti-close"
+                       data-ng-click="switchNode(item,'dataType',false)"
+                       title="{{'global:ui.button.cancel' | i18next}}"></a>
+                </span>
+            </form>
+        </div>
+    </div>
+</div>

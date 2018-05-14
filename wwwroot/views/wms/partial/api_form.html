@@ -1,0 +1,27 @@
+<form class="form-horizontal" data-ng-submit="add(api)">
+    <div class="form-group">
+        <label for="api.resourceName" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.name"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="api.resourceName" data-ng-model="api.resourceName" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="api.action" class="col-sm-4 control-label"
+               data-ng-i18next="global:ui.label.type"></label>
+        <div class="col-sm-8">
+            <select class="form-control" id="api.action" data-ng-model="api.action"
+                    data-ng-options="action for action in actionList">
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="api.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!api.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

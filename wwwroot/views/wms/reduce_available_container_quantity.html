@@ -1,0 +1,179 @@
+<div class="page" data-ng-controller="WmsReduceAvailableContainerQuantityCtrl">
+    <section class="panel panel-default" data-ng-if="availableContainer.payMode == 'pre'">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span>{{'wms:ui.heading.seller' | i18next}}</span>【{{seller.name}}】
+            <span>{{'wms:ui.label.reduceInventory' | i18next}}</span>
+            <a href="#/wms/seller_available_container_list?sellerId={{seller.id}}" class="ti-arrow-left pull-right">
+                {{'wms:ui.label.backTo' | i18next}}{{'wms:ui.heading.sellerAvailableContainerList' | i18next}}</a>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" data-ng-submit="reduceInventory(availableContainerInventoryLog)">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.name"></label>
+                    <div class="col-sm-8">
+                        <div class="checkbox">{{container.name}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.totalInventory"></label>
+                    <div class="col-sm-8">
+                        <div class="checkbox">{{container.totalInventory}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.postInventory"></label>
+                    <div class="col-sm-8">
+                        <div class="checkbox">
+                            <span data-ng-if="!container.calcPostInventory">{{container.postInventory}}</span>
+                            <span data-ng-if="container.calcPostInventory" >{{container.calcPostInventory}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="availableContainer.quantity" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.quantity"></label>
+                    <div class="col-sm-8">
+
+                        <input class="form-control" id="availableContainer.quantity" readonly
+                               data-ng-if="!availableContainerInventoryLog.calcQuantity"
+                               data-ng-model="availableContainer.quantity" />
+
+                        <input class="form-control" readonly
+                               data-ng-if="availableContainerInventoryLog.calcQuantity"
+                               data-ng-model="availableContainerInventoryLog.calcQuantity" />
+                    </div>
+                </div>
+                <div class="form-group" data-ng-if="availableContainer.quantity > 0">
+                    <label for="availableContainerInventoryLog.number" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.reduceInventory"></label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <span class="input-group-addon ti-minus"></span>
+                            <input class="form-control" id="availableContainerInventoryLog.number"
+                                   data-ng-keyup="calcQuantity()"
+                                   data-ng-model="availableContainerInventoryLog.number" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" data-ng-if="availableContainer.quantity > 0">
+                    <label for="availableContainerInventoryLog.reason" class="col-sm-2 control-label"
+                           data-ng-i18next="wms:ui.label.reason"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="availableContainerInventoryLog.reason"
+                               data-ng-model="availableContainerInventoryLog.reason" />
+                    </div>
+                </div>
+
+                <div class="form-group" data-ng-if="availableContainer.quantity == 0">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-8">
+                        <div class="checkbox">{{'wms:ui.tips.noMoreAvailableContainerInventoryToReduce' | i18next}}
+                        </div>
+
+                    </div>
+                </div>
+
+                <div>
+
+                </div>
+                <div class="form-group" data-ng-if="availableContainer.quantity > 0">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button class="btn btn-primary btn-w-md"
+                                data-ng-i18next="global:ui.button.save"></button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="divider divider-dashed divider-sm "></div>
+            <div class="form-group text-left">
+                <p><span data-ng-i18next="global:ui.heading.moreAction"></span>:</p>
+                <p><a href="#/wms/increase_available_container_quantity?availableContainerId={{availableContainer.id}}" data-ng-if="container.id">
+                        <span>{{'wms:ui.label.increaseInventory' | i18next}}</span><span data-ng-i18next="global:ui.label.action"></span></a>
+                </p>
+                <p><a href="#/wms/increase_container_inventory?containerId={{container.id}}" target="_blank" data-ng-if="container.id">
+                        {{'wms:ui.heading.containerInventoryLog' | i18next}}</a>
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="panel panel-info table-dynamic">
+        <div class="panel-footer">
+            <span data-ng-if="seller.id">【{{seller.name}}】</span>
+            <span data-ng-if="container.id">- {{container.name}}</span>
+            <span data-ng-i18next="wms:ui.heading.availableContainerInventoryLog"></span>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>
+                    <div class="th" data-ng-i18next="global:ui.label.type"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.number"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.availableContainerInventorySnapshot"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.reason"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.heading.member"></div>
+                </th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.label.createdTime"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in currentPageItems">
+                <td>{{'wms:ui.inventoryLogType.'+item.type | i18next}}</td>
+                <td>{{item.number}}</td>
+                <td>{{item.inventorySnapshot}}</td>
+                <td>{{item.reason}}</td>
+                <td>{{memberMap[item.memberId].name}}</td>
+                <td>{{item.created}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{availableContainerInventoryLogList.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        {{'global:ui.pagination.entries' | i18next}}
+                        {{'global:ui.pagination.perPage' | i18next}}
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <uib-pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredItems.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    boundary-links="true"></uib-pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>

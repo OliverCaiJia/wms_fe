@@ -1,0 +1,307 @@
+<div class="page" data-ng-controller="WmsRouteIndexCtrl">
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="glyphicon glyphicon-th"></span>
+            <span data-ng-if="!sellerId">{{'global:ui.siteName' | i18next}}</span>
+            <span data-ng-if="sellerId">{{'global:ui.nav.sellerManage' | i18next}}</span>
+        </div>
+        <div class="panel-body"  data-ng-if="username" >
+            <div class="row" data-show-menu-list>
+
+                <div class="col-md-4" data-ng-show="username && !sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/logistic_order_pick_search">
+                                <span class="ti-zoom-in"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/logistic_order_pick_search">
+                                {{'wms:ui.label.pickEntrance' | i18next}}
+                            </a></h4>
+                            <div class="desc">{{'wms:ui.label.scanningExpressPickEntrance' | i18next}}</div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-4" data-ng-show="username && !sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/pick_order_wait_pick_no_print">
+                                <span class="ti-printer"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/pick_order_wait_pick_no_print">
+                                {{'wms:ui.label.waitPickNoPrintEntrance' | i18next}}
+                            </a></h4>
+                            <div class="desc">{{'wms:ui.heading.noPrintPickOrderList' | i18next}}</div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-4" data-ng-show="username && !sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/pick_order_wait_pick_printed">
+                                <span class="ti-receipt"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/pick_order_wait_pick_printed">
+                                {{'wms:ui.label.waitPickPrintedEntrance' | i18next}}
+                            </a></h4>
+                            <div class="desc">{{'wms:ui.heading.printedPickOrderList' | i18next}}</div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-4" data-ng-show="username && !sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/pick_order_wait_pack_list">
+                                <span class="ti-shopping-cart-full"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/pick_order_wait_pack_list">
+                                {{'wms:ui.heading.waitPackNoScanLogisticOrderList' | i18next}}
+                            </a></h4>
+                            <div class="desc">{{'wms:ui.heading.waitPackNoScanLogisticOrderList' | i18next}}</div>
+                        </div>
+                    </article>
+                </div>
+
+
+                <div class="col-md-4" data-ng-show="username && !sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/pick_order_list">
+                                <span class="ti-printer"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/pick_order_list">
+                                {{'wms:ui.label.performExpressSn' | i18next}}
+                            </a></h4>
+                            <div class="desc">{{'wms:ui.label.performExpressSn' | i18next}}</div>
+                        </div>
+                    </article>
+                </div>
+
+
+                <div class="col-md-4" data-ng-show="username && !sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/express_order_pack">
+                                <span class="ti-gift"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/express_order_pack">
+                                {{'wms:ui.label.packEntrance' | i18next}}
+                            </a></h4>
+                            <div class="desc">{{'wms:ui.label.scanningExpressPackEntrance' | i18next}}</div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-4" data-ng-show="username && !sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/print_select_seller">
+                                <span class="ti-package"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/print_select_seller">
+                                {{'wms:ui.heading.prepackGoodsEntrance' | i18next}}
+                            </a></h4>
+                            <div class="desc">{{'wms:ui.label.printExpressOrder' | i18next}}</div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-4" data-ng-show="username && !sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/pick_order_list">
+                                <span class="ti-envelope"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/pick_order_list">
+                                {{'wms:ui.heading.expressAction' | i18next}}
+                            </a></h4>
+                            <div class="desc">{{'wms:ui.heading.logisticOrder' | i18next}}</div>
+                        </div>
+                    </article>
+                </div>
+
+
+                <div class="col-md-4"  data-ng-show="username && sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/order_list_wait_verify">
+                                <span class="ti-view-list-alt"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/order_list_wait_verify">
+                                {{'global:ui.nav.orderManage' | i18next}}
+                            </a></h4>
+                            <div class="desc">
+                                {{'wms:ui.orderStatus.0' | i18next}}<span data-ng-i18next="wms:ui.heading.order"></span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-4" data-ng-show="username && sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/seller_pick_order_list">
+                                <span class="ti-gift"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/seller_pick_order_list">
+                                <span data-ng-i18next="wms:ui.heading.pickOrder"></span>
+                            </a></h4>
+                            <div class="desc">
+                                {{'wms:ui.label.sellerPickList' | i18next}}
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-4" data-ng-show="username && sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/seller_goods_list">
+                                <span class="fa fa-table"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/seller_goods_list">
+                                {{'wms:ui.label.warehouseGoodsManage' | i18next}}
+                            </a></h4>
+                            <div class="desc">
+                                <span data-ng-i18next="wms:ui.heading.sellerGoodsList"></span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-4" data-ng-show="username && !sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/seller_list">
+                                <span class="fa fa-users"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/seller_list">
+                                {{'global:ui.nav.sellerManage' | i18next}}
+                            </a></h4>
+                            <div class="desc"><span data-ng-i18next="wms:ui.heading.sellerList"></span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+
+                <div class="col-md-4" data-ng-show="username && sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/seller_platform_source_list">
+                                <span class="ti-bookmark-alt"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/seller_platform_source_list">
+                                <span data-ng-i18next="global:ui.nav.platformSourceManage"></span>
+                            </a></h4>
+                            <div class="desc">
+                                <span data-ng-i18next="wms:ui.heading.sellerPlatformSource"></span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-4" data-ng-show="username && !sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/member_list">
+                                <span class="ti-user"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/member_list">
+                                {{'global:ui.nav.memberManage' | i18next}}
+                            </a></h4>
+                            <div class="desc">
+                                <span>{{'wms:ui.heading.warehouse' | i18next}}{{'wms:ui.heading.memberList' | i18next}}</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+
+                <div class="col-md-4" data-ng-show="username && sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/seller_member_list?sellerId={{sellerId}}">
+                                <span class="ti-user"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/seller_member_list?sellerId={{sellerId}}">
+                                {{'global:ui.nav.memberManage' | i18next}}
+                            </a></h4>
+                            <div class="desc">
+                                <span>{{'wms:ui.heading.seller' | i18next}}{{'wms:ui.heading.memberList' | i18next}}</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-4" data-ng-show="username && !sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/freight_group_list">
+                                <span class="ti-truck"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/freight_group_list">
+                                <span data-ng-i18next="global:ui.nav.logisticManage"></span>
+                            </a></h4>
+                            <div class="desc">
+                                <span data-ng-i18next="wms:ui.heading.logisticCompany"></span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-4" data-ng-show="username && !sellerId">
+                    <article class="icon-box icon-box-vertical">
+                        <div class="icon-container">
+                            <a href="#/wms/check_device_scale">
+                                <span class="fa fa-wrench"></span>
+                            </a>
+                        </div>
+                        <div class="desc-container">
+                            <h4><a href="#/wms/check_device_scale">
+                                {{'wms:ui.label.checkScale' | i18next}}
+                            </a></h4>
+                            <div class="desc"><span data-ng-i18next="wms:ui.label.checkScale"></span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

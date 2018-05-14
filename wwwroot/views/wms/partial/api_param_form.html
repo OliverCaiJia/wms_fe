@@ -1,0 +1,61 @@
+<form class="form-horizontal" data-ng-submit="add(apiParam)">
+    <div class="form-group" data-ng-if="!apiParam.structRootId
+                                        && apiParam.depth > 1
+                                        && !apiParam.dataType
+                                        && structNodeList[$index]">
+        <label for="apiParam.structNodeId" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.heading.structNode"></label>
+        <div class="col-sm-8">
+            <select class="form-control" id="apiParam.structNodeId"
+                    data-ng-model="apiParam.structNodeId"
+                    data-ng-options="sn.id as sn.fieldName for sn in structNodeList[$index]">
+            </select>
+        </div>
+    </div>
+    <div class="form-group" data-ng-if="apiParam.rightValue - apiParam.leftValue == 1 && !structNodeList[$index]">
+        <label for="apiParam.dataType" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.dataType"></label>
+        <div class="col-sm-8">
+            <select class="form-control" id="apiParam.dataType"
+                    data-ng-model="apiParam.dataType"
+                    data-ng-options="dataType for dataType in dataTypeList">
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group" data-ng-if="apiParam.dataType == 'STRUCT'
+                                     || apiParam.dataType == 'STRUCT_LIST'">
+        <label for="apiParam.structRootId" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.heading.structRoot"></label>
+
+        <div class="col-sm-4">
+            <select class="form-control" id="apiParam.structRootId"
+                    data-ng-model="apiParam.structRootId"
+                    data-ng-options="structRoot.id as structRoot.name for structRoot in structRootList | filter:apiParam.searchStructName">
+            </select>
+        </div>
+
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="apiParam.searchStructName"
+                   data-ng-i18next="[placeholder]global:ui.button.searchStructName"
+                   data-ng-model="apiParam.searchStructName">
+        </div>
+
+    </div>
+
+    <div class="form-group" data-ng-if="apiParam.dataType">
+        <label for="apiParam.varKey" class="col-sm-4 control-label"
+               data-ng-i18next="wms:ui.label.varKey"></label>
+        <div class="col-sm-8">
+            <input id="apiParam.varKey" class="form-control" data-ng-model="apiParam.varKey">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

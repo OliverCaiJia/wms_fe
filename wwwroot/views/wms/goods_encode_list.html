@@ -1,0 +1,238 @@
+<div class="page page-table" data-ng-controller="WmsGoodsEncodeListCtrl">
+
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-if="sellerGoods.id">
+                 {{'wms:ui.statusEnum.encodeType.'+sellerGoods.encodeType | i18next}}{{'wms:ui.label.list' | i18next}}
+                【{{sellerGoods.name}}】
+            </span>
+            <span data-ng-if="sellerGoods.id">【 {{'wms:ui.label.barCode' | i18next}} : {{sellerGoods.barCode}}】</span>
+            <a href="#/wms/seller_goods_manage_list?sellerId={{sellerGoods.sellerId}}"
+               data-ng-if="sellerGoods.id" class="ti-arrow-left pull-right">
+                {{'wms:ui.label.backTo' | i18next}}{{'wms:ui.heading.sellerGoods' | i18next}}
+            </a>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-8">
+                    <button class="btn btn-primary" data-ng-click="switchCollapse(createGoodsEncode)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span data-ng-i18next="global:ui.button.create"></span>
+                    </button>
+
+                    <div class="pull-right">
+                        <div class="btn-group" uib-dropdown is-open="status.isopen2">
+                            <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                                <span data-ng-i18next="wms:ui.label.inventoryStatus"></span>:
+                                {{'wms:ui.statusEnum.goodsInventoryStatus.'+displayInventoryStatus | i18next}}
+                                 <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="javascript:;" data-ng-click="viewInventoryStatus('all')">
+                                    {{'wms:ui.statusEnum.goodsInventoryStatus.all' | i18next}}
+                                </a></li>
+                                <li data-ng-repeat="inventoryStatus in goodsInventoryStatusEnum">
+                                    <a href="javascript:;" data-ng-click="viewInventoryStatus(inventoryStatus)" >
+                                        {{'wms:ui.statusEnum.goodsInventoryStatus.'+inventoryStatus | i18next}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <span class="space"></span>
+                        <div class="btn-group" uib-dropdown is-open="status.isopen3">
+                            <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle >
+                                <span data-ng-i18next="wms:ui.label.isLoss"></span>:
+                                {{'wms:ui.statusEnum.goodsLoss.'+displayIsLoss | i18next}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="javascript:;"
+                                       data-ng-click="viewIsLoss('all')"
+                                       data-ng-i18next="wms:ui.statusEnum.goodsLoss.all"></a></li>
+                                <li><a href="javascript:;"
+                                       data-ng-click="viewIsLoss(false)"
+                                       data-ng-i18next="wms:ui.statusEnum.goodsLoss.false"></a></li>
+                                <li><a href="javascript:;"
+                                       data-ng-click="viewIsLoss(true)"
+                                       data-ng-i18next="wms:ui.statusEnum.goodsLoss.true"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-4">
+                    <form>
+                        <input type="text" class="form-control"
+                               data-ng-i18next="[placeholder]global:ui.button.search"
+                               data-ng-model="searchOption.keywords"
+                               data-ng-keyup="search()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body" data-ng-show="createGoodsEncode.inEditing">
+            <div class="well">
+                <div data-ng-include="'views/wms/partial/goods_encode_form.html'"></div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <p>
+                    <span>
+                        {{'global:ui.pagination.showing' | i18next}}
+                        {{filteredItems.length}}/{{items.length}}
+                        {{'global:ui.pagination.entries' | i18next}}
+                    </span>
+                    <span class="space"></span>
+                    <span class="space"></span>
+
+                    <span data-ng-if="truePrintNumber > 0">
+                        {{'wms:ui.label.chosen' | i18next}}: {{truePrintNumber}}
+                    </span>
+                    <button class="btn btn-primary"
+                            data-ng-if="truePrintNumber > 0"
+                            data-ng-click="print()">
+                        <span class="ti-printer"></span>
+                        {{'global:ui.button.print' | i18next}}
+                    </button>
+
+                </p>
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                <label class="">
+                                    <input name="printBox" type="checkbox" value=""
+                                           data-ng-click="checkAll(printItems)"
+                                           data-ng-model="printAllItems" >
+                                    <span data-ng-i18next="global:ui.label.selectedAll"></span>
+                                </label>
+                            </div>
+                        </th>
+                        <th data-ng-if="sellerGoods.id">
+                            <div class="th" >
+                                <span>{{'wms:ui.statusEnum.encodeType.'+sellerGoods.encodeType | i18next}}</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.inventoryStatus"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.batchNumber"></div>
+                        </th>
+                        <th >
+                            <div class="th" data-ng-i18next="wms:ui.label.isPrinted"></div>
+                        </th>
+                        <th >
+                            <div class="th" data-ng-i18next="wms:ui.label.isLoss"></div>
+                        </th>
+                        <th>
+                            <div class="th" data-ng-i18next="wms:ui.label.modifiedTime"></div>
+                        </th>
+                       <th>
+                            <div class="th" data-ng-i18next="global:ui.label.action"></div>
+                       </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="item in currentPageItems track by $index">
+                            <td>
+                                <label>
+                                    <input name="printBox" type="checkbox" value="{{item.id}}"
+                                           data-ng-if="!item.isLoss && !item.isPrinted"
+                                           data-ng-click="calArrayTrue()"
+                                           data-ng-model="printItems[item.goodsCode]" >
+                                    <span>{{item.id}}</span>
+                                </label>
+                            </td>
+                            <td data-ng-if="sellerGoods.id">{{item.goodsCode}}</td>
+                            <td><span class="label" data-ng-class="{'label-warning':item.inventoryStatus == 1,
+                                                                    'label-info':item.inventoryStatus == 2,
+                                                                    'label-danger':item.inventoryStatus == 3,
+                                                                    'label-success':item.inventoryStatus == 4}">
+                                    {{'wms:ui.statusEnum.goodsInventoryStatus.'+item.inventoryStatus | i18next}}</span>
+                            </td>
+                            <td>{{item.batchNumber}}</td>
+                            <td>
+                                <span data-ng-class="{'badge badge-danger':item.isPrinted}">
+                                    {{'global:ui.label.'+item.isPrinted | i18next}}
+                                </span>
+                            </td>
+                            <td>
+                                <span data-ng-class="{'badge badge-danger':item.isLoss}">
+                                    {{'wms:ui.statusEnum.goodsLoss.'+item.isLoss | i18next}}
+                                </span>
+                            </td>
+                            <td>
+                                {{item.modified}}
+                            </td>
+                            <td>
+                                <a href="#/wms/goods_encode_breakage?id={{item.id}}"
+                                   class="btn btn-xs btn-danger" data-ng-if="!item.isLoss && item.inventoryStatus < 3">
+                                    <span class="glyphicon glyphicon-ban-circle"></span>
+                                    <span data-ng-i18next="wms:ui.label.goodsBreakage"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    {{'global:ui.pagination.showing' | i18next}}
+                                    {{filteredItems.length}}/{{items.length}}
+                                    {{'global:ui.pagination.entries' | i18next}}
+                                    <select data-ng-model="searchOption.numPerPage"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()">
+                                    </select>
+                                    {{'global:ui.pagination.entries' | i18next}}
+                                    {{'global:ui.pagination.perPage' | i18next}}
+                                </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <uib-pagination class="pagination-sm"
+                                                ng-model="currentPage"
+                                                total-items="filteredItems.length"
+                                                max-size="4"
+                                                ng-change="select(currentPage)"
+                                                items-per-page="searchOption.numPerPage"
+                                                rotate="false"
+                                                previous-text="&lsaquo;" next-text="&rsaquo;"
+                                                boundary-links="true"></uib-pagination>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+    </section>
+
+    <section class="panel panel-default table-dynamic" data-ng-if="sellerGoods.encodeType != 'bar'">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="global:ui.heading.moreAction"></span>
+        </div>
+
+        <div class="panel-body">
+            <a href="#/wms/seller_goods_increase?sellerGoodsId={{sellerGoods.id}}"
+               class="btn btn-sm btn-line-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span data-ng-i18next="wms:ui.label.increaseInventory"></span>
+            </a>
+            <span class="space"></span>
+            <a href="#/wms/goods_putaway?sellerGoodsId={{sellerGoods.id}}"
+               class="btn btn-sm btn-line-primary">
+                <span class="glyphicon glyphicon-cloud-upload"></span>
+                <span data-ng-i18next="wms:ui.label.goodsPutaway"></span>
+            </a>
+        </div>
+    </section>
+
+</div>

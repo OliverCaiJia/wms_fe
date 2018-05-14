@@ -1,0 +1,43 @@
+<div class="page page-table" >
+    <section class="panel panel-default" data-ng-controller="WmsContainerEditCtrl" data-ng-include="'views/wms/partial/container_edit.html'" >
+    </section>
+    <section class="panel panel-default table-dynamic" data-ng-controller="WmsContainerRelatedSellerCtrl">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span>{{container.name}}</span>
+            <span>({{'wms:ui.label.relatedSeller' | i18next}})</span>
+
+            <a href="#/wms/goods_list" class="ti-arrow-left pull-right"></a>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+            <tr>
+                <th></th>
+                <th>
+                    <div class="th" data-ng-i18next="wms:ui.heading.seller"></div>
+                </th>
+                <!--<th>-->
+                    <!--<div class="th" data-ng-i18next="wms:ui.label.disabled"></div>-->
+                <!--</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="item in sellerList track by $index">
+                <td class="col-xs-1">
+                    <span class="ti-check-box" data-ng-if="sellerGoodsMap[item.id]"></span>
+                    <span class="ti-layout-width-full" data-ng-if="!sellerGoodsMap[item.id]"></span>
+                </td>
+                <td class="col-xs-6"><a href="#/wms/seller_available_container_list?sellerId={{item.id}}">{{item.name}}</a></td>
+                <!--<td class="col-xs-5">-->
+                    <!--<div data-ng-if="sellerGoodsMap[item.id]">-->
+                        <!--<input class="checkbox1" type="checkbox"-->
+                               <!--data-ng-checked="sellerGoodsMap[item.id].disabled"-->
+                               <!--data-ng-click="disabledSellerAvailableGoods(sellerGoodsMap[item.id], !sellerGoodsMap[item.id].disabled)">-->
+                    <!--</div>-->
+                <!--</td>-->
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+</div>

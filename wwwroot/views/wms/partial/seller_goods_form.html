@@ -1,0 +1,113 @@
+<form class="form-horizontal" data-ng-submit="add(sellerGoods)">
+    <a class="glyphicon glyphicon-remove pull-right"
+       title="{{'global:ui.button.cancel' | i18next}}"
+       data-ng-click="switchCollapse(createSellerGoods)">
+    </a>
+    <div class="row col-sm-6">
+
+        <div class="form-group">
+            <label for="sellerGoods.barCode" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.barCode"></label>
+            <div class="col-sm-8">
+                <input class="form-control" id="sellerGoods.barCode" data-ng-model="sellerGoods.barCode" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.encodeType"></label>
+            <div class="col-sm-8">
+                <label class="ui-radio" data-ng-repeat="encodeType in encodeTypeList" data-ng-if="encodeType == 'bar'">
+                    <input name="encodeType" type="radio" value="{{encodeType}}"
+                           data-ng-model="sellerGoods.encodeType" ><span>
+                                {{"wms:ui.statusEnum.encodeType."+encodeType | i18next}}</span>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sellerGoods.name" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.name"></label>
+            <div class="col-sm-8">
+                <input class="form-control" id="sellerGoods.name" data-ng-model="sellerGoods.name" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sellerGoods.abbrName" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.abbrName"></label>
+            <div class="col-sm-8">
+                <input class="form-control" id="sellerGoods.abbrName" data-ng-model="sellerGoods.abbrName" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.isCombo"></label>
+            <div class="col-sm-8">
+                <label class="ui-radio"><input name="isCombo" type="radio" value="1" data-ng-model="sellerGoods.isCombo">
+                    <span>{{'global:ui.button.yes' | i18next}}</span>
+                </label>
+                <label class="ui-radio"><input name="isCombo" type="radio" value="0" data-ng-model="sellerGoods.isCombo">
+                    <span>{{'global:ui.button.no'  | i18next}}</span>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sellerGoods.price" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.price"></label>
+            <div class="col-sm-8">
+                <input class="form-control" id="sellerGoods.price" data-ng-model="sellerGoods.price" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row col-sm-6">
+
+        <div class="form-group">
+            <label for="sellerGoods.length" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.length"></label>
+            <div class="col-sm-8">
+                <input class="form-control" id="sellerGoods.length" data-ng-model="sellerGoods.length" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sellerGoods.width" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.width"></label>
+            <div class="col-sm-8">
+                <input class="form-control" id="sellerGoods.width" data-ng-model="sellerGoods.width" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sellerGoods.height" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.height"></label>
+            <div class="col-sm-8">
+                <input class="form-control" id="sellerGoods.height" data-ng-model="sellerGoods.height" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sellerGoods.weight" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.weight"></label>
+            <div class="col-sm-8">
+                <input class="form-control" id="sellerGoods.weight" data-ng-model="sellerGoods.weight" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sellerGoods.prepackWeight" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.prepackWeight"></label>
+            <div class="col-sm-8">
+                <input class="form-control" id="sellerGoods.prepackWeight" data-ng-model="sellerGoods.prepackWeight" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sellerGoods.shelfLocation" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.shelfLocation"></label>
+            <div class="col-sm-8">
+                <input class="form-control" id="sellerGoods.shelfLocation" data-ng-model="sellerGoods.shelfLocation" />
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="sellerGoods.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+
+            <a class="btn btn-default btn-md" data-ng-click="switchCollapse(createSellerGoods)">
+                <span class="glyphicon glyphicon-remove"></span>
+                <span data-ng-i18next="global:ui.button.cancel"></span>
+            </a>
+            <div class="space"></div>
+
+
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!sellerGoods.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

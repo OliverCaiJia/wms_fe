@@ -1,0 +1,24 @@
+<form class="form-horizontal" data-ng-submit="add(moduleAction)">
+    <div class="form-group">
+        <label for="moduleAction.alias" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.alias"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="moduleAction.alias" data-ng-model="moduleAction.alias" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="moduleAction.name" class="col-sm-4 control-label" data-ng-i18next="wms:ui.label.name"></label>
+        <div class="col-sm-8">
+            <input class="form-control" id="moduleAction.name" data-ng-model="moduleAction.name" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="moduleAction.id"
+                    data-ng-i18next="global:ui.button.save"></button>
+            <button class="btn btn-primary btn-w-md"
+                    data-ng-if="!moduleAction.id"
+                    data-ng-i18next="global:ui.button.create"></button>
+        </div>
+    </div>
+</form>

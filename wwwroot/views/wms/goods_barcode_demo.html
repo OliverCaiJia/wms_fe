@@ -1,0 +1,40 @@
+<div data-ng-if="sellerGoodsMap[scanSellerGoodsId].isCombo"
+     data-ng-repeat="sellerComboUnique in goodsBarCodeDemo[scanSellerGoodsId]" >
+    <div data-ng-repeat="goodsEncode in sellerComboUnique" data-ng-if="sellerGoodsMap[scanSellerGoodsId].encodeType != 'bar'">
+        <img id="barcode{{goodsEncode.goodsCode}}"/>
+        <!--{{getImagesByCode(goodsEncode.goodsCode)}}-->
+    </div>
+
+</div>
+
+<div data-ng-if="!sellerGoodsMap[scanSellerGoodsId].isCombo && sellerGoodsMap[scanSellerGoodsId].encodeType != 'bar'"
+     data-ng-repeat="goodsEncode in goodsBarCodeDemo[scanSellerGoodsId]" >
+    <img id="barcode{{goodsEncode.goodsCode}}"/>
+    <!--{{getImagesByCode(goodsEncode.goodsCode)}}-->
+
+</div>
+
+<div data-ng-if="sellerGoodsMap[scanSellerGoodsId].isCombo && sellerGoodsMap[scanSellerGoodsId].encodeType == 'bar'" >
+    {{sellerGoodsMap[scanSellerGoodsId].abbrName}}
+    <img id="barcode{{sellerGoodsMap[scanSellerGoodsId].barCode}}"/>
+    {{getImagesByCode(sellerGoodsMap[scanSellerGoodsId].barCode)}}
+    {{sellerGoodsMap[scanSellerGoodsId].barCode}}
+    {{'wms:ui.label.inventory' | i18next}}: {{sellerGoodsMap[scanSellerGoodsId].inventory}}
+
+    <div data-ng-repeat="comboGoods in allComboSellerGoodsMap[scanSellerGoodsId]">
+        {{sellerGoodsMap[comboGoods.sellerGoodsId].abbrName}}
+        <img id="barcode{{sellerGoodsMap[comboGoods.sellerGoodsId].barCode}}"/>
+        {{getImagesByCode(sellerGoodsMap[comboGoods.sellerGoodsId].barCode)}}
+        {{sellerGoodsMap[comboGoods.sellerGoodsId].barCode}}
+        {{'wms:ui.label.inventory' | i18next}}: {{sellerGoodsMap[comboGoods.sellerGoodsId].inventory}}
+    </div>
+
+</div>
+
+<div data-ng-if="!sellerGoodsMap[scanSellerGoodsId].isCombo && sellerGoodsMap[scanSellerGoodsId].encodeType == 'bar'" >
+    {{sellerGoodsMap[scanSellerGoodsId].abbrName}}
+    <img id="barcode{{sellerGoodsMap[scanSellerGoodsId].barCode}}"/>
+    {{getImagesByCode(sellerGoodsMap[scanSellerGoodsId].barCode)}}
+    {{sellerGoodsMap[scanSellerGoodsId].barCode}}
+    {{'wms:ui.label.inventory' | i18next}}: {{sellerGoodsMap[scanSellerGoodsId].inventory}}
+</div>

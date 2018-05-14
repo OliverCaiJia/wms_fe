@@ -1,0 +1,151 @@
+<div class="page" data-ng-controller="WmsRepositoryEditCtrl">
+    <section class="panel panel-default">
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.heading.repository"></span>
+            <span data-ng-i18next="global:ui.label.detail"></span>
+            <a href="#/wms/repository_list" class="ti-arrow-left pull-right"></a>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+        
+                <div class="form-group">
+                    <label for="repository.id" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.id"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="repository.id" readonly data-ng-model="repository.id" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.name"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(repository, 'name')" >
+                            <a href="javascript:;" data-ng-show="!repository[repository.id+'name']"
+                               data-ng-click="switchNode(repository,'name',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{repository.name}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="repository[repository.id+'name']">
+                                <input id="inputName" data-ng-model="repository.name" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(repository, 'name')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(repository,'name',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.warehouseId"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(repository, 'warehouseId')" >
+                            <a href="javascript:;" data-ng-show="!repository[repository.id+'warehouseId']"
+                               data-ng-click="switchNode(repository,'warehouseId',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{repository.warehouseId}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="repository[repository.id+'warehouseId']">
+                                <input id="inputWarehouseId" data-ng-model="repository.warehouseId" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(repository, 'warehouseId')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(repository,'warehouseId',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.disabled"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(repository, 'disabled')" >
+                            <a href="javascript:;" data-ng-show="!repository[repository.id+'disabled']"
+                               data-ng-click="switchNode(repository,'disabled',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{repository.disabled}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="repository[repository.id+'disabled']">
+                                <input id="inputDisabled" data-ng-model="repository.disabled" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(repository, 'disabled')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(repository,'disabled',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.repositoryCode"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(repository, 'repositoryCode')" >
+                            <a href="javascript:;" data-ng-show="!repository[repository.id+'repositoryCode']"
+                               data-ng-click="switchNode(repository,'repositoryCode',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{repository.repositoryCode}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="repository[repository.id+'repositoryCode']">
+                                <input id="inputRepositoryCode" data-ng-model="repository.repositoryCode" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(repository, 'repositoryCode')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(repository,'repositoryCode',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.useAttribute"></label>
+                    <div class="col-sm-8">
+                        <form data-ng-submit="update(repository, 'useAttribute')" >
+                            <a href="javascript:;" data-ng-show="!repository[repository.id+'useAttribute']"
+                               data-ng-click="switchNode(repository,'useAttribute',true)"
+                               title="{{'global:ui.button.edit' | i18next}}">
+                                {{repository.useAttribute}}
+                                <span class="ti-pencil"></span>
+                            </a>
+                            <span data-ng-show="repository[repository.id+'useAttribute']">
+                                <input id="inputUseAttribute" data-ng-model="repository.useAttribute" />
+                                <a href="javascript:;" class="ti-save"
+                                   data-ng-click="update(repository, 'useAttribute')"
+                                   title="{{'global:ui.button.save' | i18next}}"></a>
+                                <a href="javascript:;" class="ti-close"
+                                   data-ng-click="switchNode(repository,'useAttribute',false)"
+                                   title="{{'global:ui.button.cancel' | i18next}}"></a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="repository.created" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.created"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="repository.created" readonly data-ng-model="repository.created" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="repository.modified" class="col-sm-4 control-label" 
+                          data-ng-i18next="wms:ui.label.modified"></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="repository.modified" readonly data-ng-model="repository.modified" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

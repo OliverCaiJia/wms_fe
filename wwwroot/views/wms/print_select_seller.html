@@ -1,0 +1,20 @@
+<div class="page page-table" data-ng-controller="WmsPrintSelectSellerCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th"></span>
+            <span data-ng-i18next="wms:ui.label.selectSeller"></span>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-3 col-xsm-6" data-ng-repeat="seller in sellerList track by $index">
+                <section class="pricing-table" style="cursor:pointer;"
+                         data-ng-click="selectSeller(seller.id)">
+                    <header>{{seller.name}}</header>
+                    <footer>
+                        <a href="#/wms/print_express_order?sellerId={{seller.id}}" class="btn btn-primary"
+                           data-ng-click="selectSeller(seller.id)">{{'wms:ui.button.prePackaged' | i18next}}</a>
+                    </footer>
+                </section>
+            </div>
+        </div>
+    </section>
+</div>
